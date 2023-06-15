@@ -1,0 +1,27 @@
+.btn-login {
+  width: 120px;
+}
+
+.navbar {
+  z-index: 9999;
+}
+
+.navbar-custom {
+  background-color: #1c2024;
+  box-shadow: 0px 2px 10px 1px #25292b;
+}
+
+.navbar .dropdown-item,
+.navbar .dropdown-menu {
+  background-color: rgba(30, 41, 53, 0.8);
+  color: #FFF;
+}
+
+.navbar .dropdown-menu {
+  border: 1px solid #25292b;
+}
+
+.navbar .dropdown-item:hover {
+  background-color: rgba(30, 41, 53, 0.8) !important;
+  color: #3898ff;
+}

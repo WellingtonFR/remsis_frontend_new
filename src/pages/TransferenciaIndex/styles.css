@@ -1,0 +1,45 @@
+.lista-transferencias {
+  background-color: var(--background-color-general);
+  min-width: 1366px;
+}
+
+.lista-transferencias-search {
+  padding: 20px 10px !important;
+  background: #424e5e;
+}
+
+.lista-transferencias input {
+  border-radius: 15px !important;
+  margin-bottom: 5px !important;
+  max-width: 200px;
+}
+
+.lista-transferencias small {
+  text-align: center;
+  display: block;
+}
+
+.lista-transferencias-search label {
+  color: #fff;
+  min-width: 100px;
+}
+
+.lista-transferencias ::placeholder {
+  font-size: 0.8rem;
+}
+
+#btn-submit-search {
+  width: 150px;
+}
+
+@media screen and (max-width:800px) {
+  #btn-submit-search {
+    width: 300px;
+    margin-top: 10px;
+    margin-left: 25px !important;
+  }
+
+  .lista-transferencias-search label {
+    padding-top: 5px;
+  }
+}
