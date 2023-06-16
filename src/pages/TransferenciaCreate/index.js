@@ -9,11 +9,7 @@ export default function TransferenciaCreate() {
   //#region useState
   const [filiais, setFiliais] = useState([]); //Preenche o option com as filiais
   //Parte superior do formulário
-  const [dataAtual] = useState(
-    new Date().toLocaleDateString("pt-br") +
-      " " +
-      new Date().toLocaleTimeString("pt-br")
-  );
+  const [dataAtual] = useState(new Date().toLocaleDateString("pt-br") + " " + new Date().toLocaleTimeString("pt-br"));
   const [numeroControle] = useState(generateId(10));
   const [filialDestino, setFilialDestino] = useState("");
   const [nomeFilialDestino, setNomeFilialDestino] = useState("");
@@ -447,25 +443,16 @@ export default function TransferenciaCreate() {
     showLoader();
     setFilialDestino(optionValue);
 
-    await api
-      .get(`/filiais/findByNumeroFilial/${optionValue}`)
-      .then((response) => {
-        let endereco =
-          response.data[0].endereco +
-          ", " +
-          response.data[0].numeroEndereco +
-          " " +
-          response.data[0].complemento;
-        setNomeFilialDestino(response.data[0].nomeFantasia);
-        setEnderecoFilialDestino(endereco);
-      });
+    await api.get(`/filiais/findByNumeroFilial/${optionValue}`).then((response) => {
+      let endereco = response.data[0].endereco + ", " + response.data[0].numeroEndereco + " " + response.data[0].complemento;
+      setNomeFilialDestino(response.data[0].nomeFantasia);
+      setEnderecoFilialDestino(endereco);
+    });
 
-    await api
-      .get(`/transportador/findByFilialAtendida/${optionValue}`)
-      .then((response) => {
-        hideLoader();
-        setTransportadores(response.data);
-      });
+    await api.get(`/transportador/findByFilialAtendida/${optionValue}`).then((response) => {
+      hideLoader();
+      setTransportadores(response.data);
+    });
   }
 
   async function handleTransportador(optionValue) {
@@ -491,36 +478,18 @@ export default function TransferenciaCreate() {
         <div className="row">
           <div className="field-size-2 ml-3">
             <label htmlFor="dataAtual">Data</label>
-            <input
-              type="text"
-              name="dataAtual"
-              className="form-control"
-              required
-              disabled
-              value={dataAtual}
-            />
+            <input type="text" name="dataAtual" className="form-control" required disabled value={dataAtual} />
           </div>
           <div className="field-size-2 ml-3">
             <label htmlFor="numeroControle">Controle</label>
-            <input
-              type="text"
-              name="numeroControle"
-              className="form-control"
-              value={numeroControle}
-              disabled
-            />
+            <input type="text" name="numeroControle" className="form-control" value={numeroControle} disabled />
           </div>
         </div>
 
         <div className="row">
           <div className="field-size-2 ml-3">
             <label htmlFor="filialDestino">Unidade destino</label>
-            <select
-              name="filialDestino"
-              className="form-control"
-              required
-              onChange={(e) => handlefilialDestino(e.target.value)}
-            >
+            <select name="filialDestino" className="form-control" required onChange={(e) => handlefilialDestino(e.target.value)}>
               <option value="">Selecione</option>
               {filiais.map((filial) => (
                 <option value={filial.numeroFilial} key={filial.id}>
@@ -532,43 +501,23 @@ export default function TransferenciaCreate() {
 
           <div className="field-size-2 ml-3">
             <label htmlFor="nomefilialDestino">Nome</label>
-            <input
-              name="nomefilialDestino"
-              type="text"
-              className="form-control"
-              value={nomeFilialDestino}
-              required
-              disabled
-            />
+            <input name="nomefilialDestino" type="text" className="form-control" value={nomeFilialDestino} required disabled />
           </div>
 
           <div className="field-size-4 ml-3">
             <label htmlFor="enderecofilialDestino">Endereço</label>
-            <input
-              name="enderecofilialDestino"
-              type="text"
-              className="form-control"
-              value={enderecoFilialDestino}
-              disabled
-            />
+            <input name="enderecofilialDestino" type="text" className="form-control" value={enderecoFilialDestino} disabled />
           </div>
         </div>
 
         <div className="row">
           <div className="field-size-2 ml-3">
             <label htmlFor="transportador">Transportador</label>
-            <select
-              name="transportador"
-              className="form-control"
-              required
-              onChange={(e) => handleTransportador(e.target.value)}
-            >
+            <select name="transportador" className="form-control" required onChange={(e) => handleTransportador(e.target.value)}>
               <option value="">Selecione</option>
               {transportadores.map((transportador) => (
                 <option value={transportador.id} key={transportador.id}>
-                  {transportador.filialAtendida +
-                    " - " +
-                    transportador.nomeTransportador}
+                  {transportador.filialAtendida + " - " + transportador.nomeTransportador}
                 </option>
               ))}
             </select>
@@ -576,24 +525,12 @@ export default function TransferenciaCreate() {
 
           <div className="field-size-2 ml-3">
             <label htmlFor="placaVeiculo">Placa</label>
-            <input
-              type="text"
-              name="placaVeiculo"
-              className="form-control"
-              required
-              disabled
-              value={placaVeiculo}
-            />
+            <input type="text" name="placaVeiculo" className="form-control" required disabled value={placaVeiculo} />
           </div>
 
           <div className="field-size-4 ml-3">
             <label htmlFor="nomeConferente">Conferente</label>
-            <select
-              name="nomeConferente"
-              className="form-control"
-              required
-              onChange={(e) => setConferente(e.target.value)}
-            >
+            <select name="nomeConferente" className="form-control" required onChange={(e) => setConferente(e.target.value)}>
               <option value="">Selecione</option>
               {conferentes.map((conferente) => (
                 <option value={conferente.nomeConferente} key={conferente.id}>
@@ -604,11 +541,7 @@ export default function TransferenciaCreate() {
           </div>
 
           <div className="">
-            <button
-              type="submit"
-              className="btn btn-primary btn-submit"
-              style={{ height: "50px" }}
-            >
+            <button type="submit" className="btn btn-primary btn-submit" style={{ height: "50px" }}>
               Inserir
             </button>
           </div>
@@ -628,665 +561,325 @@ export default function TransferenciaCreate() {
           {/*Line1*/}
           <div className="row">
             <div className="field-size-1">
-              <input
-                type="text"
-                name="filialOrigem_1"
-                className="form-control"
-                required
-                onChange={(e) => setFilialorigem_1(e.target.value)}
-              />{" "}
+              <input type="text" name="filialOrigem_1" className="form-control" required onChange={(e) => setFilialorigem_1(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
-              <input
-                type="text"
-                name="notaFiscal_1"
-                className="form-control"
-                required
-                onChange={(e) => setNotafiscal_1(e.target.value)}
-              />{" "}
+              <input type="text" name="notaFiscal_1" className="form-control" required onChange={(e) => setNotafiscal_1(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
-              <select
-                name="tipoOperacao_1"
-                className="form-control"
-                required
-                onChange={(e) => setTipoOperacao_1(e.target.value)}
-              >
+              <select name="tipoOperacao_1" className="form-control" required onChange={(e) => setTipoOperacao_1(e.target.value)}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
-                  <option value={option}>{option}</option>
+                  <option value={option} key={option}>
+                    {option}
+                  </option>
                 ))}
               </select>
             </div>
             <div className="field-size-1">
-              <input
-                type="text"
-                name="codigo_1"
-                className="form-control"
-                required
-                onChange={(e) => setCodigo_1(e.target.value)}
-              />{" "}
+              <input type="text" name="codigo_1" className="form-control" required onChange={(e) => setCodigo_1(e.target.value)} />{" "}
             </div>
             <div className="field-size-2">
-              <input
-                type="text"
-                name="descricaoProduto_1"
-                className="form-control"
-                maxLength="50"
-                required
-                onChange={(e) => setDescricaoProduto_1(e.target.value)}
-              />{" "}
+              <input type="text" name="descricaoProduto_1" className="form-control" maxLength="50" required onChange={(e) => setDescricaoProduto_1(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
-              <input
-                type="number"
-                name="quantidadeProduto_1"
-                className="form-control"
-                required
-                onChange={(e) => setQuantidadeproduto_1(e.target.value)}
-              />{" "}
+              <input type="number" name="quantidadeProduto_1" className="form-control" required onChange={(e) => setQuantidadeproduto_1(e.target.value)} />{" "}
             </div>
             <div className="field-size-2">
-              <input
-                type="text"
-                name="observacao_1"
-                className="form-control"
-                onChange={(e) => setObservacao_1(e.target.value)}
-              />{" "}
+              <input type="text" name="observacao_1" className="form-control" onChange={(e) => setObservacao_1(e.target.value)} />{" "}
             </div>
           </div>
 
           {/*Line2*/}
           <div className="row">
             <div className="field-size-1">
-              <input
-                type="text"
-                name="filialOrigem_2"
-                className="form-control"
-                onChange={(e) => setFilialorigem_2(e.target.value)}
-              />{" "}
+              <input type="text" name="filialOrigem_2" className="form-control" onChange={(e) => setFilialorigem_2(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
-              <input
-                type="text"
-                name="notaFiscal_2"
-                className="form-control"
-                onChange={(e) => setNotafiscal_2(e.target.value)}
-              />{" "}
+              <input type="text" name="notaFiscal_2" className="form-control" onChange={(e) => setNotafiscal_2(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
-              <select
-                name="tipoOperacao_2"
-                className="form-control"
-                onChange={(e) => setTipoOperacao_2(e.target.value)}
-              >
+              <select name="tipoOperacao_2" className="form-control" onChange={(e) => setTipoOperacao_2(e.target.value)}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
-                  <option value={option}>{option}</option>
+                  <option value={option} key={option}>
+                    {option}
+                  </option>
                 ))}
               </select>
             </div>
             <div className="field-size-1">
-              <input
-                type="text"
-                name="codigo_2"
-                className="form-control"
-                onChange={(e) => setCodigo_2(e.target.value)}
-              />{" "}
+              <input type="text" name="codigo_2" className="form-control" onChange={(e) => setCodigo_2(e.target.value)} />{" "}
             </div>
             <div className="field-size-2">
-              <input
-                type="text"
-                name="descricaoProduto_2"
-                className="form-control"
-                maxLength="50"
-                onChange={(e) => setDescricaoProduto_2(e.target.value)}
-              />{" "}
+              <input type="text" name="descricaoProduto_2" className="form-control" maxLength="50" onChange={(e) => setDescricaoProduto_2(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
-              <input
-                type="number"
-                name="quantidadeProduto_2"
-                className="form-control"
-                onChange={(e) => setQuantidadeproduto_2(e.target.value)}
-              />{" "}
+              <input type="number" name="quantidadeProduto_2" className="form-control" onChange={(e) => setQuantidadeproduto_2(e.target.value)} />{" "}
             </div>
             <div className="field-size-2">
-              <input
-                type="text"
-                name="observacao_2"
-                className="form-control"
-                onChange={(e) => setObservacao_2(e.target.value)}
-              />{" "}
+              <input type="text" name="observacao_2" className="form-control" onChange={(e) => setObservacao_2(e.target.value)} />{" "}
             </div>
           </div>
 
           {/*Line3*/}
           <div className="row">
             <div className="field-size-1">
-              <input
-                type="text"
-                name="filialOrigem_3"
-                className="form-control"
-                onChange={(e) => setFilialorigem_3(e.target.value)}
-              />{" "}
+              <input type="text" name="filialOrigem_3" className="form-control" onChange={(e) => setFilialorigem_3(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
-              <input
-                type="text"
-                name="notaFiscal_3"
-                className="form-control"
-                onChange={(e) => setNotafiscal_3(e.target.value)}
-              />{" "}
+              <input type="text" name="notaFiscal_3" className="form-control" onChange={(e) => setNotafiscal_3(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
-              <select
-                name="tipoOperacao_3"
-                className="form-control"
-                onChange={(e) => setTipoOperacao_3(e.target.value)}
-              >
+              <select name="tipoOperacao_3" className="form-control" onChange={(e) => setTipoOperacao_3(e.target.value)}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
-                  <option value={option}>{option}</option>
+                  <option value={option} key={option}>
+                    {option}
+                  </option>
                 ))}
               </select>
             </div>
             <div className="field-size-1">
-              <input
-                type="text"
-                name="codigo_3"
-                className="form-control"
-                onChange={(e) => setCodigo_3(e.target.value)}
-              />{" "}
+              <input type="text" name="codigo_3" className="form-control" onChange={(e) => setCodigo_3(e.target.value)} />{" "}
             </div>
             <div className="field-size-2">
-              <input
-                type="text"
-                name="descricaoProduto_3"
-                className="form-control"
-                maxLength="50"
-                onChange={(e) => setDescricaoProduto_3(e.target.value)}
-              />{" "}
+              <input type="text" name="descricaoProduto_3" className="form-control" maxLength="50" onChange={(e) => setDescricaoProduto_3(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
-              <input
-                type="number"
-                name="quantidadeProduto_3"
-                className="form-control"
-                onChange={(e) => setQuantidadeproduto_3(e.target.value)}
-              />{" "}
+              <input type="number" name="quantidadeProduto_3" className="form-control" onChange={(e) => setQuantidadeproduto_3(e.target.value)} />{" "}
             </div>
             <div className="field-size-2">
-              <input
-                type="text"
-                name="observacao_3"
-                className="form-control"
-                onChange={(e) => setObservacao_3(e.target.value)}
-              />{" "}
+              <input type="text" name="observacao_3" className="form-control" onChange={(e) => setObservacao_3(e.target.value)} />{" "}
             </div>
           </div>
 
           {/*Line4*/}
           <div className="row">
             <div className="field-size-1">
-              <input
-                type="text"
-                name="filialOrigem_4"
-                className="form-control"
-                onChange={(e) => setFilialorigem_4(e.target.value)}
-              />{" "}
+              <input type="text" name="filialOrigem_4" className="form-control" onChange={(e) => setFilialorigem_4(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
-              <input
-                type="text"
-                name="notaFiscal_4"
-                className="form-control"
-                onChange={(e) => setNotafiscal_4(e.target.value)}
-              />{" "}
+              <input type="text" name="notaFiscal_4" className="form-control" onChange={(e) => setNotafiscal_4(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
-              <select
-                name="tipoOperacao_4"
-                className="form-control"
-                onChange={(e) => setTipoOperacao_4(e.target.value)}
-              >
+              <select name="tipoOperacao_4" className="form-control" onChange={(e) => setTipoOperacao_4(e.target.value)}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
-                  <option value={option}>{option}</option>
+                  <option value={option} key={option}>
+                    {option}
+                  </option>
                 ))}
               </select>
             </div>
             <div className="field-size-1">
-              <input
-                type="text"
-                name="codigo_4"
-                className="form-control"
-                onChange={(e) => setCodigo_4(e.target.value)}
-              />{" "}
+              <input type="text" name="codigo_4" className="form-control" onChange={(e) => setCodigo_4(e.target.value)} />{" "}
             </div>
             <div className="field-size-2">
-              <input
-                type="text"
-                name="descricaoProduto_4"
-                className="form-control"
-                maxLength="50"
-                onChange={(e) => setDescricaoProduto_4(e.target.value)}
-              />{" "}
+              <input type="text" name="descricaoProduto_4" className="form-control" maxLength="50" onChange={(e) => setDescricaoProduto_4(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
-              <input
-                type="number"
-                name="quantidadeProduto_4"
-                className="form-control"
-                onChange={(e) => setQuantidadeproduto_4(e.target.value)}
-              />{" "}
+              <input type="number" name="quantidadeProduto_4" className="form-control" onChange={(e) => setQuantidadeproduto_4(e.target.value)} />{" "}
             </div>
             <div className="field-size-2">
-              <input
-                type="text"
-                name="observacao_4"
-                className="form-control"
-                onChange={(e) => setObservacao_4(e.target.value)}
-              />{" "}
+              <input type="text" name="observacao_4" className="form-control" onChange={(e) => setObservacao_4(e.target.value)} />{" "}
             </div>
           </div>
 
           {/*Line5*/}
           <div className="row">
             <div className="field-size-1">
-              <input
-                type="text"
-                name="filialOrigem_5"
-                className="form-control"
-                onChange={(e) => setFilialorigem_5(e.target.value)}
-              />{" "}
+              <input type="text" name="filialOrigem_5" className="form-control" onChange={(e) => setFilialorigem_5(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
-              <input
-                type="text"
-                name="notaFiscal_5"
-                className="form-control"
-                onChange={(e) => setNotafiscal_5(e.target.value)}
-              />{" "}
+              <input type="text" name="notaFiscal_5" className="form-control" onChange={(e) => setNotafiscal_5(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
-              <select
-                name="tipoOperacao_5"
-                className="form-control"
-                onChange={(e) => setTipoOperacao_5(e.target.value)}
-              >
+              <select name="tipoOperacao_5" className="form-control" onChange={(e) => setTipoOperacao_5(e.target.value)}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
-                  <option value={option}>{option}</option>
+                  <option value={option} key={option}>
+                    {option}
+                  </option>
                 ))}
               </select>
             </div>
             <div className="field-size-1">
-              <input
-                type="text"
-                name="codigo_5"
-                className="form-control"
-                onChange={(e) => setCodigo_5(e.target.value)}
-              />{" "}
+              <input type="text" name="codigo_5" className="form-control" onChange={(e) => setCodigo_5(e.target.value)} />{" "}
             </div>
             <div className="field-size-2">
-              <input
-                type="text"
-                name="descricaoProduto_5"
-                className="form-control"
-                maxLength="50"
-                onChange={(e) => setDescricaoProduto_5(e.target.value)}
-              />{" "}
+              <input type="text" name="descricaoProduto_5" className="form-control" maxLength="50" onChange={(e) => setDescricaoProduto_5(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
-              <input
-                type="number"
-                name="quantidadeProduto_5"
-                className="form-control"
-                onChange={(e) => setQuantidadeproduto_5(e.target.value)}
-              />{" "}
+              <input type="number" name="quantidadeProduto_5" className="form-control" onChange={(e) => setQuantidadeproduto_5(e.target.value)} />{" "}
             </div>
             <div className="field-size-2">
-              <input
-                type="text"
-                name="observacao_5"
-                className="form-control"
-                onChange={(e) => setObservacao_5(e.target.value)}
-              />{" "}
+              <input type="text" name="observacao_5" className="form-control" onChange={(e) => setObservacao_5(e.target.value)} />{" "}
             </div>
           </div>
 
           {/*Line6*/}
           <div className="row">
             <div className="field-size-1">
-              <input
-                type="text"
-                name="filialOrigem_6"
-                className="form-control"
-                onChange={(e) => setFilialorigem_6(e.target.value)}
-              />{" "}
+              <input type="text" name="filialOrigem_6" className="form-control" onChange={(e) => setFilialorigem_6(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
-              <input
-                type="text"
-                name="notaFiscal_6"
-                className="form-control"
-                onChange={(e) => setNotafiscal_6(e.target.value)}
-              />{" "}
+              <input type="text" name="notaFiscal_6" className="form-control" onChange={(e) => setNotafiscal_6(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
-              <select
-                name="tipoOperacao_6"
-                className="form-control"
-                onChange={(e) => setTipoOperacao_6(e.target.value)}
-              >
+              <select name="tipoOperacao_6" className="form-control" onChange={(e) => setTipoOperacao_6(e.target.value)}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
-                  <option value={option}>{option}</option>
+                  <option value={option} key={option}>
+                    {option}
+                  </option>
                 ))}
               </select>
             </div>
             <div className="field-size-1">
-              <input
-                type="text"
-                name="codigo_6"
-                className="form-control"
-                onChange={(e) => setCodigo_6(e.target.value)}
-              />{" "}
+              <input type="text" name="codigo_6" className="form-control" onChange={(e) => setCodigo_6(e.target.value)} />{" "}
             </div>
             <div className="field-size-2">
-              <input
-                type="text"
-                name="descricaoProduto_6"
-                className="form-control"
-                maxLength="50"
-                onChange={(e) => setDescricaoProduto_6(e.target.value)}
-              />{" "}
+              <input type="text" name="descricaoProduto_6" className="form-control" maxLength="50" onChange={(e) => setDescricaoProduto_6(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
-              <input
-                type="number"
-                name="quantidadeProduto_6"
-                className="form-control"
-                onChange={(e) => setQuantidadeproduto_6(e.target.value)}
-              />{" "}
+              <input type="number" name="quantidadeProduto_6" className="form-control" onChange={(e) => setQuantidadeproduto_6(e.target.value)} />{" "}
             </div>
             <div className="field-size-2">
-              <input
-                type="text"
-                name="observacao_6"
-                className="form-control"
-                onChange={(e) => setObservacao_6(e.target.value)}
-              />{" "}
+              <input type="text" name="observacao_6" className="form-control" onChange={(e) => setObservacao_6(e.target.value)} />{" "}
             </div>
           </div>
 
           {/*Line7*/}
           <div className="row">
             <div className="field-size-1">
-              <input
-                type="text"
-                name="filialOrigem_7"
-                className="form-control"
-                onChange={(e) => setFilialorigem_7(e.target.value)}
-              />{" "}
+              <input type="text" name="filialOrigem_7" className="form-control" onChange={(e) => setFilialorigem_7(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
-              <input
-                type="text"
-                name="notaFiscal_7"
-                className="form-control"
-                onChange={(e) => setNotafiscal_7(e.target.value)}
-              />{" "}
+              <input type="text" name="notaFiscal_7" className="form-control" onChange={(e) => setNotafiscal_7(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
-              <select
-                name="tipoOperacao_7"
-                className="form-control"
-                onChange={(e) => setTipoOperacao_7(e.target.value)}
-              >
+              <select name="tipoOperacao_7" className="form-control" onChange={(e) => setTipoOperacao_7(e.target.value)}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
-                  <option value={option}>{option}</option>
+                  <option value={option} key={option}>
+                    {option}
+                  </option>
                 ))}
               </select>
             </div>
             <div className="field-size-1">
-              <input
-                type="text"
-                name="codigo_7"
-                className="form-control"
-                onChange={(e) => setCodigo_7(e.target.value)}
-              />{" "}
+              <input type="text" name="codigo_7" className="form-control" onChange={(e) => setCodigo_7(e.target.value)} />{" "}
             </div>
             <div className="field-size-2">
-              <input
-                type="text"
-                name="descricaoProduto_7"
-                className="form-control"
-                maxLength="50"
-                onChange={(e) => setDescricaoProduto_7(e.target.value)}
-              />{" "}
+              <input type="text" name="descricaoProduto_7" className="form-control" maxLength="50" onChange={(e) => setDescricaoProduto_7(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
-              <input
-                type="number"
-                name="quantidadeProduto_7"
-                className="form-control"
-                onChange={(e) => setQuantidadeproduto_7(e.target.value)}
-              />{" "}
+              <input type="number" name="quantidadeProduto_7" className="form-control" onChange={(e) => setQuantidadeproduto_7(e.target.value)} />{" "}
             </div>
             <div className="field-size-2">
-              <input
-                type="text"
-                name="observacao_7"
-                className="form-control"
-                onChange={(e) => setObservacao_7(e.target.value)}
-              />{" "}
+              <input type="text" name="observacao_7" className="form-control" onChange={(e) => setObservacao_7(e.target.value)} />{" "}
             </div>
           </div>
 
           {/*Line8*/}
           <div className="row">
             <div className="field-size-1">
-              <input
-                type="text"
-                name="filialOrigem_8"
-                className="form-control"
-                onChange={(e) => setFilialorigem_8(e.target.value)}
-              />{" "}
+              <input type="text" name="filialOrigem_8" className="form-control" onChange={(e) => setFilialorigem_8(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
-              <input
-                type="text"
-                name="notaFiscal_8"
-                className="form-control"
-                onChange={(e) => setNotafiscal_8(e.target.value)}
-              />{" "}
+              <input type="text" name="notaFiscal_8" className="form-control" onChange={(e) => setNotafiscal_8(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
-              <select
-                name="tipoOperacao_8"
-                className="form-control"
-                onChange={(e) => setTipoOperacao_8(e.target.value)}
-              >
+              <select name="tipoOperacao_8" className="form-control" onChange={(e) => setTipoOperacao_8(e.target.value)}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
-                  <option value={option}>{option}</option>
+                  <option value={option} key={option}>
+                    {option}
+                  </option>
                 ))}
               </select>
             </div>
             <div className="field-size-1">
-              <input
-                type="text"
-                name="codigo_8"
-                className="form-control"
-                onChange={(e) => setCodigo_8(e.target.value)}
-              />{" "}
+              <input type="text" name="codigo_8" className="form-control" onChange={(e) => setCodigo_8(e.target.value)} />{" "}
             </div>
             <div className="field-size-2">
-              <input
-                type="text"
-                name="descricaoProduto_8"
-                className="form-control"
-                maxLength="50"
-                onChange={(e) => setDescricaoProduto_8(e.target.value)}
-              />{" "}
+              <input type="text" name="descricaoProduto_8" className="form-control" maxLength="50" onChange={(e) => setDescricaoProduto_8(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
-              <input
-                type="number"
-                name="quantidadeProduto_8"
-                className="form-control"
-                onChange={(e) => setQuantidadeproduto_8(e.target.value)}
-              />{" "}
+              <input type="number" name="quantidadeProduto_8" className="form-control" onChange={(e) => setQuantidadeproduto_8(e.target.value)} />{" "}
             </div>
             <div className="field-size-2">
-              <input
-                type="text"
-                name="observacao_8"
-                className="form-control"
-                onChange={(e) => setObservacao_8(e.target.value)}
-              />{" "}
+              <input type="text" name="observacao_8" className="form-control" onChange={(e) => setObservacao_8(e.target.value)} />{" "}
             </div>
           </div>
 
           {/*Line9*/}
           <div className="row">
             <div className="field-size-1">
-              <input
-                type="text"
-                name="filialOrigem_9"
-                className="form-control"
-                onChange={(e) => setFilialorigem_9(e.target.value)}
-              />{" "}
+              <input type="text" name="filialOrigem_9" className="form-control" onChange={(e) => setFilialorigem_9(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
-              <input
-                type="text"
-                name="notaFiscal_9"
-                className="form-control"
-                onChange={(e) => setNotafiscal_9(e.target.value)}
-              />{" "}
+              <input type="text" name="notaFiscal_9" className="form-control" onChange={(e) => setNotafiscal_9(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
-              <select
-                name="tipoOperacao_9"
-                className="form-control"
-                onChange={(e) => setTipoOperacao_9(e.target.value)}
-              >
+              <select name="tipoOperacao_9" className="form-control" onChange={(e) => setTipoOperacao_9(e.target.value)}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
-                  <option value={option}>{option}</option>
+                  <option value={option} key={option}>
+                    {option}
+                  </option>
                 ))}
               </select>
             </div>
             <div className="field-size-1">
-              <input
-                type="text"
-                name="codigo_9"
-                className="form-control"
-                onChange={(e) => setCodigo_9(e.target.value)}
-              />{" "}
+              <input type="text" name="codigo_9" className="form-control" onChange={(e) => setCodigo_9(e.target.value)} />{" "}
             </div>
             <div className="field-size-2">
-              <input
-                type="text"
-                name="descricaoProduto_9"
-                className="form-control"
-                maxLength="50"
-                onChange={(e) => setDescricaoProduto_9(e.target.value)}
-              />{" "}
+              <input type="text" name="descricaoProduto_9" className="form-control" maxLength="50" onChange={(e) => setDescricaoProduto_9(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
-              <input
-                type="number"
-                name="quantidadeProduto_9"
-                className="form-control"
-                onChange={(e) => setQuantidadeproduto_9(e.target.value)}
-              />{" "}
+              <input type="number" name="quantidadeProduto_9" className="form-control" onChange={(e) => setQuantidadeproduto_9(e.target.value)} />{" "}
             </div>
             <div className="field-size-2">
-              <input
-                type="text"
-                name="filialOrigem_9"
-                className="form-control"
-                onChange={(e) => setObservacao_9(e.target.value)}
-              />{" "}
+              <input type="text" name="filialOrigem_9" className="form-control" onChange={(e) => setObservacao_9(e.target.value)} />{" "}
             </div>
           </div>
 
           {/*Line10*/}
           <div className="row">
             <div className="field-size-1">
-              <input
-                type="text"
-                name="filialOrigem_10"
-                className="form-control"
-                onChange={(e) => setFilialorigem_10(e.target.value)}
-              />{" "}
+              <input type="text" name="filialOrigem_10" className="form-control" onChange={(e) => setFilialorigem_10(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
-              <input
-                type="text"
-                name="notaFiscal_10"
-                className="form-control"
-                onChange={(e) => setNotafiscal_10(e.target.value)}
-              />{" "}
+              <input type="text" name="notaFiscal_10" className="form-control" onChange={(e) => setNotafiscal_10(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
-              <select
-                name="tipoOperacao_10"
-                className="form-control"
-                onChange={(e) => setTipoOperacao_10(e.target.value)}
-              >
+              <select name="tipoOperacao_10" className="form-control" onChange={(e) => setTipoOperacao_10(e.target.value)}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
-                  <option value={option}>{option}</option>
+                  <option value={option} key={option}>
+                    {option}
+                  </option>
                 ))}
               </select>
             </div>
             <div className="field-size-1">
-              <input
-                type="text"
-                name="codigo_10"
-                className="form-control"
-                onChange={(e) => setCodigo_10(e.target.value)}
-              />{" "}
+              <input type="text" name="codigo_10" className="form-control" onChange={(e) => setCodigo_10(e.target.value)} />{" "}
             </div>
             <div className="field-size-2">
-              <input
-                type="text"
-                name="descricaoProduto_10"
-                className="form-control"
-                maxLength="50"
-                onChange={(e) => setDescricaoProduto_10(e.target.value)}
-              />{" "}
+              <input type="text" name="descricaoProduto_10" className="form-control" maxLength="50" onChange={(e) => setDescricaoProduto_10(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
-              <input
-                type="number"
-                name="quantidadeProduto_10"
-                className="form-control"
-                onChange={(e) => setQuantidadeproduto_10(e.target.value)}
-              />{" "}
+              <input type="number" name="quantidadeProduto_10" className="form-control" onChange={(e) => setQuantidadeproduto_10(e.target.value)} />{" "}
             </div>
             <div className="field-size-2">
-              <input
-                type="text"
-                name="observacao_10"
-                className="form-control"
-                onChange={(e) => setObservacao_10(e.target.value)}
-              />{" "}
+              <input type="text" name="observacao_10" className="form-control" onChange={(e) => setObservacao_10(e.target.value)} />{" "}
             </div>
           </div>
           <div className="row">
             <div className="col-md-1 p-0">
-              <button
-                className="btn btn-primary my-2"
-                id="btnShowMoreLines"
-                onClick={showMoreLines}
-              >
+              <button className="btn btn-primary my-2" id="btnShowMoreLines" onClick={showMoreLines}>
                 <FiPlusCircle size="30" />
               </button>
             </div>
@@ -1295,650 +888,320 @@ export default function TransferenciaCreate() {
             {/*Line11*/}
             <div className="row">
               <div className="field-size-1">
-                <input
-                  type="text"
-                  name="filialOrigem_11"
-                  className="form-control"
-                  onChange={(e) => setFilialorigem_11(e.target.value)}
-                />
+                <input type="text" name="filialOrigem_11" className="form-control" onChange={(e) => setFilialorigem_11(e.target.value)} />
               </div>
               <div className="field-size-1">
-                <input
-                  type="text"
-                  name="notaFiscal_11"
-                  className="form-control"
-                  onChange={(e) => setNotafiscal_11(e.target.value)}
-                />
+                <input type="text" name="notaFiscal_11" className="form-control" onChange={(e) => setNotafiscal_11(e.target.value)} />
               </div>
               <div className="field-size-1">
-                <select
-                  name="tipoOperacao_11"
-                  className="form-control"
-                  onChange={(e) => setTipoOperacao_11(e.target.value)}
-                >
+                <select name="tipoOperacao_11" className="form-control" onChange={(e) => setTipoOperacao_11(e.target.value)}>
                   <option value="">Selecione</option>
                   {tipoOptions.map((option) => (
-                    <option value={option}>{option}</option>
+                    <option value={option} key={option}>
+                      {option}
+                    </option>
                   ))}
                 </select>
               </div>
               <div className="field-size-1">
-                <input
-                  type="text"
-                  name="codigo_11"
-                  className="form-control"
-                  onChange={(e) => setCodigo_11(e.target.value)}
-                />
+                <input type="text" name="codigo_11" className="form-control" onChange={(e) => setCodigo_11(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input
-                  type="text"
-                  name="descricaoProduto_11"
-                  className="form-control"
-                  maxLength="50"
-                  onChange={(e) => setDescricaoProduto_11(e.target.value)}
-                />
+                <input type="text" name="descricaoProduto_11" className="form-control" maxLength="50" onChange={(e) => setDescricaoProduto_11(e.target.value)} />
               </div>
               <div className="field-size-1">
-                <input
-                  type="number"
-                  name="quantidadeProduto_11"
-                  className="form-control"
-                  onChange={(e) => setQuantidadeproduto_11(e.target.value)}
-                />
+                <input type="number" name="quantidadeProduto_11" className="form-control" onChange={(e) => setQuantidadeproduto_11(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input
-                  type="text"
-                  name="observacao_11"
-                  className="form-control"
-                  onChange={(e) => setObservacao_11(e.target.value)}
-                />
+                <input type="text" name="observacao_11" className="form-control" onChange={(e) => setObservacao_11(e.target.value)} />
               </div>
             </div>
 
             {/*Line12*/}
             <div className="row">
               <div className="field-size-1">
-                <input
-                  type="text"
-                  name="filialOrigem_12"
-                  className="form-control"
-                  onChange={(e) => setFilialorigem_12(e.target.value)}
-                />
+                <input type="text" name="filialOrigem_12" className="form-control" onChange={(e) => setFilialorigem_12(e.target.value)} />
               </div>
               <div className="field-size-1">
-                <input
-                  type="text"
-                  name="notaFiscal_12"
-                  className="form-control"
-                  onChange={(e) => setNotafiscal_12(e.target.value)}
-                />
+                <input type="text" name="notaFiscal_12" className="form-control" onChange={(e) => setNotafiscal_12(e.target.value)} />
               </div>
               <div className="field-size-1">
-                <select
-                  name="tipoOperacao_12"
-                  className="form-control"
-                  onChange={(e) => setTipoOperacao_12(e.target.value)}
-                >
+                <select name="tipoOperacao_12" className="form-control" onChange={(e) => setTipoOperacao_12(e.target.value)}>
                   <option value="">Selecione</option>
                   {tipoOptions.map((option) => (
-                    <option value={option}>{option}</option>
+                    <option value={option} key={option}>
+                      {option}
+                    </option>
                   ))}
                 </select>
               </div>
               <div className="field-size-1">
-                <input
-                  type="text"
-                  name="codigo_12"
-                  className="form-control"
-                  onChange={(e) => setCodigo_12(e.target.value)}
-                />
+                <input type="text" name="codigo_12" className="form-control" onChange={(e) => setCodigo_12(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input
-                  type="text"
-                  name="descricaoProduto_12"
-                  className="form-control"
-                  maxLength="50"
-                  onChange={(e) => setDescricaoProduto_12(e.target.value)}
-                />
+                <input type="text" name="descricaoProduto_12" className="form-control" maxLength="50" onChange={(e) => setDescricaoProduto_12(e.target.value)} />
               </div>
               <div className="field-size-1">
-                <input
-                  type="number"
-                  name="quantidadeProduto_12"
-                  className="form-control"
-                  onChange={(e) => setQuantidadeproduto_12(e.target.value)}
-                />
+                <input type="number" name="quantidadeProduto_12" className="form-control" onChange={(e) => setQuantidadeproduto_12(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input
-                  type="text"
-                  name="observacao_12"
-                  className="form-control"
-                  onChange={(e) => setObservacao_12(e.target.value)}
-                />
+                <input type="text" name="observacao_12" className="form-control" onChange={(e) => setObservacao_12(e.target.value)} />
               </div>
             </div>
 
             {/*Line13*/}
             <div className="row">
               <div className="field-size-1">
-                <input
-                  type="text"
-                  name="filialOrigem_13"
-                  className="form-control"
-                  onChange={(e) => setFilialorigem_13(e.target.value)}
-                />
+                <input type="text" name="filialOrigem_13" className="form-control" onChange={(e) => setFilialorigem_13(e.target.value)} />
               </div>
               <div className="field-size-1">
-                <input
-                  type="text"
-                  name="notaFiscal_13"
-                  className="form-control"
-                  onChange={(e) => setNotafiscal_13(e.target.value)}
-                />
+                <input type="text" name="notaFiscal_13" className="form-control" onChange={(e) => setNotafiscal_13(e.target.value)} />
               </div>
               <div className="field-size-1">
-                <select
-                  name="tipoOperacao_13"
-                  className="form-control"
-                  onChange={(e) => setTipoOperacao_13(e.target.value)}
-                >
+                <select name="tipoOperacao_13" className="form-control" onChange={(e) => setTipoOperacao_13(e.target.value)}>
                   <option value="">Selecione</option>
                   {tipoOptions.map((option) => (
-                    <option value={option}>{option}</option>
+                    <option value={option} key={option}>
+                      {option}
+                    </option>
                   ))}
                 </select>
               </div>
               <div className="field-size-1">
-                <input
-                  type="text"
-                  name="codigo_13"
-                  className="form-control"
-                  onChange={(e) => setCodigo_13(e.target.value)}
-                />
+                <input type="text" name="codigo_13" className="form-control" onChange={(e) => setCodigo_13(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input
-                  type="text"
-                  name="descricaoProduto_13"
-                  className="form-control"
-                  maxLength="50"
-                  onChange={(e) => setDescricaoProduto_13(e.target.value)}
-                />
+                <input type="text" name="descricaoProduto_13" className="form-control" maxLength="50" onChange={(e) => setDescricaoProduto_13(e.target.value)} />
               </div>
               <div className="field-size-1">
-                <input
-                  type="number"
-                  name="quantidadeProduto_13"
-                  className="form-control"
-                  onChange={(e) => setQuantidadeproduto_13(e.target.value)}
-                />
+                <input type="number" name="quantidadeProduto_13" className="form-control" onChange={(e) => setQuantidadeproduto_13(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input
-                  type="text"
-                  name="observacao_13"
-                  className="form-control"
-                  onChange={(e) => setObservacao_13(e.target.value)}
-                />
+                <input type="text" name="observacao_13" className="form-control" onChange={(e) => setObservacao_13(e.target.value)} />
               </div>
             </div>
 
             {/*Line14*/}
             <div className="row">
               <div className="field-size-1">
-                <input
-                  type="text"
-                  name="filialOrigem_14"
-                  className="form-control"
-                  onChange={(e) => setFilialorigem_14(e.target.value)}
-                />
+                <input type="text" name="filialOrigem_14" className="form-control" onChange={(e) => setFilialorigem_14(e.target.value)} />
               </div>
               <div className="field-size-1">
-                <input
-                  type="text"
-                  name="notaFiscal_14"
-                  className="form-control"
-                  onChange={(e) => setNotafiscal_14(e.target.value)}
-                />
+                <input type="text" name="notaFiscal_14" className="form-control" onChange={(e) => setNotafiscal_14(e.target.value)} />
               </div>
               <div className="field-size-1">
-                <select
-                  name="tipoOperacao_14"
-                  className="form-control"
-                  onChange={(e) => setTipoOperacao_14(e.target.value)}
-                >
+                <select name="tipoOperacao_14" className="form-control" onChange={(e) => setTipoOperacao_14(e.target.value)}>
                   <option value="">Selecione</option>
                   {tipoOptions.map((option) => (
-                    <option value={option}>{option}</option>
+                    <option value={option} key={option}>
+                      {option}
+                    </option>
                   ))}
                 </select>
               </div>
               <div className="field-size-1">
-                <input
-                  type="text"
-                  name="codigo_14"
-                  className="form-control"
-                  onChange={(e) => setCodigo_14(e.target.value)}
-                />
+                <input type="text" name="codigo_14" className="form-control" onChange={(e) => setCodigo_14(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input
-                  type="text"
-                  name="descricaoProduto_14"
-                  className="form-control"
-                  maxLength="50"
-                  onChange={(e) => setDescricaoProduto_14(e.target.value)}
-                />
+                <input type="text" name="descricaoProduto_14" className="form-control" maxLength="50" onChange={(e) => setDescricaoProduto_14(e.target.value)} />
               </div>
               <div className="field-size-1">
-                <input
-                  type="number"
-                  name="quantidadeProduto_14"
-                  className="form-control"
-                  onChange={(e) => setQuantidadeproduto_14(e.target.value)}
-                />
+                <input type="number" name="quantidadeProduto_14" className="form-control" onChange={(e) => setQuantidadeproduto_14(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input
-                  type="text"
-                  name="observacao_14"
-                  className="form-control"
-                  onChange={(e) => setObservacao_14(e.target.value)}
-                />
+                <input type="text" name="observacao_14" className="form-control" onChange={(e) => setObservacao_14(e.target.value)} />
               </div>
             </div>
 
             {/*Line15*/}
             <div className="row">
               <div className="field-size-1">
-                <input
-                  type="text"
-                  name="filialOrigem_15"
-                  className="form-control"
-                  onChange={(e) => setFilialorigem_15(e.target.value)}
-                />
+                <input type="text" name="filialOrigem_15" className="form-control" onChange={(e) => setFilialorigem_15(e.target.value)} />
               </div>
               <div className="field-size-1">
-                <input
-                  type="text"
-                  name="notaFiscal_15"
-                  className="form-control"
-                  onChange={(e) => setNotafiscal_15(e.target.value)}
-                />
+                <input type="text" name="notaFiscal_15" className="form-control" onChange={(e) => setNotafiscal_15(e.target.value)} />
               </div>
               <div className="field-size-1">
-                <select
-                  name="tipoOperacao_15"
-                  className="form-control"
-                  onChange={(e) => setTipoOperacao_15(e.target.value)}
-                >
+                <select name="tipoOperacao_15" className="form-control" onChange={(e) => setTipoOperacao_15(e.target.value)}>
                   <option value="">Selecione</option>
                   {tipoOptions.map((option) => (
-                    <option value={option}>{option}</option>
+                    <option value={option} key={option}>
+                      {option}
+                    </option>
                   ))}
                 </select>
               </div>
               <div className="field-size-1">
-                <input
-                  type="text"
-                  name="codigo_15"
-                  className="form-control"
-                  onChange={(e) => setCodigo_15(e.target.value)}
-                />
+                <input type="text" name="codigo_15" className="form-control" onChange={(e) => setCodigo_15(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input
-                  type="text"
-                  name="descricaoProduto_15"
-                  className="form-control"
-                  maxLength="50"
-                  onChange={(e) => setDescricaoProduto_15(e.target.value)}
-                />
+                <input type="text" name="descricaoProduto_15" className="form-control" maxLength="50" onChange={(e) => setDescricaoProduto_15(e.target.value)} />
               </div>
               <div className="field-size-1">
-                <input
-                  type="number"
-                  name="quantidadeProduto_15"
-                  className="form-control"
-                  onChange={(e) => setQuantidadeproduto_15(e.target.value)}
-                />
+                <input type="number" name="quantidadeProduto_15" className="form-control" onChange={(e) => setQuantidadeproduto_15(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input
-                  type="text"
-                  name="observacao_15"
-                  className="form-control"
-                  onChange={(e) => setObservacao_15(e.target.value)}
-                />
+                <input type="text" name="observacao_15" className="form-control" onChange={(e) => setObservacao_15(e.target.value)} />
               </div>
             </div>
 
             {/*Line16*/}
             <div className="row">
               <div className="field-size-1">
-                <input
-                  type="text"
-                  name="filialOrigem_16"
-                  className="form-control"
-                  onChange={(e) => setFilialorigem_16(e.target.value)}
-                />
+                <input type="text" name="filialOrigem_16" className="form-control" onChange={(e) => setFilialorigem_16(e.target.value)} />
               </div>
               <div className="field-size-1">
-                <input
-                  type="text"
-                  name="notaFiscal_16"
-                  className="form-control"
-                  onChange={(e) => setNotafiscal_16(e.target.value)}
-                />
+                <input type="text" name="notaFiscal_16" className="form-control" onChange={(e) => setNotafiscal_16(e.target.value)} />
               </div>
               <div className="field-size-1">
-                <select
-                  name="tipoOperacao_16"
-                  className="form-control"
-                  onChange={(e) => setTipoOperacao_16(e.target.value)}
-                >
+                <select name="tipoOperacao_16" className="form-control" onChange={(e) => setTipoOperacao_16(e.target.value)}>
                   <option value="">Selecione</option>
                   {tipoOptions.map((option) => (
-                    <option value={option}>{option}</option>
+                    <option value={option} key={option}>
+                      {option}
+                    </option>
                   ))}
                 </select>
               </div>
               <div className="field-size-1">
-                <input
-                  type="text"
-                  name="codigo_16"
-                  className="form-control"
-                  onChange={(e) => setCodigo_16(e.target.value)}
-                />
+                <input type="text" name="codigo_16" className="form-control" onChange={(e) => setCodigo_16(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input
-                  type="text"
-                  name="descricaoProduto_16"
-                  className="form-control"
-                  maxLength="50"
-                  onChange={(e) => setDescricaoProduto_16(e.target.value)}
-                />
+                <input type="text" name="descricaoProduto_16" className="form-control" maxLength="50" onChange={(e) => setDescricaoProduto_16(e.target.value)} />
               </div>
               <div className="field-size-1">
-                <input
-                  type="number"
-                  name="quantidadeProduto_16"
-                  className="form-control"
-                  onChange={(e) => setQuantidadeproduto_16(e.target.value)}
-                />
+                <input type="number" name="quantidadeProduto_16" className="form-control" onChange={(e) => setQuantidadeproduto_16(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input
-                  type="text"
-                  name="observacao_16"
-                  className="form-control"
-                  onChange={(e) => setObservacao_16(e.target.value)}
-                />
+                <input type="text" name="observacao_16" className="form-control" onChange={(e) => setObservacao_16(e.target.value)} />
               </div>
             </div>
 
             {/*Line17*/}
             <div className="row">
               <div className="field-size-1">
-                <input
-                  type="text"
-                  name="filialOrigem_17"
-                  className="form-control"
-                  onChange={(e) => setFilialorigem_17(e.target.value)}
-                />
+                <input type="text" name="filialOrigem_17" className="form-control" onChange={(e) => setFilialorigem_17(e.target.value)} />
               </div>
               <div className="field-size-1">
-                <input
-                  type="text"
-                  name="notaFiscal_17"
-                  className="form-control"
-                  onChange={(e) => setNotafiscal_17(e.target.value)}
-                />
+                <input type="text" name="notaFiscal_17" className="form-control" onChange={(e) => setNotafiscal_17(e.target.value)} />
               </div>
               <div className="field-size-1">
-                <select
-                  name="tipoOperacao_17"
-                  className="form-control"
-                  onChange={(e) => setTipoOperacao_17(e.target.value)}
-                >
+                <select name="tipoOperacao_17" className="form-control" onChange={(e) => setTipoOperacao_17(e.target.value)}>
                   <option value="">Selecione</option>
                   {tipoOptions.map((option) => (
-                    <option value={option}>{option}</option>
+                    <option value={option} key={option}>
+                      {option}
+                    </option>
                   ))}
                 </select>
               </div>
               <div className="field-size-1">
-                <input
-                  type="text"
-                  name="codigo_17"
-                  className="form-control"
-                  onChange={(e) => setCodigo_17(e.target.value)}
-                />
+                <input type="text" name="codigo_17" className="form-control" onChange={(e) => setCodigo_17(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input
-                  type="text"
-                  name="descricaoProduto_17"
-                  className="form-control"
-                  maxLength="50"
-                  onChange={(e) => setDescricaoProduto_17(e.target.value)}
-                />
+                <input type="text" name="descricaoProduto_17" className="form-control" maxLength="50" onChange={(e) => setDescricaoProduto_17(e.target.value)} />
               </div>
               <div className="field-size-1">
-                <input
-                  type="number"
-                  name="quantidadeProduto_17"
-                  className="form-control"
-                  onChange={(e) => setQuantidadeproduto_17(e.target.value)}
-                />
+                <input type="number" name="quantidadeProduto_17" className="form-control" onChange={(e) => setQuantidadeproduto_17(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input
-                  type="text"
-                  name="observacao_17"
-                  className="form-control"
-                  onChange={(e) => setObservacao_17(e.target.value)}
-                />
+                <input type="text" name="observacao_17" className="form-control" onChange={(e) => setObservacao_17(e.target.value)} />
               </div>
             </div>
 
             {/*Line18*/}
             <div className="row">
               <div className="field-size-1">
-                <input
-                  type="text"
-                  name="filialOrigem_18"
-                  className="form-control"
-                  onChange={(e) => setFilialorigem_18(e.target.value)}
-                />
+                <input type="text" name="filialOrigem_18" className="form-control" onChange={(e) => setFilialorigem_18(e.target.value)} />
               </div>
               <div className="field-size-1">
-                <input
-                  type="text"
-                  name="notaFiscal_18"
-                  className="form-control"
-                  onChange={(e) => setNotafiscal_18(e.target.value)}
-                />
+                <input type="text" name="notaFiscal_18" className="form-control" onChange={(e) => setNotafiscal_18(e.target.value)} />
               </div>
               <div className="field-size-1">
-                <select
-                  name="tipoOperacao_18"
-                  className="form-control"
-                  onChange={(e) => setTipoOperacao_18(e.target.value)}
-                >
+                <select name="tipoOperacao_18" className="form-control" onChange={(e) => setTipoOperacao_18(e.target.value)}>
                   <option value="">Selecione</option>
                   {tipoOptions.map((option) => (
-                    <option value={option}>{option}</option>
+                    <option value={option} key={option}>
+                      {option}
+                    </option>
                   ))}
                 </select>
               </div>
               <div className="field-size-1">
-                <input
-                  type="text"
-                  name="codigo_18"
-                  className="form-control"
-                  onChange={(e) => setCodigo_18(e.target.value)}
-                />
+                <input type="text" name="codigo_18" className="form-control" onChange={(e) => setCodigo_18(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input
-                  type="text"
-                  name="descricaoProduto_18"
-                  className="form-control"
-                  maxLength="50"
-                  onChange={(e) => setDescricaoProduto_18(e.target.value)}
-                />
+                <input type="text" name="descricaoProduto_18" className="form-control" maxLength="50" onChange={(e) => setDescricaoProduto_18(e.target.value)} />
               </div>
               <div className="field-size-1">
-                <input
-                  type="number"
-                  name="quantidadeProduto_18"
-                  className="form-control"
-                  onChange={(e) => setQuantidadeproduto_18(e.target.value)}
-                />
+                <input type="number" name="quantidadeProduto_18" className="form-control" onChange={(e) => setQuantidadeproduto_18(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input
-                  type="text"
-                  name="observacao_18"
-                  className="form-control"
-                  onChange={(e) => setObservacao_18(e.target.value)}
-                />
+                <input type="text" name="observacao_18" className="form-control" onChange={(e) => setObservacao_18(e.target.value)} />
               </div>
             </div>
 
             {/*Line19*/}
             <div className="row">
               <div className="field-size-1">
-                <input
-                  type="text"
-                  name="filialOrigem_19"
-                  className="form-control"
-                  onChange={(e) => setFilialorigem_19(e.target.value)}
-                />
+                <input type="text" name="filialOrigem_19" className="form-control" onChange={(e) => setFilialorigem_19(e.target.value)} />
               </div>
               <div className="field-size-1">
-                <input
-                  type="text"
-                  name="notaFiscal_19"
-                  className="form-control"
-                  onChange={(e) => setNotafiscal_19(e.target.value)}
-                />
+                <input type="text" name="notaFiscal_19" className="form-control" onChange={(e) => setNotafiscal_19(e.target.value)} />
               </div>
               <div className="field-size-1">
-                <select
-                  name="tipoOperacao_19"
-                  className="form-control"
-                  onChange={(e) => setTipoOperacao_19(e.target.value)}
-                >
+                <select name="tipoOperacao_19" className="form-control" onChange={(e) => setTipoOperacao_19(e.target.value)}>
                   <option value="">Selecione</option>
                   {tipoOptions.map((option) => (
-                    <option value={option}>{option}</option>
+                    <option value={option} key={option}>
+                      {option}
+                    </option>
                   ))}
                 </select>
               </div>
               <div className="field-size-1">
-                <input
-                  type="text"
-                  name="codigo_19"
-                  className="form-control"
-                  onChange={(e) => setCodigo_19(e.target.value)}
-                />
+                <input type="text" name="codigo_19" className="form-control" onChange={(e) => setCodigo_19(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input
-                  type="text"
-                  name="descricaoProduto_19"
-                  className="form-control"
-                  maxLength="50"
-                  onChange={(e) => setDescricaoProduto_19(e.target.value)}
-                />
+                <input type="text" name="descricaoProduto_19" className="form-control" maxLength="50" onChange={(e) => setDescricaoProduto_19(e.target.value)} />
               </div>
               <div className="field-size-1">
-                <input
-                  type="number"
-                  name="quantidadeProduto_19"
-                  className="form-control"
-                  onChange={(e) => setQuantidadeproduto_19(e.target.value)}
-                />
+                <input type="number" name="quantidadeProduto_19" className="form-control" onChange={(e) => setQuantidadeproduto_19(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input
-                  type="text"
-                  name="observacao_19"
-                  className="form-control"
-                  onChange={(e) => setObservacao_19(e.target.value)}
-                />
+                <input type="text" name="observacao_19" className="form-control" onChange={(e) => setObservacao_19(e.target.value)} />
               </div>
             </div>
 
             {/*Line20*/}
             <div className="row">
               <div className="field-size-1">
-                <input
-                  type="text"
-                  name="filialOrigem_20"
-                  className="form-control"
-                  onChange={(e) => setFilialorigem_20(e.target.value)}
-                />
+                <input type="text" name="filialOrigem_20" className="form-control" onChange={(e) => setFilialorigem_20(e.target.value)} />
               </div>
               <div className="field-size-1">
-                <input
-                  type="text"
-                  name="notaFiscal_20"
-                  className="form-control"
-                  onChange={(e) => setNotafiscal_20(e.target.value)}
-                />
+                <input type="text" name="notaFiscal_20" className="form-control" onChange={(e) => setNotafiscal_20(e.target.value)} />
               </div>
               <div className="field-size-1">
-                <select
-                  name="tipoOperacao_20"
-                  className="form-control"
-                  onChange={(e) => setTipoOperacao_20(e.target.value)}
-                >
+                <select name="tipoOperacao_20" className="form-control" onChange={(e) => setTipoOperacao_20(e.target.value)}>
                   <option value="">Selecione</option>
                   {tipoOptions.map((option) => (
-                    <option value={option}>{option}</option>
+                    <option value={option} key={option}>
+                      {option}
+                    </option>
                   ))}
                 </select>
               </div>
               <div className="field-size-1">
-                <input
-                  type="text"
-                  name="codigo_20"
-                  className="form-control"
-                  onChange={(e) => setCodigo_20(e.target.value)}
-                />
+                <input type="text" name="codigo_20" className="form-control" onChange={(e) => setCodigo_20(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input
-                  type="text"
-                  name="descricaoProduto_20"
-                  className="form-control"
-                  maxLength="50"
-                  onChange={(e) => setDescricaoProduto_20(e.target.value)}
-                />
+                <input type="text" name="descricaoProduto_20" className="form-control" maxLength="50" onChange={(e) => setDescricaoProduto_20(e.target.value)} />
               </div>
               <div className="field-size-1">
-                <input
-                  type="number"
-                  name="quantidadeProduto_20"
-                  className="form-control"
-                  onChange={(e) => setQuantidadeproduto_20(e.target.value)}
-                />
+                <input type="number" name="quantidadeProduto_20" className="form-control" onChange={(e) => setQuantidadeproduto_20(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input
-                  type="text"
-                  name="observacao_20"
-                  className="form-control"
-                  onChange={(e) => setObservacao_20(e.target.value)}
-                />
+                <input type="text" name="observacao_20" className="form-control" onChange={(e) => setObservacao_20(e.target.value)} />
               </div>
             </div>
 

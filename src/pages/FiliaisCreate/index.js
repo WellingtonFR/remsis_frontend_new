@@ -5,25 +5,36 @@ import UseLoader from "../../hooks/UseLoader";
 
 export default function FiliaisCreate() {
   const [loader, showLoader, hideLoader] = UseLoader();
-  const [numeroFilial, setNumeroFilial] = useState("");
-  const [endereco, setEndereco] = useState("");
-  const [numeroEndereco, setNumeroEndereco] = useState("");
-  const [complemento, setComplemento] = useState("");
-  const [cidade, setCidade] = useState("");
-  const [estado, setEstado] = useState("");
-  const [nomeFantasia, setNomeFantasia] = useState("");
+
+  const [values, setValues] = useState({
+    numeroFilial: "",
+    endereco: "",
+    numeroEndereco: "",
+    complemento: "",
+    cidade: "",
+    estado: "",
+    nomeFantasia: "",
+  });
+
+  const handleChange = (event) => {
+    const value = event.target.value;
+    setValues({
+      ...values,
+      [event.target.name]: value,
+    });
+  };
 
   async function handleNewFilial(e) {
     e.preventDefault();
 
     const data = {
-      numeroFilial,
-      endereco,
-      numeroEndereco,
-      complemento,
-      cidade,
-      estado,
-      nomeFantasia,
+      numeroFilial: values.numeroFilial,
+      endereco: values.endereco,
+      numeroEndereco: values.numeroEndereco,
+      complemento: values.complemento,
+      cidade: values.cidade,
+      estado: values.estado,
+      nomeFantasia: values.nomeFantasia,
     };
 
     try {
@@ -56,69 +67,33 @@ export default function FiliaisCreate() {
           <hr />
           <div className="form-group">
             <label htmlFor="numeroFilial">Número da filial</label>
-            <input
-              type="number"
-              name="numeroFilial"
-              className="form-control"
-              maxLength="6"
-              required
-              onChange={(e) => setNumeroFilial(e.target.value)}
-            ></input>
+            <input type="number" name="numeroFilial" className="form-control" maxLength="6" required onChange={handleChange}></input>
           </div>
 
           <div className="form-row">
             <div className="form-group col-md-9">
               <label htmlFor="endereco">Endereço</label>
-              <input
-                type="text"
-                name="endereco"
-                className="form-control"
-                required
-                maxLength="70"
-                onChange={(e) => setEndereco(e.target.value)}
-              ></input>
+              <input type="text" name="endereco" className="form-control" required maxLength="70" onChange={handleChange}></input>
             </div>
             <div className="form-group col-md-3">
               <label htmlFor="numeroEndereco">Número</label>
-              <input
-                type="number"
-                name="numeroEndereco"
-                className="form-control"
-                required
-                onChange={(e) => setNumeroEndereco(e.target.value)}
-              ></input>
+              <input type="number" name="numeroEndereco" className="form-control" required onChange={handleChange}></input>
             </div>
           </div>
 
           <div className="form-group">
             <label htmlFor="complemento">Complemento</label>
-            <input
-              type="text"
-              name="complemento"
-              className="form-control"
-              onChange={(e) => setComplemento(e.target.value)}
-            ></input>
+            <input type="text" name="complemento" className="form-control" onChange={handleChange}></input>
           </div>
 
           <div className="form-group">
             <label htmlFor="cidade">Cidade</label>
-            <input
-              type="text"
-              name="cidade"
-              className="form-control"
-              required
-              onChange={(e) => setCidade(e.target.value)}
-            ></input>
+            <input type="text" name="cidade" className="form-control" required onChange={handleChange}></input>
           </div>
 
           <div className="form-group">
             <label htmlFor="estado">Estado</label>
-            <select
-              name="estado"
-              className="form-control"
-              required
-              onChange={(e) => setEstado(e.target.value)}
-            >
+            <select name="estado" className="form-control" required onChange={handleChange}>
               <option value="">Selecione</option>
               <option value="AC">Acre</option>
               <option value="AL">Alagoas</option>
@@ -151,15 +126,7 @@ export default function FiliaisCreate() {
           </div>
           <div className="form-group">
             <label htmlFor="nomeFantasia">Nome Fantasia</label>
-            <input
-              type="text"
-              name="nomeFantasia"
-              className="form-control"
-              placeholder="Exemplo: LD182"
-              maxLength="20"
-              required
-              onChange={(e) => setNomeFantasia(e.target.value)}
-            ></input>
+            <input type="text" name="nomeFantasia" className="form-control" placeholder="Exemplo: LD182" maxLength="20" required onChange={handleChange}></input>
 
             <div className="div-btn-form-submit">
               <button type="submit" className="btn btn-primary btn-form-submit">
