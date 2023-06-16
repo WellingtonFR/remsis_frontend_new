@@ -33,52 +33,45 @@ export default function TransferenciaUpdate() {
     populateData();
   }, []);
 
-  async function populateData() {
-    showLoader();
-    await api.get(`/transferencia/findById/${id}`).then((response) => {
-      hideLoader();
-      setTransferencia(response.data[0]);
-      api
-        .get(
-          `/transportador/findByFilialAtendida/${response.data[0].filialDestino}`
-        )
-        .then((response) => {
-          hideLoader();
-          setTransportadores(response.data);
-        });
-    });
-    fetchDataToOptions();
-  }
-
-  async function fetchDataToOptions() {
-    showLoader();
-    await api.get("transportador").then((response) => {
-      setTransportadores(response.data);
-    });
-    await api.get("conferente").then((response) => {
-      hideLoader();
-      setConferentes(response.data);
-    });
-  }
-
   async function handleTransportador(optionValue) {
-    if (!optionValue || optionValue == "") {
+    if (!optionValue || optionValue === "") {
       setPlacaVeiculo("");
       setTransportador("");
       return null;
     }
     showLoader();
     await api.get(`/transportador/findById/${optionValue}`).then((response) => {
-      hideLoader();
       setPlacaVeiculo(response.data[0].placaVeiculo);
       setTransportador(response.data[0].nomeTransportador);
     });
+    hideLoader();
   }
 
   const handleInputChange = (e) => {
     e.persist();
     setTransferencia({ ...transferencia, [e.target.name]: e.target.value });
   };
+
+  async function populateData() {
+    showLoader();
+    await api.get(`/transferencia/findById/${id}`).then((response) => {
+      setTransferencia(response.data[0]);
+      api
+        .get(
+          `/transportador/findByFilialAtendida/${response.data[0].filialDestino}`
+        )
+        .then((response) => {
+          setTransportadores(response.data);
+        });
+    });
+    await api.get("transportador").then((response) => {
+      setTransportadores(response.data);
+    });
+    await api.get("conferente").then((response) => {
+      setConferentes(response.data);
+    });
+    hideLoader();
+  }
 
   async function handleNewTransferencia(e) {
     e.preventDefault();
@@ -395,19 +388,13 @@ export default function TransferenciaUpdate() {
           </div>
 
           <div className="">
-            <Link
-              to="/transferencia"
-              className="btn btn-dark btn-cancel"
-            >
+            <Link to="/transferencia" className="btn btn-dark btn-cancel">
               Cancelar
             </Link>
           </div>
 
           <div className="">
-            <button
-              type="submit"
-              className="btn btn-primary btn-submit"
-            >
+            <button type="submit" className="btn btn-primary btn-submit">
               Salvar
             </button>
           </div>

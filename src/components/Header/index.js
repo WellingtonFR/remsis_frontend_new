@@ -38,7 +38,6 @@ export default function Header() {
           <div className="collapse navbar-collapse" id="navbarNav">
             {isLoggedIn === "true" && (
               <ul className="navbar-nav mr-auto">
-
                 <li className="nav-item">
                   <Link to="/entrada/create" className="nav-link">
                     ENTRADA <span className="sr-only">(current)</span>
@@ -70,7 +69,7 @@ export default function Header() {
                     <Link to="#" className="dropdown-item">
                       Estoque
                     </Link>
-                    <Link to="#" className="dropdown-item">
+                    <Link to="/entrada" className="dropdown-item">
                       Entrada
                     </Link>
                     <Link to="/transferencia" className="dropdown-item">
@@ -115,10 +114,12 @@ export default function Header() {
                     </Link>
                   </div>
                 </li>
-
               </ul>
             )}
-            <button className="btn btn-primary btn-login" onClick={handleLogout}>
+            <button
+              className="btn btn-primary btn-login"
+              onClick={handleLogout}
+            >
               SAIR
             </button>
           </div>

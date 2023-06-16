@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import $ from "jquery";
+// eslint-disable-next-line
+import styles from "./styles.css";
 import api from "../../services/api";
 import Swal from "sweetalert2";
 import { FiTrash2, FiEdit, FiArrowUp, FiPrinter } from "react-icons/fi";
 import UseLoader from "../../hooks/UseLoader";
 
-export default function TransferenciaIndex() {
+export default function EntradaIndex() {
   const [loader, showLoader, hideLoader] = UseLoader();
-  const [transferencias, setTransferencias] = useState([]);
+  const [entrada, setEntrada] = useState([]);
   const [initialDate, setInitialDate] = useState("");
   const [finalDate, setFinalDate] = useState("");
-  const [numeroControle, setNumeroControle] = useState("");
+  const [filialOrigem, setFilialOrigem] = useState("");
   const [filialDestino, setFilialDestino] = useState("");
 
   useEffect(() => {
@@ -22,15 +24,15 @@ export default function TransferenciaIndex() {
     const data = {
       initialDate: new Date().toLocaleDateString("pt-br"),
       finalDate: new Date().toLocaleDateString("pt-br"),
-      numeroControle: numeroControle,
+      filialOrigem: filialOrigem,
       filialDestino: filialDestino,
     };
-    showLoader();
     try {
-      await api.post("/transferencia/search", data).then((response) => {
-        setTransferencias(response.data);
+      showLoader();
+      await api.post("/entrada/search", data).then((response) => {
+        setEntrada(response.data);
+        hideLoader();
       });
-      hideLoader();
     } catch (err) {
       hideLoader();
       const { data } = err.response;
@@ -49,21 +51,11 @@ export default function TransferenciaIndex() {
     const data = {
       initialDate: initialDate,
       finalDate: finalDate,
-      numeroControle: numeroControle,
       filialDestino: filialDestino,
+      filialOrigem: filialOrigem,
     };
 
-    if (initialDate === "" && numeroControle === "") {
-      Swal.fire({
-        title: "Atenção",
-        text: "É necessário preencher a data inicial e final",
-        icon: "info",
-        confirmButtonText: "Voltar",
-      });
-      return;
-    }
-
-    if (numeroControle !== "" && initialDate === "" && numeroControle === "") {
+    if (initialDate === "" && finalDate === "") {
       Swal.fire({
         title: "Atenção",
         text: "É necessário preencher a data inicial e final",
@@ -75,10 +67,10 @@ export default function TransferenciaIndex() {
 
     try {
       showLoader();
-      await api.post("/transferencia/search", data).then((response) => {
-        setTransferencias(response.data);
-        hideLoader();
+      await api.post("/entrada/search", data).then((response) => {
+        setEntrada(response.data);
       });
+      hideLoader();
     } catch (err) {
       hideLoader();
       const { data } = err.response;
@@ -91,7 +83,7 @@ export default function TransferenciaIndex() {
     }
   }
 
-  async function excluirtransferencia(id) {
+  async function excluirEntrada(id) {
     try {
       const { value: userConfirmAction } = await Swal.fire({
         title: "Deseja excluir essa transferência ?",
@@ -103,7 +95,7 @@ export default function TransferenciaIndex() {
         confirmButtonColor: "#af0600",
       });
       if (userConfirmAction) {
-        await api.delete(`/transferencia/delete/${id}`).then(() => {
+        await api.delete(`/entrada/delete/${id}`).then(() => {
           Swal.fire({
             title: "Transferência excluída com sucesso",
             icon: "success",
@@ -157,7 +149,7 @@ export default function TransferenciaIndex() {
   }
 
   return (
-    <div className="lista-transferencias">
+    <div className="lista-entrada">
       <div className="top-search">
         <form onSubmit={handleSearch}>
           <div className="form-inline">
@@ -187,15 +179,14 @@ export default function TransferenciaIndex() {
               />
             </div>
             <div className="input-group">
-              <label htmlFor="numeroControle" className="ml-1 mr-2">
-                Nº controle
+              <label htmlFor="filialOrigem" className="ml-1 mr-2">
+                Filial origem
               </label>
               <input
                 type="text"
-                name="numeroControle"
-                maxLength="10"
+                name="filialOrigem"
                 className="form-control"
-                onChange={(e) => setNumeroControle(e.target.value)}
+                onChange={(e) => setFilialOrigem(e.target.value)}
               ></input>
             </div>
             <div className="input-group">
@@ -224,36 +215,31 @@ export default function TransferenciaIndex() {
         <thead>
           <tr>
             <th>Data</th>
-            <th>Nº Controle</th>
+            <th>Filial origem</th>
             <th>Filial destino</th>
-            <th>Transportador</th>
             <th colSpan="2" style={{ textAlign: "center" }}>
               Opções
             </th>
           </tr>
         </thead>
         <tbody>
-          {transferencias.length === 0 ? (
+          {entrada.length === 0 ? (
             <tr>
               <td>Não há informações para exibir</td>
             </tr>
           ) : (
-            transferencias.map((transferencia) => (
-              <tr key={transferencia.id}>
-                <td>{transferencia.dataAtual}</td>
-                <td>{transferencia.numeroControle}</td>
-                <td>{transferencia.filialDestino}</td>
-                <td>{transferencia.transportador}</td>
+            entrada.map((entrada) => (
+              <tr key={entrada.id}>
+                <td>{entrada.dataAtual}</td>
+                <td>{entrada.filialOrigem}</td>
+                <td>{entrada.filialDestino}</td>
                 <td className="form-buttons">
-                  <Link to={`/transferencia/report/${transferencia.id}`}>
-                    <FiPrinter className="btn-icon-custom btn-icon-imprimir mr-2 mt-1" />
-                  </Link>
-                  <Link to={`/transferencia/update/${transferencia.id}`}>
+                  <Link to={`/entrada/update/${entrada.id}`}>
                     <FiEdit className="btn-icon-custom btn-icon-alterar mr-2 mt-1" />
                   </Link>
                   <FiTrash2
                     className="btn-icon-custom btn-icon-excluir mt-1"
-                    onClick={() => excluirtransferencia(transferencia.id)}
+                    onClick={() => excluirEntrada(entrada.id)}
                   />
                 </td>
               </tr>

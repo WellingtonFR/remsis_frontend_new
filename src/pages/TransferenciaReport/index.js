@@ -22,7 +22,7 @@ export default function TransferenciaReport() {
 
   async function populateData() {
     showLoader();
-    api.get(`/transferencia/findById/${id}`).then((response) => {
+    await api.get(`/transferencia/findById/${id}`).then((response) => {
       hideLoader();
       setReport(response.data[0]);
     });

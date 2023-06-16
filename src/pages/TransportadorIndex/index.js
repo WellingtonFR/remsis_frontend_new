@@ -9,7 +9,6 @@ import UseLoader from "../../hooks/UseLoader";
 export default function TransportadorIndex() {
   const [loader, showLoader, hideLoader] = UseLoader();
   const [transportador, setTransportador] = useState([]);
-  const [filialAtendida, setFilialAtendida] = useState([]);
 
   useEffect(() => {
     populateData();
@@ -120,9 +119,7 @@ export default function TransportadorIndex() {
                   </Link>
                   <FiTrash2
                     className="btn-icon-custom btn-icon-excluir mt-1"
-                    onClick={() =>
-                      excluirTransportador(`${transportador.id}`)
-                    }
+                    onClick={() => excluirTransportador(`${transportador.id}`)}
                   />
                 </td>
               </tr>
@@ -134,6 +131,6 @@ export default function TransportadorIndex() {
         <FiArrowUp />
       </div>
       {loader}
-    </div >
+    </div>
   );
 }

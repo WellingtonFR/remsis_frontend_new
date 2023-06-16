@@ -18,10 +18,10 @@ import ConferenteCreate from "../pages/ConferenteCreate";
 import Login from "../pages/Login";
 import NotFoundPage from "../pages/NotFoundPage";
 import EntradaCreate from "../pages/EntradaCreate";
+import EntradaIndex from "../pages/EntradaIndex";
 
 export default function Routes() {
   const token = localStorage.getItem("token");
-  let currentDate = new Date();
   const isAuthenticated = () => token !== "";
 
   const PrivateRoute = ({ component: Component, ...rest }) => (
@@ -71,7 +71,7 @@ export default function Routes() {
           />
 
           {/*Entrada */}
-          {/* <PrivateRoute exact path="/entrada" component={TransferenciaIndex} /> */}
+          <PrivateRoute exact path="/entrada" component={EntradaIndex} />
           <PrivateRoute path="/entrada/create" component={EntradaCreate} />
           {/* <PrivateRoute path="/transferencia/update/:id" component={TransferenciaUpdate} /> */}
           {/* <PrivateRoute path="/transferencia/report/:id" component={TransferenciaReport} /> */}
