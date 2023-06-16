@@ -9,7 +9,7 @@ export default function TransferenciaCreate() {
   //#region useState
   const [filiais, setFiliais] = useState([]); //Preenche o option com as filiais
   //Parte superior do formulário
-  const [dataAtual] = useState(new Date().toLocaleDateString("pt-br") + " " + new Date().toLocaleTimeString("pt-br"));
+  const [dataAtual] = useState(new Date().toLocaleDateString("pt-br"));
   const [numeroControle] = useState(generateId(10));
   const [filialDestino, setFilialDestino] = useState("");
   const [nomeFilialDestino, setNomeFilialDestino] = useState("");

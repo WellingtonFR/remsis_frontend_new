@@ -59,14 +59,7 @@ body {
   width: 100wh;
   height: 100vh;
   color: #fff;
-  background: -webkit-gradient(
-    linear,
-    left top,
-    right top,
-    from(#0083ca),
-    color-stop(#8e2073),
-    to(#006195)
-  );
+  background: -webkit-gradient(linear, left top, right top, from(#0083ca), color-stop(#8e2073), to(#006195));
   background: -webkit-linear-gradient(left, #c7ca00, #ff4f4f, #0083ca, #21a300);
   background: -o-linear-gradient(left, #c7ca00, #ff4f4f, #0083ca, #21a300);
   background: linear-gradient(90deg, #c7ca00, #ff4f4f, #0083ca, #21a300);
@@ -270,6 +263,11 @@ body {
   border: none !important;
 }
 
+:disabled {
+  background-color: #999 !important;
+  border: 0px !important;
+}
+
 .form-create .btn-cancel {
   width: 150px;
   height: 40px !important;
@@ -288,7 +286,7 @@ body {
   width: fit-content;
   margin: 0 auto;
 }
-
+/* 
 .swal2-modal {
   background-color: #343a40 !important;
   box-shadow: 0px 0px 10px 0px #008cff;
@@ -317,4 +315,4 @@ body {
 .swal2-icon.swal2-alert {
   color: #fff !important;
   border-color: #fff !important;
-}
+} */
