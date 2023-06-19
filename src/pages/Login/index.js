@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 import Swal from "sweetalert2";
 // eslint-disable-next-line
 import styles from "./styles.css";
@@ -24,9 +24,8 @@ export default function Login() {
       await api.post("/auth/login", data).then((response) => {
         hideLoader();
         localStorage.setItem("token", response.data.token);
-        localStorage.setItem("isLoggedIn", "true");
-        history.push("/transferencia");
-        window.location.reload();
+        localStorage.setItem("isLoggedIn", true);
+        window.location.replace("/");
       });
     } catch (err) {
       hideLoader();
@@ -52,21 +51,9 @@ export default function Login() {
             <div className="col"></div>
           </div>
           <FiUser className="login-icons" />
-          <input
-            type="text"
-            className="form-control"
-            placeholder="USUÁRIO"
-            required
-            onChange={(e) => setNomeusuario(e.target.value)}
-          />
+          <input type="text" className="form-control" placeholder="USUÁRIO" required onChange={(e) => setNomeusuario(e.target.value)} />
           <FiKey className="login-icons" />
-          <input
-            type="password"
-            className="form-control"
-            placeholder="SENHA"
-            required
-            onChange={(e) => setSenha(e.target.value)}
-          />
+          <input type="password" className="form-control" placeholder="SENHA" required onChange={(e) => setSenha(e.target.value)} />
           <div className="buttons-submit">
             <button className="btn btn-primary">Entrar</button>
           </div>

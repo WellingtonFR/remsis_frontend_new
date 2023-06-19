@@ -22,21 +22,11 @@ import EntradaIndex from "../pages/EntradaIndex";
 
 export default function Routes() {
   const token = localStorage.getItem("token");
-  const isAuthenticated = () => token !== "";
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+  const isAuthenticated = () => token !== "" && isLoggedIn === "true";
 
   const PrivateRoute = ({ component: Component, ...rest }) => (
-    <Route
-      {...rest}
-      render={(props) =>
-        isAuthenticated() ? (
-          <Component {...props} />
-        ) : (
-          <Redirect
-            to={{ pathname: "/login", state: { from: props.location } }}
-          />
-        )
-      }
-    />
+    <Route {...rest} render={(props) => (isAuthenticated() ? <Component {...props} /> : <Redirect to={{ pathname: "/login", state: { from: props.location } }} />)} />
   );
 
   return (
@@ -52,23 +42,10 @@ export default function Routes() {
           <PrivateRoute path="/filiais/update/:id" component={FiliaisUpdate} />
 
           {/*Transferencia */}
-          <PrivateRoute
-            exact
-            path="/transferencia"
-            component={TransferenciaIndex}
-          />
-          <PrivateRoute
-            path="/transferencia/create"
-            component={TransferenciaCreate}
-          />
-          <PrivateRoute
-            path="/transferencia/update/:id"
-            component={TransferenciaUpdate}
-          />
-          <PrivateRoute
-            path="/transferencia/report/:id"
-            component={TransferenciaReport}
-          />
+          <PrivateRoute exact path="/transferencia" component={TransferenciaIndex} />
+          <PrivateRoute path="/transferencia/create" component={TransferenciaCreate} />
+          <PrivateRoute path="/transferencia/update/:id" component={TransferenciaUpdate} />
+          <PrivateRoute path="/transferencia/report/:id" component={TransferenciaReport} />
 
           {/*Entrada */}
           <PrivateRoute exact path="/entrada" component={EntradaIndex} />
@@ -77,26 +54,13 @@ export default function Routes() {
           {/* <PrivateRoute path="/transferencia/report/:id" component={TransferenciaReport} /> */}
 
           {/*Transportador*/}
-          <PrivateRoute
-            exact
-            path="/transportador"
-            component={TransportadorIndex}
-          />
-          <PrivateRoute
-            path="/transportador/create"
-            component={TransportadorCreate}
-          />
-          <PrivateRoute
-            path="/transportador/update/:id"
-            component={TransportadorUpdate}
-          />
+          <PrivateRoute exact path="/transportador" component={TransportadorIndex} />
+          <PrivateRoute path="/transportador/create" component={TransportadorCreate} />
+          <PrivateRoute path="/transportador/update/:id" component={TransportadorUpdate} />
 
           {/*Conferente*/}
           <PrivateRoute exact path="/conferente" component={ConferenteIndex} />
-          <PrivateRoute
-            path="/conferente/create"
-            component={ConferenteCreate}
-          />
+          <PrivateRoute path="/conferente/create" component={ConferenteCreate} />
 
           {/*Login*/}
           <Route exact path="/login" component={Login} />

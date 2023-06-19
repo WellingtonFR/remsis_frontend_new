@@ -10,11 +10,10 @@ export default function Header() {
 
   async function handleLogout(e) {
     e.preventDefault();
-    api.post("/logout");
+    api.post("/auth/logout");
     localStorage.removeItem("token");
     localStorage.setItem("isLoggedIn", "false");
-    history.push("/login");
-    window.location.reload();
+    window.location.replace("/login");
   }
 
   return (
@@ -24,15 +23,7 @@ export default function Header() {
           <a className="navbar-brand" href="/">
             RemSis
           </a>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
+          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
@@ -51,21 +42,10 @@ export default function Header() {
                 </li>
 
                 <li className="nav-item dropdown">
-                  <a
-                    href="!#"
-                    className="nav-link dropdown-toggle"
-                    id="navbarDropdown"
-                    role="button"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
+                  <a href="!#" className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     VISUALIZAÇÃO
                   </a>
-                  <div
-                    className="dropdown-menu"
-                    aria-labelledby="navbarDropdown"
-                  >
+                  <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                     <Link to="#" className="dropdown-item">
                       Estoque
                     </Link>
@@ -88,21 +68,10 @@ export default function Header() {
                 </li>
 
                 <li className="nav-item dropdown">
-                  <a
-                    href="!#"
-                    className="nav-link dropdown-toggle"
-                    id="navbarDropdown"
-                    role="button"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
+                  <a href="!#" className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     CADASTRO
                   </a>
-                  <div
-                    className="dropdown-menu"
-                    aria-labelledby="navbarDropdown"
-                  >
+                  <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                     <Link to="/transportador/create" className="dropdown-item">
                       Transportador
                     </Link>
@@ -116,10 +85,7 @@ export default function Header() {
                 </li>
               </ul>
             )}
-            <button
-              className="btn btn-primary btn-login"
-              onClick={handleLogout}
-            >
+            <button className="btn btn-primary btn-login" onClick={handleLogout}>
               SAIR
             </button>
           </div>
