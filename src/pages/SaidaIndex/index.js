@@ -6,9 +6,9 @@ import Swal from "sweetalert2";
 import { FiTrash2, FiEdit, FiArrowUp, FiPrinter } from "react-icons/fi";
 import UseLoader from "../../hooks/UseLoader";
 
-export default function TransferenciaIndex() {
+export default function SaidaIndex() {
   const [loader, showLoader, hideLoader] = UseLoader();
-  const [transferencias, setTransferencias] = useState([]);
+  const [saidas, setSaidas] = useState([]);
   const [initialDate, setInitialDate] = useState("");
   const [finalDate, setFinalDate] = useState("");
   const [numeroControle, setNumeroControle] = useState("");
@@ -27,8 +27,8 @@ export default function TransferenciaIndex() {
     };
     showLoader();
     try {
-      await api.post("/transferencia/search", data).then((response) => {
-        setTransferencias(response.data);
+      await api.post("/saida/search", data).then((response) => {
+        setSaidas(response.data);
       });
       hideLoader();
     } catch (err) {
@@ -75,8 +75,8 @@ export default function TransferenciaIndex() {
 
     try {
       showLoader();
-      await api.post("/transferencia/search", data).then((response) => {
-        setTransferencias(response.data);
+      await api.post("/saida/search", data).then((response) => {
+        setSaidas(response.data);
         hideLoader();
       });
     } catch (err) {
@@ -91,7 +91,7 @@ export default function TransferenciaIndex() {
     }
   }
 
-  async function excluirtransferencia(id) {
+  async function excluirsaida(id) {
     try {
       const { value: userConfirmAction } = await Swal.fire({
         title: "Deseja excluir essa transferência ?",
@@ -103,7 +103,7 @@ export default function TransferenciaIndex() {
         confirmButtonColor: "#af0600",
       });
       if (userConfirmAction) {
-        await api.delete(`/transferencia/delete/${id}`).then(() => {
+        await api.delete(`/saida/delete/${id}`).then(() => {
           Swal.fire({
             title: "Transferência excluída com sucesso",
             icon: "success",
@@ -157,7 +157,7 @@ export default function TransferenciaIndex() {
   }
 
   return (
-    <div className="lista-transferencias">
+    <div className="lista-saidas">
       <div className="top-search">
         <form onSubmit={handleSearch}>
           <div className="form-inline">
@@ -165,56 +165,27 @@ export default function TransferenciaIndex() {
               <label htmlFor="initialDate" className="col-form-label ml-1 mr-2">
                 Data inicial
               </label>
-              <input
-                type="date"
-                name="initialDate"
-                className="form-control"
-                placeholder="dd/mm/aaaa"
-                maxLength="10"
-                onChange={(e) => setInitialDate(handleDate(e.target.value))}
-              />
+              <input type="date" name="initialDate" className="form-control" placeholder="dd/mm/aaaa" maxLength="10" onChange={(e) => setInitialDate(handleDate(e.target.value))} />
             </div>
             <div className="input-group">
               <label htmlFor="finalDate" className="ml-1 mr-2">
                 Data final
               </label>
-              <input
-                type="date"
-                name="finalDate"
-                className="form-control"
-                placeholder="dd/mm/aaaa"
-                onChange={(e) => setFinalDate(handleDate(e.target.value))}
-              />
+              <input type="date" name="finalDate" className="form-control" placeholder="dd/mm/aaaa" onChange={(e) => setFinalDate(handleDate(e.target.value))} />
             </div>
             <div className="input-group">
               <label htmlFor="numeroControle" className="ml-1 mr-2">
                 Nº controle
               </label>
-              <input
-                type="text"
-                name="numeroControle"
-                maxLength="10"
-                className="form-control"
-                onChange={(e) => setNumeroControle(e.target.value)}
-              ></input>
+              <input type="text" name="numeroControle" maxLength="10" className="form-control" onChange={(e) => setNumeroControle(e.target.value)}></input>
             </div>
             <div className="input-group">
               <label htmlFor="filialDestino" className="ml-1 mr-2">
                 Filial destino
               </label>
-              <input
-                type="text"
-                name="filialDestino"
-                className="form-control"
-                onChange={(e) => setFilialDestino(e.target.value)}
-              ></input>
+              <input type="text" name="filialDestino" className="form-control" onChange={(e) => setFilialDestino(e.target.value)}></input>
             </div>
-            <button
-              type="submit"
-              className="btn btn-primary ml-3"
-              id="btn-submit-search"
-              onClick={() => handleSearch}
-            >
+            <button type="submit" className="btn btn-primary ml-3" id="btn-submit-search" onClick={() => handleSearch}>
               Pesquisar
             </button>
           </div>
@@ -233,28 +204,25 @@ export default function TransferenciaIndex() {
           </tr>
         </thead>
         <tbody>
-          {transferencias.length === 0 ? (
+          {saidas.length === 0 ? (
             <tr>
               <td>Não há informações para exibir</td>
             </tr>
           ) : (
-            transferencias.map((transferencia) => (
-              <tr key={transferencia.id}>
-                <td>{transferencia.dataAtual}</td>
-                <td>{transferencia.numeroControle}</td>
-                <td>{transferencia.filialDestino}</td>
-                <td>{transferencia.transportador}</td>
+            saidas.map((saida) => (
+              <tr key={saida.id}>
+                <td>{saida.dataAtual}</td>
+                <td>{saida.numeroControle}</td>
+                <td>{saida.filialDestino}</td>
+                <td>{saida.transportador}</td>
                 <td className="form-buttons">
-                  <Link to={`/transferencia/report/${transferencia.id}`}>
+                  <Link to={`/saida/report/${saida.id}`}>
                     <FiPrinter className="btn-icon-custom btn-icon-imprimir mr-2 mt-1" />
                   </Link>
-                  <Link to={`/transferencia/update/${transferencia.id}`}>
+                  <Link to={`/saida/update/${saida.id}`}>
                     <FiEdit className="btn-icon-custom btn-icon-alterar mr-2 mt-1" />
                   </Link>
-                  <FiTrash2
-                    className="btn-icon-custom btn-icon-excluir mt-1"
-                    onClick={() => excluirtransferencia(transferencia.id)}
-                  />
+                  <FiTrash2 className="btn-icon-custom btn-icon-excluir mt-1" onClick={() => excluirsaida(saida.id)} />
                 </td>
               </tr>
             ))

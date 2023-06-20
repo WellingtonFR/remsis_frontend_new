@@ -1,15 +1,22 @@
 .not-found-page {
-  width: 50%;
+  width: 100%;
+  height: 800px;
+  padding-top: 250px !important;
   color: #fff;
   text-align: center;
   padding-top: 20px;
+  background-color: #2b3035;
 }
 
-.not-found-page hr {
-  background-color: #fff;
+.not-found-page p {
+  font-size: 20px;
 }
 
-.not-found-page .FiFrown {
-  width: 250px;
-  height: 250px;
+.not-found-page h4 {
+  font-size: 36px;
+}
+
+.not-found-icon {
+  width: 300px;
+  height: 300px;
 }

@@ -6,10 +6,10 @@ import Home from "../pages/Home";
 import FiliaisCreate from "../pages/FiliaisCreate";
 import FiliaisIndex from "../pages/FiliaisIndex";
 import FiliaisUpdate from "../pages/FiliaisUpdate";
-import TransferenciaIndex from "../pages/TransferenciaIndex";
-import TransferenciaCreate from "../pages/TransferenciaCreate";
-import TransferenciaUpdate from "../pages/TransferenciaUpdate";
-import TransferenciaReport from "../pages/TransferenciaReport";
+import SaidaIndex from "../pages/SaidaIndex";
+import SaidaCreate from "../pages/SaidaCreate";
+import SaidaUpdate from "../pages/SaidaUpdate";
+import SaidaReport from "../pages/SaidaReport";
 import TransportadorCreate from "../pages/TransportadorCreate";
 import TransportadorIndex from "../pages/TransportadorIndex";
 import TransportadorUpdate from "../pages/TransportadorUpdate";
@@ -19,6 +19,7 @@ import Login from "../pages/Login";
 import NotFoundPage from "../pages/NotFoundPage";
 import EntradaCreate from "../pages/EntradaCreate";
 import EntradaIndex from "../pages/EntradaIndex";
+import EstoqueIndex from "../pages/EstoqueIndex";
 
 export default function Routes() {
   const token = localStorage.getItem("token");
@@ -41,17 +42,20 @@ export default function Routes() {
           <PrivateRoute path="/filiais/create" component={FiliaisCreate} />
           <PrivateRoute path="/filiais/update/:id" component={FiliaisUpdate} />
 
-          {/*Transferencia */}
-          <PrivateRoute exact path="/transferencia" component={TransferenciaIndex} />
-          <PrivateRoute path="/transferencia/create" component={TransferenciaCreate} />
-          <PrivateRoute path="/transferencia/update/:id" component={TransferenciaUpdate} />
-          <PrivateRoute path="/transferencia/report/:id" component={TransferenciaReport} />
+          {/*Saida */}
+          <PrivateRoute exact path="/saida" component={SaidaIndex} />
+          <PrivateRoute path="/saida/create" component={SaidaCreate} />
+          <PrivateRoute path="/saida/update/:id" component={SaidaUpdate} />
+          <PrivateRoute path="/saida/report/:id" component={SaidaReport} />
 
           {/*Entrada */}
           <PrivateRoute exact path="/entrada" component={EntradaIndex} />
           <PrivateRoute path="/entrada/create" component={EntradaCreate} />
-          {/* <PrivateRoute path="/transferencia/update/:id" component={TransferenciaUpdate} /> */}
-          {/* <PrivateRoute path="/transferencia/report/:id" component={TransferenciaReport} /> */}
+          {/* <PrivateRoute path="/saida/update/:id" component={SaidaUpdate} /> */}
+          {/* <PrivateRoute path="/saida/report/:id" component={SaidaReport} /> */}
+
+          {/* Estoque */}
+          <PrivateRoute exact path="/estoque" component={EstoqueIndex} />
 
           {/*Transportador*/}
           <PrivateRoute exact path="/transportador" component={TransportadorIndex} />

@@ -36,7 +36,7 @@ export default function Header() {
                 </li>
 
                 <li className="nav-item">
-                  <Link to="/transferencia/create" className="nav-link">
+                  <Link to="/saida/create" className="nav-link">
                     SAÍDA <span className="sr-only"></span>
                   </Link>
                 </li>
@@ -46,13 +46,13 @@ export default function Header() {
                     VISUALIZAÇÃO
                   </a>
                   <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <Link to="#" className="dropdown-item">
+                    <Link to="/estoque" className="dropdown-item">
                       Estoque
                     </Link>
                     <Link to="/entrada" className="dropdown-item">
                       Entrada
                     </Link>
-                    <Link to="/transferencia" className="dropdown-item">
+                    <Link to="/saida" className="dropdown-item">
                       Saída
                     </Link>
                     <Link to="/filiais" className="dropdown-item">

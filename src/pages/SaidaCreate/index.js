@@ -5,7 +5,7 @@ import { FiPlusCircle } from "react-icons/fi";
 import api from "../../services/api";
 import UseLoader from "../../hooks/UseLoader";
 
-export default function TransferenciaCreate() {
+export default function SaidaCreate() {
   //#region useState
   const [filiais, setFiliais] = useState([]); //Preenche o option com as filiais
   //Parte superior do formulário
@@ -186,15 +186,15 @@ export default function TransferenciaCreate() {
 
   const tipoOptions = [
     "PORTARIA",
-    "DQS - PRODUTO CLIENTE",
-    "DQS - PRODUTO ESTOQUE",
+    "DQS-PROD. CLIENTE",
+    "DQS-PROD. ESTOQUE",
     "REMESSA DE PEÇA",
-    "TRANSFERÊNCIA ENTRE LOJA",
-    "TRANSFERÊNCIA IMOBILIZADO",
-    "SUP - MATERIAL PROMOCIONAL",
-    "SITE - VENDA",
-    "SITE - CANCELAMENTO",
-    "SUP - USO E CONSUMO",
+    "TRANSF. ENTRE LOJA",
+    "TRANSF. IMOBILIZADO",
+    "SUP-MAT. PROMOCIONAL",
+    "SITE-VENDA",
+    "SITE-CANCELAMENTO",
+    "SUP-USO E CONSUMO",
   ];
 
   useEffect(() => {
@@ -225,7 +225,7 @@ export default function TransferenciaCreate() {
     return Array.from(arr, dec2hex).join("");
   }
 
-  async function handleNewTransferencia(e) {
+  async function handleNewSaida(e) {
     e.preventDefault();
 
     const data = {
@@ -401,24 +401,33 @@ export default function TransferenciaCreate() {
 
     try {
       showLoader();
-      await api.post("/transferencia/create", data).then((dataReturn) => {
+      await api.post("/saida/create", data).then((dataReturn) => {
         hideLoader();
         const { id } = dataReturn.data;
+
+        setNomeFilialDestino("");
+        setEnderecoFilialDestino("");
+        setPlacaVeiculo("");
+
+        document.querySelector("#form_saida").reset();
+
         Swal.fire({
           title: "Inserido com sucesso !",
           confirmButtonText: "Gerar relatório",
+          showCancelButton: true,
+          cancelButtonText: "Cancelar",
           icon: "success",
           preConfirm: () => {
-            document.querySelector("form").reset();
-            history.push(`/transferencia/report/${id}`);
+            history.push(`/saida/report/${id}`);
           },
         });
       });
     } catch (err) {
       hideLoader();
+      // const { data } = err.response;
       Swal.fire({
         title: "Erro ao inserir",
-        text: "Contate o administrador",
+        text: err,
         icon: "error",
         confirmButtonText: "Voltar",
       });
@@ -472,8 +481,8 @@ export default function TransferenciaCreate() {
 
   return (
     <div className="form-create">
-      <h4 className="form-header">Nova transferência</h4>
-      <form onSubmit={handleNewTransferencia}>
+      <h4 className="form-header">Cadastro de saída</h4>
+      <form onSubmit={handleNewSaida} id="form_saida">
         <hr />
         <div className="row">
           <div className="field-size-2 ml-3">
@@ -580,13 +589,13 @@ export default function TransferenciaCreate() {
               <input type="text" name="codigo_1" className="form-control" required onChange={(e) => setCodigo_1(e.target.value)} />{" "}
             </div>
             <div className="field-size-2">
-              <input type="text" name="descricaoProduto_1" className="form-control" maxLength="50" required onChange={(e) => setDescricaoProduto_1(e.target.value)} />{" "}
+              <input type="text" name="descricaoProduto_1" className="form-control" maxLength="30" required onChange={(e) => setDescricaoProduto_1(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
               <input type="number" name="quantidadeProduto_1" className="form-control" required onChange={(e) => setQuantidadeproduto_1(e.target.value)} />{" "}
             </div>
             <div className="field-size-2">
-              <input type="text" name="observacao_1" className="form-control" onChange={(e) => setObservacao_1(e.target.value)} />{" "}
+              <input type="text" maxLength="30" name="observacao_1" className="form-control" onChange={(e) => setObservacao_1(e.target.value)} />{" "}
             </div>
           </div>
 
@@ -612,13 +621,13 @@ export default function TransferenciaCreate() {
               <input type="text" name="codigo_2" className="form-control" onChange={(e) => setCodigo_2(e.target.value)} />{" "}
             </div>
             <div className="field-size-2">
-              <input type="text" name="descricaoProduto_2" className="form-control" maxLength="50" onChange={(e) => setDescricaoProduto_2(e.target.value)} />{" "}
+              <input type="text" name="descricaoProduto_2" className="form-control" maxLength="30" onChange={(e) => setDescricaoProduto_2(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
               <input type="number" name="quantidadeProduto_2" className="form-control" onChange={(e) => setQuantidadeproduto_2(e.target.value)} />{" "}
             </div>
             <div className="field-size-2">
-              <input type="text" name="observacao_2" className="form-control" onChange={(e) => setObservacao_2(e.target.value)} />{" "}
+              <input type="text" maxLength="30" name="observacao_2" className="form-control" onChange={(e) => setObservacao_2(e.target.value)} />{" "}
             </div>
           </div>
 
@@ -644,13 +653,13 @@ export default function TransferenciaCreate() {
               <input type="text" name="codigo_3" className="form-control" onChange={(e) => setCodigo_3(e.target.value)} />{" "}
             </div>
             <div className="field-size-2">
-              <input type="text" name="descricaoProduto_3" className="form-control" maxLength="50" onChange={(e) => setDescricaoProduto_3(e.target.value)} />{" "}
+              <input type="text" name="descricaoProduto_3" className="form-control" maxLength="30" onChange={(e) => setDescricaoProduto_3(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
               <input type="number" name="quantidadeProduto_3" className="form-control" onChange={(e) => setQuantidadeproduto_3(e.target.value)} />{" "}
             </div>
             <div className="field-size-2">
-              <input type="text" name="observacao_3" className="form-control" onChange={(e) => setObservacao_3(e.target.value)} />{" "}
+              <input type="text" maxLength="30" name="observacao_3" className="form-control" onChange={(e) => setObservacao_3(e.target.value)} />{" "}
             </div>
           </div>
 
@@ -676,13 +685,13 @@ export default function TransferenciaCreate() {
               <input type="text" name="codigo_4" className="form-control" onChange={(e) => setCodigo_4(e.target.value)} />{" "}
             </div>
             <div className="field-size-2">
-              <input type="text" name="descricaoProduto_4" className="form-control" maxLength="50" onChange={(e) => setDescricaoProduto_4(e.target.value)} />{" "}
+              <input type="text" name="descricaoProduto_4" className="form-control" maxLength="30" onChange={(e) => setDescricaoProduto_4(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
               <input type="number" name="quantidadeProduto_4" className="form-control" onChange={(e) => setQuantidadeproduto_4(e.target.value)} />{" "}
             </div>
             <div className="field-size-2">
-              <input type="text" name="observacao_4" className="form-control" onChange={(e) => setObservacao_4(e.target.value)} />{" "}
+              <input type="text" maxLength="30" name="observacao_4" className="form-control" onChange={(e) => setObservacao_4(e.target.value)} />{" "}
             </div>
           </div>
 
@@ -708,13 +717,13 @@ export default function TransferenciaCreate() {
               <input type="text" name="codigo_5" className="form-control" onChange={(e) => setCodigo_5(e.target.value)} />{" "}
             </div>
             <div className="field-size-2">
-              <input type="text" name="descricaoProduto_5" className="form-control" maxLength="50" onChange={(e) => setDescricaoProduto_5(e.target.value)} />{" "}
+              <input type="text" name="descricaoProduto_5" className="form-control" maxLength="30" onChange={(e) => setDescricaoProduto_5(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
               <input type="number" name="quantidadeProduto_5" className="form-control" onChange={(e) => setQuantidadeproduto_5(e.target.value)} />{" "}
             </div>
             <div className="field-size-2">
-              <input type="text" name="observacao_5" className="form-control" onChange={(e) => setObservacao_5(e.target.value)} />{" "}
+              <input type="text" maxLength="30" name="observacao_5" className="form-control" onChange={(e) => setObservacao_5(e.target.value)} />{" "}
             </div>
           </div>
 
@@ -740,13 +749,13 @@ export default function TransferenciaCreate() {
               <input type="text" name="codigo_6" className="form-control" onChange={(e) => setCodigo_6(e.target.value)} />{" "}
             </div>
             <div className="field-size-2">
-              <input type="text" name="descricaoProduto_6" className="form-control" maxLength="50" onChange={(e) => setDescricaoProduto_6(e.target.value)} />{" "}
+              <input type="text" name="descricaoProduto_6" className="form-control" maxLength="30" onChange={(e) => setDescricaoProduto_6(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
               <input type="number" name="quantidadeProduto_6" className="form-control" onChange={(e) => setQuantidadeproduto_6(e.target.value)} />{" "}
             </div>
             <div className="field-size-2">
-              <input type="text" name="observacao_6" className="form-control" onChange={(e) => setObservacao_6(e.target.value)} />{" "}
+              <input type="text" maxLength="30" name="observacao_6" className="form-control" onChange={(e) => setObservacao_6(e.target.value)} />{" "}
             </div>
           </div>
 
@@ -772,13 +781,13 @@ export default function TransferenciaCreate() {
               <input type="text" name="codigo_7" className="form-control" onChange={(e) => setCodigo_7(e.target.value)} />{" "}
             </div>
             <div className="field-size-2">
-              <input type="text" name="descricaoProduto_7" className="form-control" maxLength="50" onChange={(e) => setDescricaoProduto_7(e.target.value)} />{" "}
+              <input type="text" name="descricaoProduto_7" className="form-control" maxLength="30" onChange={(e) => setDescricaoProduto_7(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
               <input type="number" name="quantidadeProduto_7" className="form-control" onChange={(e) => setQuantidadeproduto_7(e.target.value)} />{" "}
             </div>
             <div className="field-size-2">
-              <input type="text" name="observacao_7" className="form-control" onChange={(e) => setObservacao_7(e.target.value)} />{" "}
+              <input type="text" maxLength="30" name="observacao_7" className="form-control" onChange={(e) => setObservacao_7(e.target.value)} />{" "}
             </div>
           </div>
 
@@ -804,13 +813,13 @@ export default function TransferenciaCreate() {
               <input type="text" name="codigo_8" className="form-control" onChange={(e) => setCodigo_8(e.target.value)} />{" "}
             </div>
             <div className="field-size-2">
-              <input type="text" name="descricaoProduto_8" className="form-control" maxLength="50" onChange={(e) => setDescricaoProduto_8(e.target.value)} />{" "}
+              <input type="text" name="descricaoProduto_8" className="form-control" maxLength="30" onChange={(e) => setDescricaoProduto_8(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
               <input type="number" name="quantidadeProduto_8" className="form-control" onChange={(e) => setQuantidadeproduto_8(e.target.value)} />{" "}
             </div>
             <div className="field-size-2">
-              <input type="text" name="observacao_8" className="form-control" onChange={(e) => setObservacao_8(e.target.value)} />{" "}
+              <input type="text" maxLength="30" name="observacao_8" className="form-control" onChange={(e) => setObservacao_8(e.target.value)} />{" "}
             </div>
           </div>
 
@@ -836,7 +845,7 @@ export default function TransferenciaCreate() {
               <input type="text" name="codigo_9" className="form-control" onChange={(e) => setCodigo_9(e.target.value)} />{" "}
             </div>
             <div className="field-size-2">
-              <input type="text" name="descricaoProduto_9" className="form-control" maxLength="50" onChange={(e) => setDescricaoProduto_9(e.target.value)} />{" "}
+              <input type="text" name="descricaoProduto_9" className="form-control" maxLength="30" onChange={(e) => setDescricaoProduto_9(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
               <input type="number" name="quantidadeProduto_9" className="form-control" onChange={(e) => setQuantidadeproduto_9(e.target.value)} />{" "}
@@ -868,13 +877,13 @@ export default function TransferenciaCreate() {
               <input type="text" name="codigo_10" className="form-control" onChange={(e) => setCodigo_10(e.target.value)} />{" "}
             </div>
             <div className="field-size-2">
-              <input type="text" name="descricaoProduto_10" className="form-control" maxLength="50" onChange={(e) => setDescricaoProduto_10(e.target.value)} />{" "}
+              <input type="text" name="descricaoProduto_10" className="form-control" maxLength="30" onChange={(e) => setDescricaoProduto_10(e.target.value)} />{" "}
             </div>
             <div className="field-size-1">
               <input type="number" name="quantidadeProduto_10" className="form-control" onChange={(e) => setQuantidadeproduto_10(e.target.value)} />{" "}
             </div>
             <div className="field-size-2">
-              <input type="text" name="observacao_10" className="form-control" onChange={(e) => setObservacao_10(e.target.value)} />{" "}
+              <input type="text" maxLength="30" name="observacao_10" className="form-control" onChange={(e) => setObservacao_10(e.target.value)} />{" "}
             </div>
           </div>
           <div className="row">
@@ -907,13 +916,13 @@ export default function TransferenciaCreate() {
                 <input type="text" name="codigo_11" className="form-control" onChange={(e) => setCodigo_11(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input type="text" name="descricaoProduto_11" className="form-control" maxLength="50" onChange={(e) => setDescricaoProduto_11(e.target.value)} />
+                <input type="text" name="descricaoProduto_11" className="form-control" maxLength="30" onChange={(e) => setDescricaoProduto_11(e.target.value)} />
               </div>
               <div className="field-size-1">
                 <input type="number" name="quantidadeProduto_11" className="form-control" onChange={(e) => setQuantidadeproduto_11(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input type="text" name="observacao_11" className="form-control" onChange={(e) => setObservacao_11(e.target.value)} />
+                <input type="text" maxLength="30" name="observacao_11" className="form-control" onChange={(e) => setObservacao_11(e.target.value)} />
               </div>
             </div>
 
@@ -939,13 +948,13 @@ export default function TransferenciaCreate() {
                 <input type="text" name="codigo_12" className="form-control" onChange={(e) => setCodigo_12(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input type="text" name="descricaoProduto_12" className="form-control" maxLength="50" onChange={(e) => setDescricaoProduto_12(e.target.value)} />
+                <input type="text" name="descricaoProduto_12" className="form-control" maxLength="30" onChange={(e) => setDescricaoProduto_12(e.target.value)} />
               </div>
               <div className="field-size-1">
                 <input type="number" name="quantidadeProduto_12" className="form-control" onChange={(e) => setQuantidadeproduto_12(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input type="text" name="observacao_12" className="form-control" onChange={(e) => setObservacao_12(e.target.value)} />
+                <input type="text" maxLength="30" name="observacao_12" className="form-control" onChange={(e) => setObservacao_12(e.target.value)} />
               </div>
             </div>
 
@@ -971,13 +980,13 @@ export default function TransferenciaCreate() {
                 <input type="text" name="codigo_13" className="form-control" onChange={(e) => setCodigo_13(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input type="text" name="descricaoProduto_13" className="form-control" maxLength="50" onChange={(e) => setDescricaoProduto_13(e.target.value)} />
+                <input type="text" name="descricaoProduto_13" className="form-control" maxLength="30" onChange={(e) => setDescricaoProduto_13(e.target.value)} />
               </div>
               <div className="field-size-1">
                 <input type="number" name="quantidadeProduto_13" className="form-control" onChange={(e) => setQuantidadeproduto_13(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input type="text" name="observacao_13" className="form-control" onChange={(e) => setObservacao_13(e.target.value)} />
+                <input type="text" maxLength="30" name="observacao_13" className="form-control" onChange={(e) => setObservacao_13(e.target.value)} />
               </div>
             </div>
 
@@ -1003,13 +1012,13 @@ export default function TransferenciaCreate() {
                 <input type="text" name="codigo_14" className="form-control" onChange={(e) => setCodigo_14(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input type="text" name="descricaoProduto_14" className="form-control" maxLength="50" onChange={(e) => setDescricaoProduto_14(e.target.value)} />
+                <input type="text" name="descricaoProduto_14" className="form-control" maxLength="30" onChange={(e) => setDescricaoProduto_14(e.target.value)} />
               </div>
               <div className="field-size-1">
                 <input type="number" name="quantidadeProduto_14" className="form-control" onChange={(e) => setQuantidadeproduto_14(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input type="text" name="observacao_14" className="form-control" onChange={(e) => setObservacao_14(e.target.value)} />
+                <input type="text" maxLength="30" name="observacao_14" className="form-control" onChange={(e) => setObservacao_14(e.target.value)} />
               </div>
             </div>
 
@@ -1035,13 +1044,13 @@ export default function TransferenciaCreate() {
                 <input type="text" name="codigo_15" className="form-control" onChange={(e) => setCodigo_15(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input type="text" name="descricaoProduto_15" className="form-control" maxLength="50" onChange={(e) => setDescricaoProduto_15(e.target.value)} />
+                <input type="text" name="descricaoProduto_15" className="form-control" maxLength="30" onChange={(e) => setDescricaoProduto_15(e.target.value)} />
               </div>
               <div className="field-size-1">
                 <input type="number" name="quantidadeProduto_15" className="form-control" onChange={(e) => setQuantidadeproduto_15(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input type="text" name="observacao_15" className="form-control" onChange={(e) => setObservacao_15(e.target.value)} />
+                <input type="text" maxLength="30" name="observacao_15" className="form-control" onChange={(e) => setObservacao_15(e.target.value)} />
               </div>
             </div>
 
@@ -1067,13 +1076,13 @@ export default function TransferenciaCreate() {
                 <input type="text" name="codigo_16" className="form-control" onChange={(e) => setCodigo_16(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input type="text" name="descricaoProduto_16" className="form-control" maxLength="50" onChange={(e) => setDescricaoProduto_16(e.target.value)} />
+                <input type="text" name="descricaoProduto_16" className="form-control" maxLength="30" onChange={(e) => setDescricaoProduto_16(e.target.value)} />
               </div>
               <div className="field-size-1">
                 <input type="number" name="quantidadeProduto_16" className="form-control" onChange={(e) => setQuantidadeproduto_16(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input type="text" name="observacao_16" className="form-control" onChange={(e) => setObservacao_16(e.target.value)} />
+                <input type="text" maxLength="30" name="observacao_16" className="form-control" onChange={(e) => setObservacao_16(e.target.value)} />
               </div>
             </div>
 
@@ -1099,13 +1108,13 @@ export default function TransferenciaCreate() {
                 <input type="text" name="codigo_17" className="form-control" onChange={(e) => setCodigo_17(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input type="text" name="descricaoProduto_17" className="form-control" maxLength="50" onChange={(e) => setDescricaoProduto_17(e.target.value)} />
+                <input type="text" name="descricaoProduto_17" className="form-control" maxLength="30" onChange={(e) => setDescricaoProduto_17(e.target.value)} />
               </div>
               <div className="field-size-1">
                 <input type="number" name="quantidadeProduto_17" className="form-control" onChange={(e) => setQuantidadeproduto_17(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input type="text" name="observacao_17" className="form-control" onChange={(e) => setObservacao_17(e.target.value)} />
+                <input type="text" maxLength="30" name="observacao_17" className="form-control" onChange={(e) => setObservacao_17(e.target.value)} />
               </div>
             </div>
 
@@ -1131,13 +1140,13 @@ export default function TransferenciaCreate() {
                 <input type="text" name="codigo_18" className="form-control" onChange={(e) => setCodigo_18(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input type="text" name="descricaoProduto_18" className="form-control" maxLength="50" onChange={(e) => setDescricaoProduto_18(e.target.value)} />
+                <input type="text" name="descricaoProduto_18" className="form-control" maxLength="30" onChange={(e) => setDescricaoProduto_18(e.target.value)} />
               </div>
               <div className="field-size-1">
                 <input type="number" name="quantidadeProduto_18" className="form-control" onChange={(e) => setQuantidadeproduto_18(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input type="text" name="observacao_18" className="form-control" onChange={(e) => setObservacao_18(e.target.value)} />
+                <input type="text" maxLength="30" name="observacao_18" className="form-control" onChange={(e) => setObservacao_18(e.target.value)} />
               </div>
             </div>
 
@@ -1163,13 +1172,13 @@ export default function TransferenciaCreate() {
                 <input type="text" name="codigo_19" className="form-control" onChange={(e) => setCodigo_19(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input type="text" name="descricaoProduto_19" className="form-control" maxLength="50" onChange={(e) => setDescricaoProduto_19(e.target.value)} />
+                <input type="text" name="descricaoProduto_19" className="form-control" maxLength="30" onChange={(e) => setDescricaoProduto_19(e.target.value)} />
               </div>
               <div className="field-size-1">
                 <input type="number" name="quantidadeProduto_19" className="form-control" onChange={(e) => setQuantidadeproduto_19(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input type="text" name="observacao_19" className="form-control" onChange={(e) => setObservacao_19(e.target.value)} />
+                <input type="text" maxLength="30" name="observacao_19" className="form-control" onChange={(e) => setObservacao_19(e.target.value)} />
               </div>
             </div>
 
@@ -1195,13 +1204,13 @@ export default function TransferenciaCreate() {
                 <input type="text" name="codigo_20" className="form-control" onChange={(e) => setCodigo_20(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input type="text" name="descricaoProduto_20" className="form-control" maxLength="50" onChange={(e) => setDescricaoProduto_20(e.target.value)} />
+                <input type="text" name="descricaoProduto_20" className="form-control" maxLength="30" onChange={(e) => setDescricaoProduto_20(e.target.value)} />
               </div>
               <div className="field-size-1">
                 <input type="number" name="quantidadeProduto_20" className="form-control" onChange={(e) => setQuantidadeproduto_20(e.target.value)} />
               </div>
               <div className="field-size-2">
-                <input type="text" name="observacao_20" className="form-control" onChange={(e) => setObservacao_20(e.target.value)} />
+                <input type="text" maxLength="30" name="observacao_20" className="form-control" onChange={(e) => setObservacao_20(e.target.value)} />
               </div>
             </div>
 

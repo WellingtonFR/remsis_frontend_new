@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 import { FiTrash2, FiEdit, FiArrowUp } from "react-icons/fi";
 import UseLoader from "../../hooks/UseLoader";
 
-export default function EntradaIndex() {
+export default function EstoqueIndex() {
   const [loader, showLoader, hideLoader] = UseLoader();
   const [entrada, setEntrada] = useState([]);
   const [initialDate, setInitialDate] = useState("");

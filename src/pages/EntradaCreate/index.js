@@ -13,14 +13,16 @@ export default function EntradaCreate() {
 
   const [conferente, setConferente] = useState("");
   const [filialOrigem, setFilialOrigem] = useState("");
+  const [doca, setDoca] = useState("");
   const [conferentes, setConferentes] = useState([]);
   const [filiais, setFiliais] = useState([]);
 
   const [formFields, setFormFields] = useState([
     {
       dataAtual: dataAtual,
+      filialOrigem: filialOrigem,
       conferente: conferente,
-      filialOrigem: "",
+      doca: doca,
       notaFiscal: "",
       codigo: "",
       descricaoProduto: "",
@@ -31,9 +33,25 @@ export default function EntradaCreate() {
   ]);
 
   useEffect(() => {
+    setInitialValues();
+  }, []);
+
+  function setInitialValues() {
     fetchDataToOptions();
     removeFields(0);
-  }, []);
+
+    let filialOrigem = document.querySelector("select[name='filialOrigem']");
+    let conferente = document.querySelector("select[name='nomeConferente']");
+    let doca = document.querySelector("input[name='doca']");
+
+    filialOrigem.removeAttribute("disabled");
+    conferente.removeAttribute("disabled");
+    doca.removeAttribute("disabled");
+    setDoca("");
+
+    filialOrigem.querySelector("option").selected = "selected";
+    conferente.querySelector("option").selected = "selected";
+  }
 
   async function fetchDataToOptions() {
     showLoader();
@@ -57,8 +75,9 @@ export default function EntradaCreate() {
     if (conferente !== "" && filialOrigem !== "") {
       let object = {
         dataAtual: dataAtual,
-        conferente: conferente,
         filialOrigem: filialOrigem,
+        conferente: conferente,
+        doca: doca,
         notaFiscal: "",
         codigo: "",
         descricaoProduto: "",
@@ -76,18 +95,6 @@ export default function EntradaCreate() {
     setFormFields(data);
   };
 
-  const Toast = Swal.mixin({
-    toast: true,
-    showConfirmButton: false,
-    timer: 2000,
-    timerProgressBar: true,
-    position: "bottom",
-    didOpen: (toast) => {
-      toast.addEventListener("mouseenter", Swal.stopTimer);
-      toast.addEventListener("mouseleave", Swal.resumeTimer);
-    },
-  });
-
   async function onSubmit(e) {
     e.preventDefault();
 
@@ -100,34 +107,40 @@ export default function EntradaCreate() {
       await api.post("/entrada/create", data).then(() => {
         hideLoader();
 
-        Toast.fire({
-          icon: "success",
+        Swal.fire({
           title: "Inserido com sucesso !",
+          showCancelButton: false,
+          showConfirmButton: false,
+          icon: "success",
+          timer: 2000,
+          timerProgressBar: true,
         });
 
         setTimeout(() => {
-          window.location.reload(false);
+          setInitialValues();
         }, 2000);
       });
     } catch (err) {
       hideLoader();
       const { data } = err.response;
-      Toast.fire({
+      Swal.fire({
+        title: "Erro ao inserir",
+        text: data.message,
         icon: "error",
-        title: "Contate o administrador" + data.message,
+        confirmButtonText: "Voltar",
       });
     }
   }
 
   return (
     <div className="form-create">
-      <h4 className="form-header">Nova Entrada</h4>
+      <h4 className="form-header">Cadastro de entrada</h4>
       <form onSubmit={onSubmit} id="form_entrada">
         <hr />
         <div className="row">
           <div className="field-size-2 ml-3">
             <label htmlFor="dataAtual">Data</label>
-            <input type="text" name="dataAtual" className="form-control" required disabled value={dataAtual} />
+            <input type="number" name="dataAtual" className="form-control" required disabled value={dataAtual} />
           </div>
 
           <div className="field-size-2 ml-3">
@@ -142,7 +155,7 @@ export default function EntradaCreate() {
             </select>
           </div>
 
-          <div className="field-size-3 ml-3">
+          <div className="field-size-2 ml-3">
             <label htmlFor="nomeConferente">Conferente</label>
             <select name="nomeConferente" className="form-control" required disabled={conferente !== "" ? true : false} onChange={(e) => setConferente(e.target.value)}>
               <option value="">Selecione</option>
@@ -152,6 +165,11 @@ export default function EntradaCreate() {
                 </option>
               ))}
             </select>
+          </div>
+
+          <div className="field-size-1 ml-3">
+            <label htmlFor="doca">Doca</label>
+            <input type="number" name="doca" className="form-control" required value={doca} onBlur={(e) => e.target.setAttribute("disabled", "true")} onChange={(e) => setDoca(e.target.value)} />
           </div>
 
           <div className="">
@@ -201,7 +219,7 @@ export default function EntradaCreate() {
                   <input type="text" name="observacao" className="form-control" value={form.observacao} onChange={(event) => handleFormBodyChange(event, index)} />
                 </div>
                 <div className="field-size-1">
-                  <button type="button" className="btn btn-primary" id="btn-remove-fields" onClick={() => removeFields(index)}>
+                  <button type="button" className="btn btn-primary" id="btn-remove-fields" style={{ height: "40px", paddingTop: "5px" }} onClick={() => removeFields(index)}>
                     <FiMinusCircle size="30" />
                   </button>
                 </div>
@@ -211,7 +229,7 @@ export default function EntradaCreate() {
 
           <div className="row">
             <div className="col-md-1 p-0">
-              <button type="button" className="btn btn-primary my-2" id="btn-add-fields" disabled={conferente === "" || filialOrigem === "" ? true : false} onClick={addFields}>
+              <button type="button" className="btn btn-primary my-2" id="btn-add-fields" disabled={conferente === "" || filialOrigem === "" || doca === "" ? true : false} onClick={addFields}>
                 <FiPlusCircle size="30" />
               </button>
             </div>
