@@ -269,6 +269,13 @@ body {
   border: none !important;
 }
 
+.form-create .btn-submit-saida {
+  width: 150px;
+  height: 40px;
+  margin-left: 10px;
+  border: none !important;
+}
+
 :disabled {
   background-color: #999 !important;
   border: 0px !important;

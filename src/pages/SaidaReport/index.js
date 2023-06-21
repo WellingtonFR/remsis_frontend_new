@@ -44,7 +44,7 @@ export default function TransferenciaReport() {
           </div>
           <div className="col">
             <div className="label">Data</div>
-            <div className="data">{report.dataAtual}</div>
+            <div className="data">{report.data}</div>
             <div className="label">Controle</div>
             <div className="data">{report.numeroControle}</div>
           </div>
@@ -340,7 +340,7 @@ export default function TransferenciaReport() {
             </div>
           </div>
         </div>
-        <div className="row dataAtual mt-3">
+        <div className="row data mt-3">
           <div className="col">Impresso em {dataDeImpressao}</div>
         </div>
       </div>

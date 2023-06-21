@@ -211,7 +211,7 @@ export default function SaidaIndex() {
           ) : (
             saidas.map((saida) => (
               <tr key={saida.id}>
-                <td>{saida.dataAtual}</td>
+                <td>{saida.data}</td>
                 <td>{saida.numeroControle}</td>
                 <td>{saida.filialDestino}</td>
                 <td>{saida.transportador}</td>

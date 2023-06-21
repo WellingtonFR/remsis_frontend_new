@@ -7,19 +7,20 @@ import UseLoader from "../../hooks/UseLoader";
 
 export default function SaidaCreate() {
   //#region useState
-  const [filiais, setFiliais] = useState([]); //Preenche o option com as filiais
-  //Parte superior do formulário
-  const [dataAtual] = useState(new Date().toLocaleDateString("pt-br"));
+  const [data] = useState(new Date().toLocaleDateString("pt-br"));
   const [numeroControle] = useState(generateId(10));
   const [filialDestino, setFilialDestino] = useState("");
   const [nomeFilialDestino, setNomeFilialDestino] = useState("");
   const [enderecoFilialDestino, setEnderecoFilialDestino] = useState("");
+  const [placaVeiculo, setPlacaVeiculo] = useState("");
+  const [doca, setDoca] = useState();
+
+  const [filiais, setFiliais] = useState([]); //Preenche o option com as filiais
   const [transportadores, setTransportadores] = useState([]); //Preenche o option
   const [transportador, setTransportador] = useState(""); //para saída dos dados ao submeter
-  const [placaVeiculo, setPlacaVeiculo] = useState("");
   const [conferente, setConferente] = useState(""); //Preenche o option
   const [conferentes, setConferentes] = useState([]); //para saída dos dados ao submeter
-  //Linhas
+
   const [filialOrigem_1, setFilialorigem_1] = useState("");
   const [notaFiscal_1, setNotafiscal_1] = useState("");
   const [tipoOperacao_1, setTipoOperacao_1] = useState("");
@@ -27,7 +28,7 @@ export default function SaidaCreate() {
   const [descricaoProduto_1, setDescricaoProduto_1] = useState("");
   const [quantidadeProduto_1, setQuantidadeproduto_1] = useState("");
   const [observacao_1, setObservacao_1] = useState("");
-  //
+
   const [filialOrigem_2, setFilialorigem_2] = useState("");
   const [notaFiscal_2, setNotafiscal_2] = useState("");
   const [tipoOperacao_2, setTipoOperacao_2] = useState("");
@@ -35,7 +36,7 @@ export default function SaidaCreate() {
   const [descricaoProduto_2, setDescricaoProduto_2] = useState("");
   const [quantidadeProduto_2, setQuantidadeproduto_2] = useState("");
   const [observacao_2, setObservacao_2] = useState("");
-  //
+
   const [filialOrigem_3, setFilialorigem_3] = useState("");
   const [notaFiscal_3, setNotafiscal_3] = useState("");
   const [tipoOperacao_3, setTipoOperacao_3] = useState("");
@@ -43,7 +44,7 @@ export default function SaidaCreate() {
   const [descricaoProduto_3, setDescricaoProduto_3] = useState("");
   const [quantidadeProduto_3, setQuantidadeproduto_3] = useState("");
   const [observacao_3, setObservacao_3] = useState("");
-  //
+
   const [filialOrigem_4, setFilialorigem_4] = useState("");
   const [notaFiscal_4, setNotafiscal_4] = useState("");
   const [tipoOperacao_4, setTipoOperacao_4] = useState("");
@@ -51,7 +52,7 @@ export default function SaidaCreate() {
   const [descricaoProduto_4, setDescricaoProduto_4] = useState("");
   const [quantidadeProduto_4, setQuantidadeproduto_4] = useState("");
   const [observacao_4, setObservacao_4] = useState("");
-  //
+
   const [filialOrigem_5, setFilialorigem_5] = useState("");
   const [notaFiscal_5, setNotafiscal_5] = useState("");
   const [tipoOperacao_5, setTipoOperacao_5] = useState("");
@@ -59,7 +60,7 @@ export default function SaidaCreate() {
   const [descricaoProduto_5, setDescricaoProduto_5] = useState("");
   const [quantidadeProduto_5, setQuantidadeproduto_5] = useState("");
   const [observacao_5, setObservacao_5] = useState("");
-  //
+
   const [filialOrigem_6, setFilialorigem_6] = useState("");
   const [notaFiscal_6, setNotafiscal_6] = useState("");
   const [tipoOperacao_6, setTipoOperacao_6] = useState("");
@@ -67,7 +68,7 @@ export default function SaidaCreate() {
   const [descricaoProduto_6, setDescricaoProduto_6] = useState("");
   const [quantidadeProduto_6, setQuantidadeproduto_6] = useState("");
   const [observacao_6, setObservacao_6] = useState("");
-  //
+
   const [filialOrigem_7, setFilialorigem_7] = useState("");
   const [notaFiscal_7, setNotafiscal_7] = useState("");
   const [tipoOperacao_7, setTipoOperacao_7] = useState("");
@@ -75,7 +76,7 @@ export default function SaidaCreate() {
   const [descricaoProduto_7, setDescricaoProduto_7] = useState("");
   const [quantidadeProduto_7, setQuantidadeproduto_7] = useState("");
   const [observacao_7, setObservacao_7] = useState("");
-  //
+
   const [filialOrigem_8, setFilialorigem_8] = useState("");
   const [notaFiscal_8, setNotafiscal_8] = useState("");
   const [tipoOperacao_8, setTipoOperacao_8] = useState("");
@@ -83,7 +84,7 @@ export default function SaidaCreate() {
   const [descricaoProduto_8, setDescricaoProduto_8] = useState("");
   const [quantidadeProduto_8, setQuantidadeproduto_8] = useState("");
   const [observacao_8, setObservacao_8] = useState("");
-  //
+
   const [filialOrigem_9, setFilialorigem_9] = useState("");
   const [notaFiscal_9, setNotafiscal_9] = useState("");
   const [tipoOperacao_9, setTipoOperacao_9] = useState("");
@@ -91,7 +92,7 @@ export default function SaidaCreate() {
   const [descricaoProduto_9, setDescricaoProduto_9] = useState("");
   const [quantidadeProduto_9, setQuantidadeproduto_9] = useState("");
   const [observacao_9, setObservacao_9] = useState("");
-  //
+
   const [filialOrigem_10, setFilialorigem_10] = useState("");
   const [notaFiscal_10, setNotafiscal_10] = useState("");
   const [tipoOperacao_10, setTipoOperacao_10] = useState("");
@@ -99,7 +100,7 @@ export default function SaidaCreate() {
   const [descricaoProduto_10, setDescricaoProduto_10] = useState("");
   const [quantidadeProduto_10, setQuantidadeproduto_10] = useState("");
   const [observacao_10, setObservacao_10] = useState("");
-  //
+
   const [filialOrigem_11, setFilialorigem_11] = useState("");
   const [notaFiscal_11, setNotafiscal_11] = useState("");
   const [tipoOperacao_11, setTipoOperacao_11] = useState("");
@@ -107,7 +108,7 @@ export default function SaidaCreate() {
   const [descricaoProduto_11, setDescricaoProduto_11] = useState("");
   const [quantidadeProduto_11, setQuantidadeproduto_11] = useState("");
   const [observacao_11, setObservacao_11] = useState("");
-  //
+
   const [filialOrigem_12, setFilialorigem_12] = useState("");
   const [notaFiscal_12, setNotafiscal_12] = useState("");
   const [tipoOperacao_12, setTipoOperacao_12] = useState("");
@@ -115,7 +116,7 @@ export default function SaidaCreate() {
   const [descricaoProduto_12, setDescricaoProduto_12] = useState("");
   const [quantidadeProduto_12, setQuantidadeproduto_12] = useState("");
   const [observacao_12, setObservacao_12] = useState("");
-  //
+
   const [filialOrigem_13, setFilialorigem_13] = useState("");
   const [notaFiscal_13, setNotafiscal_13] = useState("");
   const [tipoOperacao_13, setTipoOperacao_13] = useState("");
@@ -123,7 +124,7 @@ export default function SaidaCreate() {
   const [descricaoProduto_13, setDescricaoProduto_13] = useState("");
   const [quantidadeProduto_13, setQuantidadeproduto_13] = useState("");
   const [observacao_13, setObservacao_13] = useState("");
-  //
+
   const [filialOrigem_14, setFilialorigem_14] = useState("");
   const [notaFiscal_14, setNotafiscal_14] = useState("");
   const [tipoOperacao_14, setTipoOperacao_14] = useState("");
@@ -131,7 +132,7 @@ export default function SaidaCreate() {
   const [descricaoProduto_14, setDescricaoProduto_14] = useState("");
   const [quantidadeProduto_14, setQuantidadeproduto_14] = useState("");
   const [observacao_14, setObservacao_14] = useState("");
-  //
+
   const [filialOrigem_15, setFilialorigem_15] = useState("");
   const [notaFiscal_15, setNotafiscal_15] = useState("");
   const [tipoOperacao_15, setTipoOperacao_15] = useState("");
@@ -139,7 +140,7 @@ export default function SaidaCreate() {
   const [descricaoProduto_15, setDescricaoProduto_15] = useState("");
   const [quantidadeProduto_15, setQuantidadeproduto_15] = useState("");
   const [observacao_15, setObservacao_15] = useState("");
-  //
+
   const [filialOrigem_16, setFilialorigem_16] = useState("");
   const [notaFiscal_16, setNotafiscal_16] = useState("");
   const [tipoOperacao_16, setTipoOperacao_16] = useState("");
@@ -147,7 +148,7 @@ export default function SaidaCreate() {
   const [descricaoProduto_16, setDescricaoProduto_16] = useState("");
   const [quantidadeProduto_16, setQuantidadeproduto_16] = useState("");
   const [observacao_16, setObservacao_16] = useState("");
-  //
+
   const [filialOrigem_17, setFilialorigem_17] = useState("");
   const [notaFiscal_17, setNotafiscal_17] = useState("");
   const [tipoOperacao_17, setTipoOperacao_17] = useState("");
@@ -155,7 +156,7 @@ export default function SaidaCreate() {
   const [descricaoProduto_17, setDescricaoProduto_17] = useState("");
   const [quantidadeProduto_17, setQuantidadeproduto_17] = useState("");
   const [observacao_17, setObservacao_17] = useState("");
-  //
+
   const [filialOrigem_18, setFilialorigem_18] = useState("");
   const [notaFiscal_18, setNotafiscal_18] = useState("");
   const [tipoOperacao_18, setTipoOperacao_18] = useState("");
@@ -163,7 +164,7 @@ export default function SaidaCreate() {
   const [descricaoProduto_18, setDescricaoProduto_18] = useState("");
   const [quantidadeProduto_18, setQuantidadeproduto_18] = useState("");
   const [observacao_18, setObservacao_18] = useState("");
-  //
+
   const [filialOrigem_19, setFilialorigem_19] = useState("");
   const [notaFiscal_19, setNotafiscal_19] = useState("");
   const [tipoOperacao_19, setTipoOperacao_19] = useState("");
@@ -171,7 +172,7 @@ export default function SaidaCreate() {
   const [descricaoProduto_19, setDescricaoProduto_19] = useState("");
   const [quantidadeProduto_19, setQuantidadeproduto_19] = useState("");
   const [observacao_19, setObservacao_19] = useState("");
-  //
+
   const [filialOrigem_20, setFilialorigem_20] = useState("");
   const [notaFiscal_20, setNotafiscal_20] = useState("");
   const [tipoOperacao_20, setTipoOperacao_20] = useState("");
@@ -229,14 +230,15 @@ export default function SaidaCreate() {
     e.preventDefault();
 
     const data = {
-      dataAtual,
+      data,
       numeroControle,
-      filialDestino: filialDestino,
-      nomeFilialDestino: nomeFilialDestino,
-      enderecoFilialDestino: enderecoFilialDestino,
+      filialDestino,
+      nomeFilialDestino,
+      enderecoFilialDestino,
       transportador,
       placaVeiculo,
       conferente,
+      doca,
       //
       filialOrigem_1,
       notaFiscal_1,
@@ -486,8 +488,8 @@ export default function SaidaCreate() {
         <hr />
         <div className="row">
           <div className="field-size-2 ml-3">
-            <label htmlFor="dataAtual">Data</label>
-            <input type="text" name="dataAtual" className="form-control" required disabled value={dataAtual} />
+            <label htmlFor="data">Data</label>
+            <input type="text" name="data" className="form-control" required disabled value={data} />
           </div>
           <div className="field-size-2 ml-3">
             <label htmlFor="numeroControle">Controle</label>
@@ -537,7 +539,12 @@ export default function SaidaCreate() {
             <input type="text" name="placaVeiculo" className="form-control" required disabled value={placaVeiculo} />
           </div>
 
-          <div className="field-size-4 ml-3">
+          <div className="field-size-1 ml-3">
+            <label htmlFor="doca">Doca</label>
+            <input type="text" name="doca" className="form-control" required onChange={(e) => setDoca(e.target.value)} />
+          </div>
+
+          <div className="field-size-2 ml-3">
             <label htmlFor="nomeConferente">Conferente</label>
             <select name="nomeConferente" className="form-control" required onChange={(e) => setConferente(e.target.value)}>
               <option value="">Selecione</option>
@@ -549,11 +556,9 @@ export default function SaidaCreate() {
             </select>
           </div>
 
-          <div className="">
-            <button type="submit" className="btn btn-primary btn-submit" style={{ height: "50px" }}>
-              Inserir
-            </button>
-          </div>
+          <button type="submit" className="btn btn-primary ml-2 mt-4" style={{ width: "200px", height: "50px" }}>
+            Inserir
+          </button>
         </div>
 
         <div className="form-lines">
@@ -886,13 +891,7 @@ export default function SaidaCreate() {
               <input type="text" maxLength="30" name="observacao_10" className="form-control" onChange={(e) => setObservacao_10(e.target.value)} />{" "}
             </div>
           </div>
-          <div className="row">
-            <div className="col-md-1 p-0">
-              <button className="btn btn-primary my-2" id="btnShowMoreLines" onClick={showMoreLines}>
-                <FiPlusCircle size="30" />
-              </button>
-            </div>
-          </div>
+
           <div id="moreLines" style={{ display: "none" }}>
             {/*Line11*/}
             <div className="row">
@@ -1213,11 +1212,15 @@ export default function SaidaCreate() {
                 <input type="text" maxLength="30" name="observacao_20" className="form-control" onChange={(e) => setObservacao_20(e.target.value)} />
               </div>
             </div>
-
-            {/*addMoreLines*/}
           </div>
 
-          {/*formBottomLines*/}
+          <div className="row">
+            <div className="col pl-0">
+              <button className="btn btn-primary my-2" id="btnShowMoreLines" onClick={showMoreLines}>
+                <FiPlusCircle size="30" />
+              </button>
+            </div>
+          </div>
         </div>
       </form>
       {loader}

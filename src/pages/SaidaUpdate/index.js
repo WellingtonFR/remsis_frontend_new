@@ -73,7 +73,7 @@ export default function SaidaUpdate() {
     e.preventDefault();
 
     const data = {
-      dataAtual: saida.dataAtual,
+      data: saida.data,
       numeroControle: saida.numeroControle,
       filialDestino: saida.filialDestino,
       nomeFilialDestino: saida.nomeFilialDestino,
@@ -279,8 +279,8 @@ export default function SaidaUpdate() {
         <hr />
         <div className="row">
           <div className="field-size-2 ml-3">
-            <label htmlFor="dataAtual">Data</label>
-            <input type="text" name="dataAtual" className="form-control disabled" disabled value={saida.dataAtual} />
+            <label htmlFor="data">Data</label>
+            <input type="text" name="data" className="form-control disabled" disabled value={saida.data} />
           </div>
           <div className="field-size-2 ml-3">
             <label htmlFor="numeroControle">Controle</label>

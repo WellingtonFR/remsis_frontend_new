@@ -17,10 +17,10 @@ export default function EntradaIndex() {
   const [filialDestino, setFilialDestino] = useState("");
 
   useEffect(() => {
-    populateData();
+    initialSearch();
   }, []);
 
-  async function populateData() {
+  async function initialSearch() {
     const data = {
       initialDate: new Date().toLocaleDateString("pt-br"),
       finalDate: new Date().toLocaleDateString("pt-br"),
@@ -31,8 +31,8 @@ export default function EntradaIndex() {
       showLoader();
       await api.post("/entrada/search", data).then((response) => {
         setEntrada(response.data);
-        hideLoader();
       });
+      hideLoader();
     } catch (err) {
       hideLoader();
       const { data } = err.response;
@@ -47,6 +47,9 @@ export default function EntradaIndex() {
 
   async function handleSearch(e) {
     e.preventDefault();
+
+    console.log(filialOrigem);
+    console.log(filialDestino);
 
     const data = {
       initialDate: initialDate,
@@ -100,9 +103,9 @@ export default function EntradaIndex() {
             title: "Transferência excluída com sucesso",
             icon: "success",
             showConfirmButton: false,
-            timer: 1100,
+            timer: 1000,
           });
-          populateData();
+          initialSearch();
         });
       }
     } catch (err) {
@@ -189,6 +192,10 @@ export default function EntradaIndex() {
             <th>Data</th>
             <th>Filial origem</th>
             <th>Filial destino</th>
+            <th>Nota fiscal</th>
+            <th>Código</th>
+            <th>Quantidade</th>
+            <th>Observação</th>
             <th colSpan="2" style={{ textAlign: "center" }}>
               Opções
             </th>
@@ -202,14 +209,15 @@ export default function EntradaIndex() {
           ) : (
             entrada.map((entrada) => (
               <tr key={entrada.id}>
-                <td>{entrada.dataAtual}</td>
+                <td>{entrada.data}</td>
                 <td>{entrada.filialOrigem}</td>
                 <td>{entrada.filialDestino}</td>
+                <td>{entrada.notaFiscal}</td>
+                <td>{entrada.codigo}</td>
+                <td>{entrada.quantidadeProduto}</td>
+                <td>{entrada.observacao}</td>
                 <td className="form-buttons">
-                  <Link to={`/entrada/update/${entrada.id}`}>
-                    <FiEdit className="btn-icon-custom btn-icon-alterar mr-2 mt-1" />
-                  </Link>
-                  <FiTrash2 className="btn-icon-custom btn-icon-excluir mt-1" onClick={() => excluirEntrada(entrada.id)} />
+                  <FiTrash2 className="btn-icon-custom btn-icon-excluir mt-2" onClick={() => excluirEntrada(entrada.id)} />
                 </td>
               </tr>
             ))

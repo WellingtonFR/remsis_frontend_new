@@ -8,7 +8,7 @@ export default function EntradaCreate() {
   //#region useState
 
   //Parte superior do formulário
-  const [dataAtual] = useState(new Date().toLocaleDateString("pt-br"));
+  const [data, setdata] = useState("");
   const [loader, showLoader, hideLoader] = UseLoader();
 
   const [conferente, setConferente] = useState("");
@@ -19,7 +19,7 @@ export default function EntradaCreate() {
 
   const [formFields, setFormFields] = useState([
     {
-      dataAtual: dataAtual,
+      data: data,
       filialOrigem: filialOrigem,
       conferente: conferente,
       doca: doca,
@@ -36,9 +36,10 @@ export default function EntradaCreate() {
     setInitialValues();
   }, []);
 
-  function setInitialValues() {
+  async function setInitialValues() {
     fetchDataToOptions();
-    removeFields(0);
+
+    setFormFields([]);
 
     let filialOrigem = document.querySelector("select[name='filialOrigem']");
     let conferente = document.querySelector("select[name='nomeConferente']");
@@ -48,6 +49,7 @@ export default function EntradaCreate() {
     conferente.removeAttribute("disabled");
     doca.removeAttribute("disabled");
     setDoca("");
+    setdata(new Date().toLocaleDateString("pt-br"));
 
     filialOrigem.querySelector("option").selected = "selected";
     conferente.querySelector("option").selected = "selected";
@@ -74,7 +76,7 @@ export default function EntradaCreate() {
   const addFields = () => {
     if (conferente !== "" && filialOrigem !== "") {
       let object = {
-        dataAtual: dataAtual,
+        data: data,
         filialOrigem: filialOrigem,
         conferente: conferente,
         doca: doca,
@@ -112,13 +114,12 @@ export default function EntradaCreate() {
           showCancelButton: false,
           showConfirmButton: false,
           icon: "success",
-          timer: 2000,
-          timerProgressBar: true,
+          timer: 1000,
         });
 
         setTimeout(() => {
           setInitialValues();
-        }, 2000);
+        }, 1100);
       });
     } catch (err) {
       hideLoader();
@@ -139,8 +140,8 @@ export default function EntradaCreate() {
         <hr />
         <div className="row">
           <div className="field-size-2 ml-3">
-            <label htmlFor="dataAtual">Data</label>
-            <input type="number" name="dataAtual" className="form-control" required disabled value={dataAtual} />
+            <label htmlFor="data">Data</label>
+            <input type="text" name="data" className="form-control" required disabled value={data} />
           </div>
 
           <div className="field-size-2 ml-3">
@@ -169,7 +170,7 @@ export default function EntradaCreate() {
 
           <div className="field-size-1 ml-3">
             <label htmlFor="doca">Doca</label>
-            <input type="number" name="doca" className="form-control" required value={doca} onBlur={(e) => e.target.setAttribute("disabled", "true")} onChange={(e) => setDoca(e.target.value)} />
+            <input type="number" name="doca" className="form-control" required value={doca} onChange={(e) => setDoca(e.target.value)} />
           </div>
 
           <div className="">
@@ -207,7 +208,7 @@ export default function EntradaCreate() {
                   <input type="text" name="codigo" className="form-control" required value={form.codigo} onChange={(event) => handleFormBodyChange(event, index)} />
                 </div>
                 <div className="field-size-2">
-                  <input type="text" name="descricaoProduto" className=" form-control" maxLength="50" value={form.descricaoProduto} required onChange={(event) => handleFormBodyChange(event, index)} />
+                  <input type="text" name="descricaoProduto" className=" form-control" maxLength="30" value={form.descricaoProduto} required onChange={(event) => handleFormBodyChange(event, index)} />
                 </div>
                 <div className="field-size-1">
                   <input type="number" name="quantidadeProduto" className="form-control" required value={form.quantidadeProduto} onChange={(event) => handleFormBodyChange(event, index)} />
@@ -216,7 +217,7 @@ export default function EntradaCreate() {
                   <input type="number" name="filialDestino" className="form-control" required value={form.filialDestino} onChange={(event) => handleFormBodyChange(event, index)} />
                 </div>
                 <div className="field-size-2">
-                  <input type="text" name="observacao" className="form-control" value={form.observacao} onChange={(event) => handleFormBodyChange(event, index)} />
+                  <input type="text" name="observacao" className="form-control" maxLength="30" value={form.observacao} onChange={(event) => handleFormBodyChange(event, index)} />
                 </div>
                 <div className="field-size-1">
                   <button type="button" className="btn btn-primary" id="btn-remove-fields" style={{ height: "40px", paddingTop: "5px" }} onClick={() => removeFields(index)}>

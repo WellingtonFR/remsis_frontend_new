@@ -202,7 +202,7 @@ export default function EstoqueIndex() {
           ) : (
             entrada.map((entrada) => (
               <tr key={entrada.id}>
-                <td>{entrada.dataAtual}</td>
+                <td>{entrada.data}</td>
                 <td>{entrada.filialOrigem}</td>
                 <td>{entrada.filialDestino}</td>
                 <td className="form-buttons">
