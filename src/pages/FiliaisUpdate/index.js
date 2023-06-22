@@ -12,16 +12,14 @@ export default function FiliaisUpdate() {
   const history = useHistory();
 
   useEffect(() => {
-    populateData();
-  }, []);
-
-  async function populateData() {
     showLoader();
-    await api.get(`/filiais/findById/${id}`).then((response) => {
-      hideLoader();
-      setFilial(response.data[0]);
-    });
-  }
+    (async () => {
+      await api.get(`/filiais/findById/${id}`).then((response) => {
+        setFilial(response.data[0]);
+      });
+    })();
+    hideLoader();
+  }, [showLoader, hideLoader, id]);
 
   const handleInputChange = (e) => {
     e.persist();
@@ -74,76 +72,33 @@ export default function FiliaisUpdate() {
           <hr />
           <div className="form-group">
             <label htmlFor="numeroFilial">Número da filial</label>
-            <input
-              type="number"
-              name="numeroFilial"
-              className="form-control disabled"
-              maxLength="6"
-              value={filial.numeroFilial}
-              disabled
-              required
-              onChange={handleInputChange}
-            ></input>
+            <input type="number" name="numeroFilial" className="form-control disabled" maxLength="6" value={filial.numeroFilial || ""} disabled required></input>
           </div>
 
           <div className="form-row">
             <div className="form-group col-md-9">
               <label htmlFor="endereco">Endereço</label>
-              <input
-                type="text"
-                name="endereco"
-                className="form-control"
-                required
-                maxLength="50"
-                value={filial.endereco}
-                onChange={handleInputChange}
-              ></input>
+              <input type="text" name="endereco" className="form-control" required maxLength="50" value={filial.endereco || ""} onChange={handleInputChange}></input>
             </div>
             <div className="form-group col-md-3">
               <label htmlFor="numeroEndereco">Número</label>
-              <input
-                type="number"
-                name="numeroEndereco"
-                className="form-control"
-                value={filial.numeroEndereco}
-                required
-                onChange={handleInputChange}
-              ></input>
+              <input type="number" name="numeroEndereco" className="form-control" value={filial.numeroEndereco || ""} required onChange={handleInputChange}></input>
             </div>
           </div>
 
           <div className="form-group">
             <label htmlFor="complemento">Complemento</label>
-            <input
-              type="text"
-              name="complemento"
-              className="form-control"
-              value={filial.complemento}
-              onChange={handleInputChange}
-            ></input>
+            <input type="text" name="complemento" className="form-control" value={filial.complemento || ""} onChange={handleInputChange}></input>
           </div>
 
           <div className="form-group">
             <label htmlFor="cidade">Cidade</label>
-            <input
-              type="text"
-              name="cidade"
-              className="form-control"
-              value={filial.cidade}
-              required
-              onChange={handleInputChange}
-            ></input>
+            <input type="text" name="cidade" className="form-control" value={filial.cidade || ""} required onChange={handleInputChange}></input>
           </div>
 
           <div className="form-group">
             <label htmlFor="estado">Estado</label>
-            <select
-              name="estado"
-              className="form-control"
-              required
-              value={filial.estado}
-              onChange={handleInputChange}
-            >
+            <select name="estado" className="form-control" required value={filial.estado || ""} onChange={handleInputChange}>
               <option value="AC">Acre</option>
               <option value="AL">Alagoas</option>
               <option value="AP">Amapá</option>
@@ -175,16 +130,7 @@ export default function FiliaisUpdate() {
           </div>
           <div className="form-group">
             <label htmlFor="nomeFantasia">Nome Fantasia</label>
-            <input
-              type="text"
-              name="nomeFantasia"
-              className="form-control"
-              placeholder="Exemplo: LD182"
-              maxLength="20"
-              value={filial.nomeFantasia}
-              required
-              onChange={handleInputChange}
-            ></input>
+            <input type="text" name="nomeFantasia" className="form-control" placeholder="Exemplo: LD182" maxLength="20" value={filial.nomeFantasia || ""} required onChange={handleInputChange}></input>
 
             <div className="row buttons-form-group">
               <button type="submit" className="btn btn-primary btn-submit">

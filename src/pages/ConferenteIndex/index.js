@@ -9,16 +9,14 @@ export default function FiliaisIndex() {
   const [conferente, setConferente] = useState([]);
 
   useEffect(() => {
-    populateData();
-  }, []);
-
-  async function populateData() {
     showLoader();
-    await api.get("conferente").then((response) => {
-      hideLoader();
-      setConferente(response.data);
-    });
-  }
+    (async () => {
+      await api.get("conferente").then((response) => {
+        setConferente(response.data);
+      });
+    })();
+    hideLoader();
+  }, [hideLoader, showLoader]);
 
   async function excluirConferente(id) {
     try {
@@ -31,17 +29,24 @@ export default function FiliaisIndex() {
         cancelButtonText: "Cancelar",
         confirmButtonColor: "#af0600",
       });
+
       if (userConfirmAction) {
         showLoader();
-        await api.delete(`/conferente/delete/${id}`).then(() => {
-          populateData();
+
+        await api.delete(`/conferente/delete/${id}`).then(() => {});
+
+        await api.get("conferente").then((response) => {
           hideLoader();
-          Swal.fire({
-            title: "Conferente excluído com sucesso",
-            icon: "success",
-            showConfirmButton: false,
-            timer: 1100,
-          });
+          setConferente(response.data);
+        });
+
+        hideLoader();
+
+        Swal.fire({
+          title: "Conferente excluído com sucesso",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1100,
         });
       }
     } catch (err) {
@@ -81,10 +86,7 @@ export default function FiliaisIndex() {
                   <td>{conferente.nomeConferente}</td>
                   <td>{conferente.idConferente}</td>
                   <td className="form-buttons">
-                    <FiTrash2
-                      className="btn-icon-custom btn-icon-excluir mt-1"
-                      onClick={() => excluirConferente(conferente.id)}
-                    />
+                    <FiTrash2 className="btn-icon-custom btn-icon-excluir mt-1" onClick={() => excluirConferente(conferente.id)} />
                   </td>
                 </tr>
               ))

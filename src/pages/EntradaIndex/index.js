@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import $ from "jquery";
 // eslint-disable-next-line
 import styles from "./styles.css";
 import api from "../../services/api";
 import Swal from "sweetalert2";
-import { FiTrash2, FiEdit, FiArrowUp } from "react-icons/fi";
+import { FiTrash2, FiArrowUp } from "react-icons/fi";
 import UseLoader from "../../hooks/UseLoader";
 
 export default function EntradaIndex() {
@@ -17,33 +16,36 @@ export default function EntradaIndex() {
   const [filialDestino, setFilialDestino] = useState("");
 
   useEffect(() => {
-    initialSearch();
-  }, []);
-
-  async function initialSearch() {
-    const data = {
-      initialDate: new Date().toLocaleDateString("pt-br"),
-      finalDate: new Date().toLocaleDateString("pt-br"),
-      filialOrigem: filialOrigem,
-      filialDestino: filialDestino,
-    };
-    try {
+    (async () => {
       showLoader();
-      await api.post("/entrada/search", data).then((response) => {
-        setEntrada(response.data);
-      });
-      hideLoader();
-    } catch (err) {
-      hideLoader();
-      const { data } = err.response;
-      Swal.fire({
-        title: "Atenção",
-        text: data.message,
-        icon: "info",
-        confirmButtonText: "Voltar",
-      });
-    }
-  }
+
+      const data = {
+        initialDate: new Date().toLocaleDateString("pt-br"),
+        finalDate: new Date().toLocaleDateString("pt-br"),
+        filialOrigem: filialOrigem,
+        filialDestino: filialDestino,
+      };
+
+      try {
+        await api.post("/entrada/search", data).then((response) => {
+          setEntrada(response.data);
+        });
+
+        hideLoader();
+      } catch (err) {
+        hideLoader();
+
+        const { data } = err.response;
+
+        Swal.fire({
+          title: "Atenção",
+          text: data.message,
+          icon: "info",
+          confirmButtonText: "Voltar",
+        });
+      }
+    })();
+  }, [initialDate, finalDate, filialOrigem, filialDestino, hideLoader, showLoader]);
 
   async function handleSearch(e) {
     e.preventDefault();
@@ -97,6 +99,7 @@ export default function EntradaIndex() {
         cancelButtonText: "Cancelar",
         confirmButtonColor: "#af0600",
       });
+
       if (userConfirmAction) {
         await api.delete(`/entrada/delete/${id}`).then(() => {
           Swal.fire({
@@ -105,8 +108,20 @@ export default function EntradaIndex() {
             showConfirmButton: false,
             timer: 1000,
           });
-          initialSearch();
         });
+
+        const data = {
+          initialDate: new Date().toLocaleDateString("pt-br"),
+          finalDate: new Date().toLocaleDateString("pt-br"),
+          filialOrigem: filialOrigem,
+          filialDestino: filialDestino,
+        };
+
+        await api.post("/entrada/search", data).then((response) => {
+          setEntrada(response.data);
+        });
+
+        hideLoader();
       }
     } catch (err) {
       const { data } = err.response;
@@ -120,16 +135,21 @@ export default function EntradaIndex() {
     }
   }
 
-  $(document).ready(function () {
-    let btnSubir = $("#subirTopo");
-    btnSubir.hide();
+  document.addEventListener("DOMContentLoaded", function (e) {
+    let btnSubir = document.querySelector("#subirTopo");
+    btnSubir.style.display = "none";
 
-    $(window).scroll(function () {
-      if ($(this).scrollTop() > 100) {
-        btnSubir.fadeIn();
-      } else {
-        btnSubir.fadeOut();
-      }
+    document.addEventListener("DOMContentLoaded", function (e) {
+      let btnSubir = document.querySelector("#subirTopo");
+      btnSubir.style.display = "none";
+
+      document.addEventListener("scroll", function (e) {
+        if (document.scrollTop() > 100) {
+          btnSubir.fadeIn();
+        } else {
+          btnSubir.fadeOut();
+        }
+      });
     });
   });
 

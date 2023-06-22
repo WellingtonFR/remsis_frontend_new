@@ -30,8 +30,23 @@ export default function SaidaUpdate() {
   const { id } = useParams();
 
   useEffect(() => {
-    populateData();
-  }, []);
+    showLoader();
+    (async () => {
+      await api.get(`/saida/findById/${id}`).then((response) => {
+        setSaida(response.data[0]);
+        api.get(`/transportador/findByFilialAtendida/${response.data[0].filialDestino}`).then((response) => {
+          setTransportadores(response.data);
+        });
+      });
+      await api.get("transportador").then((response) => {
+        setTransportadores(response.data);
+      });
+      await api.get("conferente").then((response) => {
+        setConferentes(response.data);
+      });
+    })();
+    hideLoader();
+  }, [showLoader, hideLoader, id]);
 
   async function handleTransportador(optionValue) {
     if (!optionValue || optionValue === "") {
@@ -51,23 +66,6 @@ export default function SaidaUpdate() {
     e.persist();
     setSaida({ ...saida, [e.target.name]: e.target.value });
   };
-
-  async function populateData() {
-    showLoader();
-    await api.get(`/saida/findById/${id}`).then((response) => {
-      setSaida(response.data[0]);
-      api.get(`/transportador/findByFilialAtendida/${response.data[0].filialDestino}`).then((response) => {
-        setTransportadores(response.data);
-      });
-    });
-    await api.get("transportador").then((response) => {
-      setTransportadores(response.data);
-    });
-    await api.get("conferente").then((response) => {
-      setConferentes(response.data);
-    });
-    hideLoader();
-  }
 
   async function handleNewSaida(e) {
     e.preventDefault();
@@ -371,7 +369,9 @@ export default function SaidaUpdate() {
               <select name="tipoOperacao_1" className="form-control" required value={saida.tipoOperacao_1} onChange={handleInputChange}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
-                  <option value={option}>{option}</option>
+                  <option value={option} key={option}>
+                    {option}
+                  </option>
                 ))}
               </select>
             </div>

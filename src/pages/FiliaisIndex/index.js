@@ -11,16 +11,14 @@ export default function FiliaisIndex() {
   const [filiais, setFiliais] = useState([]);
 
   useEffect(() => {
-    populateData();
-  }, []);
-
-  async function populateData() {
-    showLoader();
-    await api.get("filiais").then((response) => {
-      hideLoader();
-      setFiliais(response.data);
-    });
-  }
+    (async () => {
+      showLoader();
+      await api.get("filiais").then((response) => {
+        hideLoader();
+        setFiliais(response.data);
+      });
+    })();
+  }, [hideLoader, showLoader]);
 
   async function excluirFilial(id) {
     try {
@@ -35,15 +33,19 @@ export default function FiliaisIndex() {
       });
       if (userConfirmAction) {
         showLoader();
-        await api.delete(`/filiais/delete/${id}`).then(() => {
-          populateData();
-          hideLoader();
-          Swal.fire({
-            title: "Filial excluída com sucesso",
-            icon: "success",
-            showConfirmButton: false,
-            timer: 1100,
-          });
+        await api.delete(`/filiais/delete/${id}`).then(() => {});
+
+        await api.get("filiais").then((response) => {
+          setFiliais(response.data);
+        });
+
+        hideLoader();
+
+        Swal.fire({
+          title: "Filial excluída com sucesso",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1100,
         });
       }
     } catch (err) {
@@ -60,16 +62,21 @@ export default function FiliaisIndex() {
   }
 
   //Botão de retorno ao topo página
-  $(document).ready(function () {
-    let btnSubir = $("#subirTopo");
-    btnSubir.hide();
+  document.addEventListener("DOMContentLoaded", function (e) {
+    let btnSubir = document.querySelector("#subirTopo");
+    btnSubir.style.display = "none";
 
-    $(window).scroll(function () {
-      if ($(this).scrollTop() > 100) {
-        btnSubir.fadeIn();
-      } else {
-        btnSubir.fadeOut();
-      }
+    document.addEventListener("DOMContentLoaded", function (e) {
+      let btnSubir = document.querySelector("#subirTopo");
+      btnSubir.style.display = "none";
+
+      document.addEventListener("scroll", function (e) {
+        if (document.scrollTop() > 100) {
+          btnSubir.fadeIn();
+        } else {
+          btnSubir.fadeOut();
+        }
+      });
     });
   });
 
@@ -109,8 +116,7 @@ export default function FiliaisIndex() {
               <tr key={filial.id}>
                 <td>{filial.numeroFilial}</td>
                 <td>
-                  {filial.endereco}, {filial.numeroEndereco}{" "}
-                  {filial.complemento}
+                  {filial.endereco}, {filial.numeroEndereco} {filial.complemento}
                 </td>
                 <td>{filial.cidade}</td>
                 <td>{filial.estado}</td>
@@ -119,10 +125,7 @@ export default function FiliaisIndex() {
                   <Link to={`/filiais/update/${filial.id}`}>
                     <FiEdit className="btn-icon-custom btn-icon-alterar mr-2 mt-1" />
                   </Link>
-                  <FiTrash2
-                    className="btn-icon-custom btn-icon-excluir mt-1"
-                    onClick={() => excluirFilial(filial.id)}
-                  />
+                  <FiTrash2 className="btn-icon-custom btn-icon-excluir mt-1" onClick={() => excluirFilial(filial.id)} />
                 </td>
               </tr>
             ))

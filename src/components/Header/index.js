@@ -1,12 +1,11 @@
 import React from "react";
 // eslint-disable-next-line
 import styles from "./styles.css";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import api from "../../services/api";
 
 export default function Header() {
   const isLoggedIn = localStorage.getItem("isLoggedIn");
-  const history = useHistory();
 
   async function handleLogout(e) {
     e.preventDefault();

@@ -7,7 +7,7 @@ import UseLoader from "../../hooks/UseLoader";
 
 export default function SaidaCreate() {
   //#region useState
-  const [data] = useState(new Date().toLocaleDateString("pt-br"));
+  const [date] = useState(new Date().toLocaleDateString("pt-br"));
   const [numeroControle] = useState(generateId(10));
   const [filialDestino, setFilialDestino] = useState("");
   const [nomeFilialDestino, setNomeFilialDestino] = useState("");
@@ -199,22 +199,20 @@ export default function SaidaCreate() {
   ];
 
   useEffect(() => {
-    fetchDataToOptions();
-  }, []);
-
-  async function fetchDataToOptions() {
     showLoader();
-    await api.get("filiais").then((response) => {
-      setFiliais(response.data);
-    });
-    await api.get("transportador").then((response) => {
-      setTransportadores(response.data);
-    });
-    await api.get("conferente").then((response) => {
-      setConferentes(response.data);
-    });
+    (async () => {
+      await api.get("filiais").then((response) => {
+        setFiliais(response.data);
+      });
+      await api.get("transportador").then((response) => {
+        setTransportadores(response.data);
+      });
+      await api.get("conferente").then((response) => {
+        setConferentes(response.data);
+      });
+    })();
     hideLoader();
-  }
+  }, [hideLoader, showLoader]);
 
   //gera um número aleatório para o número de controle
   function dec2hex(dec) {
@@ -230,7 +228,7 @@ export default function SaidaCreate() {
     e.preventDefault();
 
     const data = {
-      data,
+      data: date,
       numeroControle,
       filialDestino,
       nomeFilialDestino,
@@ -426,10 +424,10 @@ export default function SaidaCreate() {
       });
     } catch (err) {
       hideLoader();
-      // const { data } = err.response;
+      const { data } = err.response;
       Swal.fire({
         title: "Erro ao inserir",
-        text: err,
+        text: data.message,
         icon: "error",
         confirmButtonText: "Voltar",
       });
@@ -488,8 +486,8 @@ export default function SaidaCreate() {
         <hr />
         <div className="row">
           <div className="field-size-2 ml-3">
-            <label htmlFor="data">Data</label>
-            <input type="text" name="data" className="form-control" required disabled value={data} />
+            <label htmlFor="date">Data</label>
+            <input type="text" name="date" className="form-control" required disabled value={date} />
           </div>
           <div className="field-size-2 ml-3">
             <label htmlFor="numeroControle">Controle</label>

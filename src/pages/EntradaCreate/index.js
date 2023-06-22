@@ -33,10 +33,27 @@ export default function EntradaCreate() {
   ]);
 
   useEffect(() => {
-    setInitialValues();
-  }, []);
+    (async () => {
+      fetchDataToOptions();
 
-  async function setInitialValues() {
+      setFormFields([]);
+
+      let filialOrigem = document.querySelector("select[name='filialOrigem']");
+      let conferente = document.querySelector("select[name='nomeConferente']");
+      let doca = document.querySelector("input[name='doca']");
+
+      filialOrigem.removeAttribute("disabled");
+      conferente.removeAttribute("disabled");
+      doca.removeAttribute("disabled");
+      setDoca("");
+      setdata(new Date().toLocaleDateString("pt-br"));
+
+      filialOrigem.querySelector("option").selected = "selected";
+      conferente.querySelector("option").selected = "selected";
+    })();
+  }, [fetchDataToOptions]);
+
+  const setInitialValues = async () => {
     fetchDataToOptions();
 
     setFormFields([]);
@@ -53,7 +70,7 @@ export default function EntradaCreate() {
 
     filialOrigem.querySelector("option").selected = "selected";
     conferente.querySelector("option").selected = "selected";
-  }
+  };
 
   async function fetchDataToOptions() {
     showLoader();

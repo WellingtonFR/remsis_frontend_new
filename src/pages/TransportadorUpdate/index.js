@@ -14,16 +14,14 @@ export default function TransportadoUpdate() {
   const history = useHistory();
 
   useEffect(() => {
-    populateData();
-  }, []);
-
-  async function populateData() {
     showLoader();
-    await api.get(`/transportador/findById/${id}`).then((response) => {
-      hideLoader();
-      setTransportador(response.data[0]);
-    });
-  }
+    (async () => {
+      await api.get(`/transportador/findById/${id}`).then((response) => {
+        setTransportador(response.data[0]);
+      });
+    })();
+    hideLoader();
+  }, [hideLoader, showLoader, id]);
 
   const handleInputChange = (e) => {
     e.persist();
@@ -73,41 +71,17 @@ export default function TransportadoUpdate() {
           <hr />
           <div className="form-group">
             <label htmlFor="nomeTransportador">Nome</label>
-            <input
-              type="text"
-              name="nomeTransportador"
-              className="form-control disabled"
-              maxLength="6"
-              value={transportador.nomeTransportador}
-              disabled
-              required
-              onChange={handleInputChange}
-            ></input>
+            <input type="text" name="nomeTransportador" className="form-control disabled" maxLength="6" value={transportador.nomeTransportador} disabled required onChange={handleInputChange}></input>
           </div>
 
           <div className="form-group">
             <label htmlFor="placaVeiculo">Placa do veículo</label>
-            <input
-              type="text"
-              name="placaVeiculo"
-              className="form-control"
-              maxLength="8"
-              required
-              value={transportador.placaVeiculo}
-              onChange={handleInputChange}
-            ></input>
+            <input type="text" name="placaVeiculo" className="form-control" maxLength="8" required value={transportador.placaVeiculo} onChange={handleInputChange}></input>
           </div>
 
           <div className="form-group">
             <label htmlFor="filialAtendida">Filial atendida</label>
-            <input
-              type="text"
-              name="filialAtendida"
-              className="form-control"
-              maxLength="30"
-              value={transportador.filialAtendida}
-              onChange={handleInputChange}
-            ></input>
+            <input type="text" name="filialAtendida" className="form-control" maxLength="30" value={transportador.filialAtendida} onChange={handleInputChange}></input>
           </div>
 
           <div className="row buttons-form-group">

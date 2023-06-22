@@ -196,7 +196,7 @@ body {
   width: 50px;
   height: 50px;
   font-size: 30px;
-  background: #0073ff;
+  background: #0095da;
   box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.9);
   border-radius: 30px;
   bottom: 10px;
@@ -208,10 +208,11 @@ body {
   text-transform: uppercase;
   position: fixed;
   font-family: sans-serif;
+  transition: 0.3s;
 }
 
 #subirTopo:hover {
-  background-color: #2386ff;
+  background-color: #1cb7ff;
 }
 
 .form-custom {

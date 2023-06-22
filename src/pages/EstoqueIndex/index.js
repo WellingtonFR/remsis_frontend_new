@@ -1,49 +1,49 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import $ from "jquery";
 // eslint-disable-next-line
 import styles from "./styles.css";
 import api from "../../services/api";
 import Swal from "sweetalert2";
-import { FiTrash2, FiEdit, FiArrowUp } from "react-icons/fi";
+import { FiArrowUp } from "react-icons/fi";
 import UseLoader from "../../hooks/UseLoader";
 
 export default function EstoqueIndex() {
   const [loader, showLoader, hideLoader] = UseLoader();
-  const [entrada, setEntrada] = useState([]);
+  const [estoque, setEstoque] = useState([]);
   const [initialDate, setInitialDate] = useState("");
   const [finalDate, setFinalDate] = useState("");
   const [filialOrigem, setFilialOrigem] = useState("");
   const [filialDestino, setFilialDestino] = useState("");
 
   useEffect(() => {
-    populateData();
-  }, []);
+    (async () => {
+      const data = {
+        initialDate: new Date().toLocaleDateString("pt-br"),
+        finalDate: new Date().toLocaleDateString("pt-br"),
+        filialOrigem: filialOrigem,
+        filialDestino: filialDestino,
+      };
 
-  async function populateData() {
-    const data = {
-      initialDate: new Date().toLocaleDateString("pt-br"),
-      finalDate: new Date().toLocaleDateString("pt-br"),
-      filialOrigem: filialOrigem,
-      filialDestino: filialDestino,
-    };
-    try {
-      showLoader();
-      await api.post("/entrada/search", data).then((response) => {
-        setEntrada(response.data);
+      try {
+        showLoader();
+
+        await api.get("/estoque", data).then((response) => {
+          setEstoque(response.data);
+          hideLoader();
+        });
+      } catch (err) {
         hideLoader();
-      });
-    } catch (err) {
-      hideLoader();
-      const { data } = err.response;
-      Swal.fire({
-        title: "Atenção",
-        text: data.message,
-        icon: "info",
-        confirmButtonText: "Voltar",
-      });
-    }
-  }
+
+        const { data } = err.response;
+        Swal.fire({
+          title: "Atenção",
+          text: data.message,
+          icon: "info",
+          confirmButtonText: "Voltar",
+        });
+      }
+    })();
+  }, [showLoader, hideLoader, filialDestino, filialOrigem]);
 
   async function handleSearch(e) {
     e.preventDefault();
@@ -67,8 +67,8 @@ export default function EstoqueIndex() {
 
     try {
       showLoader();
-      await api.post("/entrada/search", data).then((response) => {
-        setEntrada(response.data);
+      await api.post("/estoque/search", data).then((response) => {
+        setEstoque(response.data);
       });
       hideLoader();
     } catch (err) {
@@ -83,50 +83,21 @@ export default function EstoqueIndex() {
     }
   }
 
-  async function excluirEntrada(id) {
-    try {
-      const { value: userConfirmAction } = await Swal.fire({
-        title: "Deseja excluir essa transferência ?",
-        icon: "question",
-        showConfirmButton: true,
-        showCancelButton: true,
-        confirmButtonText: "Excluir",
-        cancelButtonText: "Cancelar",
-        confirmButtonColor: "#af0600",
-      });
-      if (userConfirmAction) {
-        await api.delete(`/entrada/delete/${id}`).then(() => {
-          Swal.fire({
-            title: "Transferência excluída com sucesso",
-            icon: "success",
-            showConfirmButton: false,
-            timer: 1100,
-          });
-          populateData();
-        });
-      }
-    } catch (err) {
-      const { data } = err.response;
-      Swal.fire({
-        title: "Erro ao excluir transferência",
-        text: data.message,
-        icon: "error",
-        showConfirmButton: false,
-        timer: 1100,
-      });
-    }
-  }
+  document.addEventListener("DOMContentLoaded", function (e) {
+    let btnSubir = document.querySelector("#subirTopo");
+    btnSubir.style.display = "none";
 
-  $(document).ready(function () {
-    let btnSubir = $("#subirTopo");
-    btnSubir.hide();
+    document.addEventListener("DOMContentLoaded", function (e) {
+      let btnSubir = document.querySelector("#subirTopo");
+      btnSubir.style.display = "none";
 
-    $(window).scroll(function () {
-      if ($(this).scrollTop() > 100) {
-        btnSubir.fadeIn();
-      } else {
-        btnSubir.fadeOut();
-      }
+      document.addEventListener("scroll", function (e) {
+        if (document.scrollTop() > 100) {
+          btnSubir.fadeIn();
+        } else {
+          btnSubir.fadeOut();
+        }
+      });
     });
   });
 
@@ -149,7 +120,7 @@ export default function EstoqueIndex() {
   }
 
   return (
-    <div className="lista-entrada">
+    <div className="lista-estoque">
       <div className="top-search">
         <form onSubmit={handleSearch}>
           <div className="form-inline">
@@ -186,31 +157,26 @@ export default function EstoqueIndex() {
       <table className="table table-hover table-dark">
         <thead>
           <tr>
-            <th>Data</th>
+            <th>Data Entrada</th>
             <th>Filial origem</th>
             <th>Filial destino</th>
-            <th colSpan="2" style={{ textAlign: "center" }}>
-              Opções
-            </th>
+            <th>Código</th>
+            <th>Quantidade</th>
           </tr>
         </thead>
         <tbody>
-          {entrada.length === 0 ? (
+          {estoque.length === 0 ? (
             <tr>
               <td>Não há informações para exibir</td>
             </tr>
           ) : (
-            entrada.map((entrada) => (
-              <tr key={entrada.id}>
-                <td>{entrada.data}</td>
-                <td>{entrada.filialOrigem}</td>
-                <td>{entrada.filialDestino}</td>
-                <td className="form-buttons">
-                  <Link to={`/entrada/update/${entrada.id}`}>
-                    <FiEdit className="btn-icon-custom btn-icon-alterar mr-2 mt-1" />
-                  </Link>
-                  <FiTrash2 className="btn-icon-custom btn-icon-excluir mt-1" onClick={() => excluirEntrada(entrada.id)} />
-                </td>
+            estoque.map((estoque) => (
+              <tr key={estoque.id}>
+                <td>{estoque.data}</td>
+                <td>{estoque.filialOrigem}</td>
+                <td>{estoque.filialDestino}</td>
+                <td>{estoque.codigo}</td>
+                <td>{estoque.quantidadeProduto}</td>
               </tr>
             ))
           )}

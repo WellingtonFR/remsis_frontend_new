@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useHistory, Redirect } from "react-router-dom";
 import Swal from "sweetalert2";
 // eslint-disable-next-line
 import styles from "./styles.css";
@@ -12,8 +11,6 @@ export default function Login() {
   const [loader, showLoader, hideLoader] = UseLoader();
   const [nomeUsuario, setNomeusuario] = useState("");
   const [senha, setSenha] = useState("");
-
-  let history = useHistory();
 
   async function handleLogin(e) {
     e.preventDefault();

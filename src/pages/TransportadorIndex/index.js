@@ -11,16 +11,14 @@ export default function TransportadorIndex() {
   const [transportador, setTransportador] = useState([]);
 
   useEffect(() => {
-    populateData();
-  }, []);
-
-  async function populateData() {
     showLoader();
-    await api.get("transportador").then((response) => {
-      hideLoader();
-      setTransportador(response.data);
-    });
-  }
+    (async () => {
+      await api.get("transportador").then((response) => {
+        setTransportador(response.data);
+      });
+    })();
+    hideLoader();
+  }, [showLoader, hideLoader]);
 
   async function excluirTransportador(id) {
     try {
@@ -35,15 +33,19 @@ export default function TransportadorIndex() {
       });
       if (userConfirmAction) {
         showLoader();
-        await api.delete(`/transportador/delete/${id}`).then(() => {
-          populateData();
-          hideLoader();
-          Swal.fire({
-            title: "Transportador excluído com sucesso",
-            icon: "success",
-            showConfirmButton: false,
-            timer: 1100,
-          });
+        await api.delete(`/transportador/delete/${id}`).then(() => {});
+
+        await api.get("transportador").then((response) => {
+          setTransportador(response.data);
+        });
+
+        hideLoader();
+
+        Swal.fire({
+          title: "Transportador excluído com sucesso",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1100,
         });
       }
     } catch (err) {
@@ -60,16 +62,21 @@ export default function TransportadorIndex() {
   }
 
   //Botão de retorno ao topo página
-  $(document).ready(function () {
-    let btnSubir = $("#subirTopo");
-    btnSubir.hide();
+  document.addEventListener("DOMContentLoaded", function (e) {
+    let btnSubir = document.querySelector("#subirTopo");
+    btnSubir.style.display = "none";
 
-    $(window).scroll(function () {
-      if ($(this).scrollTop() > 100) {
-        btnSubir.fadeIn();
-      } else {
-        btnSubir.fadeOut();
-      }
+    document.addEventListener("DOMContentLoaded", function (e) {
+      let btnSubir = document.querySelector("#subirTopo");
+      btnSubir.style.display = "none";
+
+      document.addEventListener("scroll", function (e) {
+        if (document.scrollTop() > 100) {
+          btnSubir.fadeIn();
+        } else {
+          btnSubir.fadeOut();
+        }
+      });
     });
   });
 
@@ -117,10 +124,7 @@ export default function TransportadorIndex() {
                   <Link to={`/transportador/update/${transportador.id}`}>
                     <FiEdit className="btn-icon-custom btn-icon-alterar mr-2 mt-1" />
                   </Link>
-                  <FiTrash2
-                    className="btn-icon-custom btn-icon-excluir mt-1"
-                    onClick={() => excluirTransportador(`${transportador.id}`)}
-                  />
+                  <FiTrash2 className="btn-icon-custom btn-icon-excluir mt-1" onClick={() => excluirTransportador(`${transportador.id}`)} />
                 </td>
               </tr>
             ))

@@ -15,33 +15,31 @@ export default function SaidaIndex() {
   const [filialDestino, setFilialDestino] = useState("");
 
   useEffect(() => {
-    populateData();
-  }, []);
-
-  async function populateData() {
-    const data = {
-      initialDate: new Date().toLocaleDateString("pt-br"),
-      finalDate: new Date().toLocaleDateString("pt-br"),
-      numeroControle: numeroControle,
-      filialDestino: filialDestino,
-    };
     showLoader();
-    try {
-      await api.post("/saida/search", data).then((response) => {
-        setSaidas(response.data);
-      });
-      hideLoader();
-    } catch (err) {
-      hideLoader();
-      const { data } = err.response;
-      Swal.fire({
-        title: "Atenção",
-        text: data.message,
-        icon: "info",
-        confirmButtonText: "Voltar",
-      });
-    }
-  }
+    (async () => {
+      const data = {
+        initialDate: new Date().toLocaleDateString("pt-br"),
+        finalDate: new Date().toLocaleDateString("pt-br"),
+        numeroControle: numeroControle,
+        filialDestino: filialDestino,
+      };
+      try {
+        await api.post("/saida/search", data).then((response) => {
+          setSaidas(response.data);
+        });
+        hideLoader();
+      } catch (err) {
+        hideLoader();
+        const { data } = err.response;
+        Swal.fire({
+          title: "Atenção",
+          text: data.message,
+          icon: "info",
+          confirmButtonText: "Voltar",
+        });
+      }
+    })();
+  }, [showLoader, hideLoader, numeroControle, filialDestino]);
 
   async function handleSearch(e) {
     e.preventDefault();
@@ -77,8 +75,8 @@ export default function SaidaIndex() {
       showLoader();
       await api.post("/saida/search", data).then((response) => {
         setSaidas(response.data);
-        hideLoader();
       });
+      hideLoader();
     } catch (err) {
       hideLoader();
       const { data } = err.response;
@@ -103,14 +101,24 @@ export default function SaidaIndex() {
         confirmButtonColor: "#af0600",
       });
       if (userConfirmAction) {
-        await api.delete(`/saida/delete/${id}`).then(() => {
+        await api.delete(`/saida/delete/${id}`).then((data) => {
           Swal.fire({
             title: "Transferência excluída com sucesso",
             icon: "success",
             showConfirmButton: false,
             timer: 1100,
           });
-          populateData();
+        });
+
+        const data = {
+          initialDate: new Date().toLocaleDateString("pt-br"),
+          finalDate: new Date().toLocaleDateString("pt-br"),
+          numeroControle: numeroControle,
+          filialDestino: filialDestino,
+        };
+
+        await api.post("/saida/search", data).then((response) => {
+          setSaidas(response.data);
         });
       }
     } catch (err) {
@@ -125,15 +133,15 @@ export default function SaidaIndex() {
     }
   }
 
-  $(document).ready(function () {
-    let btnSubir = $("#subirTopo");
-    btnSubir.hide();
+  document.addEventListener("DOMContentLoaded", function (e) {
+    let btnSubir = document.querySelector("#subirTopo");
+    btnSubir.style.display = "none";
 
-    $(window).scroll(function () {
-      if ($(this).scrollTop() > 100) {
-        btnSubir.fadeIn();
+    document.addEventListener("scroll", function (e) {
+      if (window.scrollY > 100) {
+        btnSubir.style.display = "block";
       } else {
-        btnSubir.fadeOut();
+        btnSubir.style.display = "none";
       }
     });
   });
@@ -198,6 +206,7 @@ export default function SaidaIndex() {
             <th>Nº Controle</th>
             <th>Filial destino</th>
             <th>Transportador</th>
+            <th>Doca</th>
             <th colSpan="2" style={{ textAlign: "center" }}>
               Opções
             </th>
@@ -215,14 +224,15 @@ export default function SaidaIndex() {
                 <td>{saida.numeroControle}</td>
                 <td>{saida.filialDestino}</td>
                 <td>{saida.transportador}</td>
+                <td>{saida.doca}</td>
                 <td className="form-buttons">
                   <Link to={`/saida/report/${saida.id}`}>
-                    <FiPrinter className="btn-icon-custom btn-icon-imprimir mr-2 mt-1" />
+                    <FiPrinter className="btn-icon-custom btn-icon-imprimir mr-2 mt-2" />
                   </Link>
                   <Link to={`/saida/update/${saida.id}`}>
-                    <FiEdit className="btn-icon-custom btn-icon-alterar mr-2 mt-1" />
+                    <FiEdit className="btn-icon-custom btn-icon-alterar mr-2 mt-2" />
                   </Link>
-                  <FiTrash2 className="btn-icon-custom btn-icon-excluir mt-1" onClick={() => excluirsaida(saida.id)} />
+                  <FiTrash2 className="btn-icon-custom btn-icon-excluir mt-2" onClick={() => excluirsaida(saida.id)} />
                 </td>
               </tr>
             ))
