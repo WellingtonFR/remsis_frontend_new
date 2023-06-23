@@ -4,27 +4,22 @@ import logoMagalu from "../../img/logoMagalu.png";
 // eslint-disable-next-line
 import styles from "./styles.css";
 import api from "../../services/api";
-import UseLoader from "../../hooks/UseLoader";
 
 export default function TransferenciaReport() {
-  const [loader, showLoader, hideLoader] = UseLoader();
   const { id } = useParams();
   const [report, setReport] = useState("");
-  const [dataDeImpressao, setDataDeImpressao] = useState(new Date().toLocaleDateString("pt-br") + " " + new Date().toLocaleTimeString("pt-br"));
+  const [dataDeImpressao] = useState(new Date().toLocaleDateString("pt-br") + " " + new Date().toLocaleTimeString("pt-br"));
 
   useEffect(() => {
-    showLoader();
     (async () => {
       await api.get(`/saida/findById/${id}`).then((response) => {
         setReport(response.data[0]);
       });
     })();
-    hideLoader();
-  }, [showLoader, hideLoader, id]);
+  }, [id]);
 
   async function handlePrint(e) {
     e.preventDefault();
-    await setDataDeImpressao(new Date().toLocaleDateString("pt-br"));
     window.print();
   }
 
@@ -62,13 +57,11 @@ export default function TransferenciaReport() {
           </div>
         </div>
       </div>
-      {/*top*/}
 
       <div className="row report-table-header">
         <div className="col">Relatório de remanejamento CD 94 - Londrina</div>
       </div>
 
-      {/*down*/}
       <div className="report-body">
         <table className="table table-report">
           <thead>
@@ -346,8 +339,6 @@ export default function TransferenciaReport() {
           <div className="col">Impresso em {dataDeImpressao}</div>
         </div>
       </div>
-      {/*container-fluid*/}
-      {loader}
     </div>
   );
 }

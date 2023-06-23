@@ -12,13 +12,11 @@ export default function FiliaisIndex() {
 
   useEffect(() => {
     (async () => {
-      showLoader();
       await api.get("filiais").then((response) => {
-        hideLoader();
         setFiliais(response.data);
       });
     })();
-  }, [hideLoader, showLoader]);
+  }, []);
 
   async function excluirFilial(id) {
     try {

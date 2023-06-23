@@ -15,7 +15,6 @@ export default function SaidaIndex() {
   const [filialDestino, setFilialDestino] = useState("");
 
   useEffect(() => {
-    showLoader();
     (async () => {
       const data = {
         initialDate: new Date().toLocaleDateString("pt-br"),
@@ -27,9 +26,7 @@ export default function SaidaIndex() {
         await api.post("/saida/search", data).then((response) => {
           setSaidas(response.data);
         });
-        hideLoader();
       } catch (err) {
-        hideLoader();
         const { data } = err.response;
         Swal.fire({
           title: "Atenção",
@@ -39,8 +36,7 @@ export default function SaidaIndex() {
         });
       }
     })();
-  }, [showLoader, hideLoader, numeroControle, filialDestino]);
-
+  }, [numeroControle, filialDestino]);
   async function handleSearch(e) {
     e.preventDefault();
 

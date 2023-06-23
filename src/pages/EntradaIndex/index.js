@@ -17,8 +17,6 @@ export default function EntradaIndex() {
 
   useEffect(() => {
     (async () => {
-      showLoader();
-
       const data = {
         initialDate: new Date().toLocaleDateString("pt-br"),
         finalDate: new Date().toLocaleDateString("pt-br"),
@@ -30,11 +28,7 @@ export default function EntradaIndex() {
         await api.post("/entrada/search", data).then((response) => {
           setEntrada(response.data);
         });
-
-        hideLoader();
       } catch (err) {
-        hideLoader();
-
         const { data } = err.response;
 
         Swal.fire({
@@ -45,7 +39,7 @@ export default function EntradaIndex() {
         });
       }
     })();
-  }, [initialDate, finalDate, filialOrigem, filialDestino, hideLoader, showLoader]);
+  }, [filialOrigem, filialDestino]);
 
   async function handleSearch(e) {
     e.preventDefault();

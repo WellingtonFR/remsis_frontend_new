@@ -9,15 +9,12 @@ export default function FiliaisIndex() {
   const [conferente, setConferente] = useState([]);
 
   useEffect(() => {
-    showLoader();
     (async () => {
       await api.get("conferente").then((response) => {
         setConferente(response.data);
       });
     })();
-    hideLoader();
-  }, [hideLoader, showLoader]);
-
+  }, []);
   async function excluirConferente(id) {
     try {
       const { value: userConfirmAction } = await Swal.fire({

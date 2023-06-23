@@ -4,25 +4,20 @@ import { useParams, useHistory, Link } from "react-router-dom";
 // eslint-disable-next-line
 import styles from "./styles.css";
 import api from "../../services/api";
-import UseLoader from "../../hooks/UseLoader";
 
 export default function TransportadoUpdate() {
-  const [loader, showLoader, hideLoader] = UseLoader();
   const [transportador, setTransportador] = useState("");
   const { id } = useParams();
 
   const history = useHistory();
 
   useEffect(() => {
-    showLoader();
     (async () => {
       await api.get(`/transportador/findById/${id}`).then((response) => {
         setTransportador(response.data[0]);
       });
     })();
-    hideLoader();
-  }, [hideLoader, showLoader, id]);
-
+  }, [id]);
   const handleInputChange = (e) => {
     e.persist();
     setTransportador({
@@ -41,7 +36,6 @@ export default function TransportadoUpdate() {
     };
 
     try {
-      // eslint-disable-next-line react-hooks/exhaustive-deps
       await api.put(`/transportador/update/${id}`, data).then(() => {
         Swal.fire({
           title: "Alterado com sucesso !",
@@ -93,7 +87,6 @@ export default function TransportadoUpdate() {
             </Link>
           </div>
         </form>
-        {loader}
       </div>
     </div>
   );

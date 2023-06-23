@@ -30,7 +30,6 @@ export default function SaidaUpdate() {
   const { id } = useParams();
 
   useEffect(() => {
-    showLoader();
     (async () => {
       await api.get(`/saida/findById/${id}`).then((response) => {
         setSaida(response.data[0]);
@@ -45,8 +44,7 @@ export default function SaidaUpdate() {
         setConferentes(response.data);
       });
     })();
-    hideLoader();
-  }, [showLoader, hideLoader, id]);
+  }, [id]);
 
   async function handleTransportador(optionValue) {
     if (!optionValue || optionValue === "") {
@@ -59,7 +57,6 @@ export default function SaidaUpdate() {
       setPlacaVeiculo(response.data[0].placaVeiculo);
       setTransportador(response.data[0].nomeTransportador);
     });
-    hideLoader();
   }
 
   const handleInputChange = (e) => {

@@ -20,6 +20,7 @@ export default function SaidaCreate() {
   const [transportador, setTransportador] = useState(""); //para saída dos dados ao submeter
   const [conferente, setConferente] = useState(""); //Preenche o option
   const [conferentes, setConferentes] = useState([]); //para saída dos dados ao submeter
+  const [registroEntrada, setRegistrosEntrada] = useState([]);
 
   const [filialOrigem_1, setFilialorigem_1] = useState("");
   const [notaFiscal_1, setNotafiscal_1] = useState("");
@@ -199,7 +200,6 @@ export default function SaidaCreate() {
   ];
 
   useEffect(() => {
-    showLoader();
     (async () => {
       await api.get("filiais").then((response) => {
         setFiliais(response.data);
@@ -211,9 +211,7 @@ export default function SaidaCreate() {
         setConferentes(response.data);
       });
     })();
-    hideLoader();
-  }, [hideLoader, showLoader]);
-
+  }, []);
   //gera um número aleatório para o número de controle
   function dec2hex(dec) {
     return ("0" + dec.toString(16)).substr(-2);
@@ -459,9 +457,20 @@ export default function SaidaCreate() {
     });
 
     await api.get(`/transportador/findByFilialAtendida/${optionValue}`).then((response) => {
-      hideLoader();
       setTransportadores(response.data);
     });
+
+    await api.get(`/entrada/findByFilialDestino/${optionValue}`).then((response) => {
+      setRegistrosEntrada(response.data);
+    });
+
+    hideLoader();
+
+    const modal = document.querySelector("#modal-saida");
+    const overlay = document.querySelector(".overlay");
+
+    modal.style.visibility = "visible";
+    overlay.style.visibility = "visible";
   }
 
   async function handleTransportador(optionValue) {
@@ -497,7 +506,7 @@ export default function SaidaCreate() {
 
         <div className="row">
           <div className="field-size-2 ml-3">
-            <label htmlFor="filialDestino">Unidade destino</label>
+            <label htmlFor="filialDestino">Filial destino</label>
             <select name="filialDestino" className="form-control" required onChange={(e) => handlefilialDestino(e.target.value)}>
               <option value="">Selecione</option>
               {filiais.map((filial) => (
@@ -509,7 +518,7 @@ export default function SaidaCreate() {
           </div>
 
           <div className="field-size-2 ml-3">
-            <label htmlFor="nomefilialDestino">Nome</label>
+            <label htmlFor="nomefilialDestino">Código Filial</label>
             <input name="nomefilialDestino" type="text" className="form-control" value={nomeFilialDestino} required disabled />
           </div>
 
@@ -1221,6 +1230,38 @@ export default function SaidaCreate() {
           </div>
         </div>
       </form>
+
+      <div className="overlay">
+        <div id="modal-saida" className="modal-saida">
+          <div className="modal-saida__body">
+            <h4>Incluir registros</h4>
+
+            <div className="modal-saida__content">
+              {registroEntrada.map((registro) => (
+                <div className="modal-saida__itens">
+                  <div>{registro.codigo}</div>
+                  <div>{registro.descricaoProduto}</div>
+                  <div>{registro.quantidade}</div>
+                </div>
+              ))}
+            </div>
+
+            <div className="modal-saida__footer">
+              <a href="#" className="modal-saida__btn-confirm btn btn-info">
+                Confirmar
+              </a>
+              <a href="#" className="modal-saida__btn-close btn btn-dark">
+                Fechar
+              </a>
+            </div>
+
+            <a href="#" className="modal-saida__close">
+              &times;
+            </a>
+          </div>
+        </div>
+      </div>
+
       {loader}
     </div>
   );

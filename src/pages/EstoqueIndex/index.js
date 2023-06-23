@@ -25,15 +25,10 @@ export default function EstoqueIndex() {
       };
 
       try {
-        showLoader();
-
         await api.get("/estoque", data).then((response) => {
           setEstoque(response.data);
-          hideLoader();
         });
       } catch (err) {
-        hideLoader();
-
         const { data } = err.response;
         Swal.fire({
           title: "Atenção",
@@ -43,8 +38,7 @@ export default function EstoqueIndex() {
         });
       }
     })();
-  }, [showLoader, hideLoader, filialDestino, filialOrigem]);
-
+  }, [filialOrigem, filialDestino]);
   async function handleSearch(e) {
     e.preventDefault();
 

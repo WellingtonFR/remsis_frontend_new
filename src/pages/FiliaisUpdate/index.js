@@ -12,14 +12,12 @@ export default function FiliaisUpdate() {
   const history = useHistory();
 
   useEffect(() => {
-    showLoader();
     (async () => {
       await api.get(`/filiais/findById/${id}`).then((response) => {
         setFilial(response.data[0]);
       });
     })();
-    hideLoader();
-  }, [showLoader, hideLoader, id]);
+  }, [id]);
 
   const handleInputChange = (e) => {
     e.persist();

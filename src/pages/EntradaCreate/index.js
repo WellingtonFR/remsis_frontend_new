@@ -34,9 +34,14 @@ export default function EntradaCreate() {
 
   useEffect(() => {
     (async () => {
-      fetchDataToOptions();
-
       setFormFields([]);
+
+      await api.get("filiais").then((response) => {
+        setFiliais(response.data);
+      });
+      await api.get("conferente").then((response) => {
+        setConferentes(response.data);
+      });
 
       let filialOrigem = document.querySelector("select[name='filialOrigem']");
       let conferente = document.querySelector("select[name='nomeConferente']");
@@ -51,9 +56,9 @@ export default function EntradaCreate() {
       filialOrigem.querySelector("option").selected = "selected";
       conferente.querySelector("option").selected = "selected";
     })();
-  }, [fetchDataToOptions]);
+  }, []);
 
-  const setInitialValues = async () => {
+  const resetForm = async () => {
     fetchDataToOptions();
 
     setFormFields([]);
@@ -135,7 +140,7 @@ export default function EntradaCreate() {
         });
 
         setTimeout(() => {
-          setInitialValues();
+          resetForm();
         }, 1100);
       });
     } catch (err) {

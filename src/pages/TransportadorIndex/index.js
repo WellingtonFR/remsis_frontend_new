@@ -11,15 +11,12 @@ export default function TransportadorIndex() {
   const [transportador, setTransportador] = useState([]);
 
   useEffect(() => {
-    showLoader();
     (async () => {
       await api.get("transportador").then((response) => {
         setTransportador(response.data);
       });
     })();
-    hideLoader();
-  }, [showLoader, hideLoader]);
-
+  }, []);
   async function excluirTransportador(id) {
     try {
       const { value: userConfirmAction } = await Swal.fire({
