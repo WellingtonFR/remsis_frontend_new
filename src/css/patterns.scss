@@ -1,7 +1,7 @@
 $font: "Roboto", "Courier New", Courier, monospace;
 $primary-background: #2b3035;
-$btn-primary: #0095da;
-$btn-primary--hover: #00a5f1;
+$btn__primary: #0095da;
+$btn__primary--hover: #00a5f1;
 
 html {
   background-color: $primary-background;
@@ -69,9 +69,10 @@ html {
 }
 
 .btn {
-  transition: 0.3s !important;
   padding: 10px;
   border-radius: 20px;
+  transition: 0.3s !important;
+  border: none;
 }
 
 .btn--medium {
@@ -83,13 +84,12 @@ html {
 }
 
 .btn__primary {
-  background-color: $btn-primary;
+  background-color: $btn__primary;
   color: #fff;
-  border: 1px solid #00a2ff;
 }
 
 .btn__primary:hover {
-  background-color: $btn-primary--hover;
+  background-color: $btn__primary--hover;
 }
 
 .btn-icon-custom {

@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
-import Header from "../components/Header";
 
 import Home from "../pages/Home";
 import FiliaisCreate from "../pages/FiliaisCreate";
@@ -20,6 +19,7 @@ import NotFoundPage from "../pages/NotFoundPage";
 import EntradaCreate from "../pages/EntradaCreate";
 import EntradaIndex from "../pages/EntradaIndex";
 import EstoqueIndex from "../pages/EstoqueIndex";
+import Navbar from "../components/Navbar";
 
 export default function Routes() {
   const token = localStorage.getItem("token");
@@ -32,9 +32,11 @@ export default function Routes() {
 
   return (
     <BrowserRouter>
-      <Header />
-      <div>
-        <Switch>
+      <Switch>
+        <Route exact path="/login" component={Login} />
+
+        <div>
+          <Navbar />
           <PrivateRoute exact path="/" component={Home} />
 
           {/*Filial*/}
@@ -67,12 +69,11 @@ export default function Routes() {
           <PrivateRoute path="/conferente/create" component={ConferenteCreate} />
 
           {/*Login*/}
-          <Route exact path="/login" component={Login} />
 
           {/* 404 error */}
-          <Route component={NotFoundPage} />
-        </Switch>
-      </div>
+        </div>
+        <Route component={NotFoundPage} />
+      </Switch>
     </BrowserRouter>
   );
 }
