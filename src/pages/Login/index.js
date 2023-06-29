@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Swal from "sweetalert2";
-// eslint-disable-next-line
-import styles from "./styles.css";
+import "./styles.scss";
 import api from "../../services/api";
 import UseLoader from "../../hooks/UseLoader";
 import { FiKey, FiUser } from "react-icons/fi";
@@ -37,24 +36,27 @@ export default function Login() {
   }
 
   return (
-    <div className="login-gradient-trasition">
-      <div className="container login">
-        <form onSubmit={handleLogin}>
-          <div className="row">
-            <div className="col"></div>
-            <div className="col-md-8">
-              <img src={logoMagalu} className="img-fluid" alt="logoMagalu" />
+    <div className="login">
+      <div className="login__background">
+        <div className="login__form">
+          <img src={logoMagalu} className="login__logo" alt="logoMagalu" />
+
+          <form onSubmit={handleLogin}>
+            <div className="form__row mt-2 flex-center">
+              <FiUser className="login__icons" />
+              <input type="text" className="login__input" placeholder="USUÁRIO" required onChange={(e) => setNomeusuario(e.target.value)} />
             </div>
-            <div className="col"></div>
-          </div>
-          <FiUser className="login-icons" />
-          <input type="text" className="form-control" placeholder="USUÁRIO" required onChange={(e) => setNomeusuario(e.target.value)} />
-          <FiKey className="login-icons" />
-          <input type="password" className="form-control" placeholder="SENHA" required onChange={(e) => setSenha(e.target.value)} />
-          <div className="buttons-submit">
-            <button className="btn btn-primary">Entrar</button>
-          </div>
-        </form>
+
+            <div className="form__row mt-1 flex-center">
+              <FiKey className="login__icons" />
+              <input type="password" className="login__input" placeholder="SENHA" required onChange={(e) => setSenha(e.target.value)} />
+            </div>
+
+            <div className="form__row mt-3 flex-center">
+              <button className="btn btn__primary btn--large">Entrar</button>
+            </div>
+          </form>
+        </div>
         {loader}
       </div>
     </div>

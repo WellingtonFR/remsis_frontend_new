@@ -19,6 +19,7 @@
     "react-maskinput": "^2.0.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
+    "sass": "^1.63.6",
     "sweetalert2": "^9.14.4"
   },
   "scripts": {

@@ -465,13 +465,24 @@ export default function SaidaCreate() {
     });
 
     hideLoader();
+    showModal();
+  }
 
+  const showModal = () => {
     const modal = document.querySelector("#modal-saida");
     const overlay = document.querySelector(".overlay");
 
     modal.style.visibility = "visible";
     overlay.style.visibility = "visible";
-  }
+  };
+
+  const hideModal = () => {
+    const modal = document.querySelector("#modal-saida");
+    const overlay = document.querySelector(".overlay");
+
+    modal.style.visibility = "hidden";
+    overlay.style.visibility = "hidden";
+  };
 
   async function handleTransportador(optionValue) {
     if (!optionValue || optionValue === "") {
@@ -1234,30 +1245,44 @@ export default function SaidaCreate() {
       <div className="overlay">
         <div id="modal-saida" className="modal-saida">
           <div className="modal-saida__body">
-            <h4>Incluir registros</h4>
-
             <div className="modal-saida__content">
-              {registroEntrada.map((registro) => (
-                <div className="modal-saida__itens">
-                  <div>{registro.codigo}</div>
-                  <div>{registro.descricaoProduto}</div>
-                  <div>{registro.quantidade}</div>
-                </div>
-              ))}
+              <table className="modal-saida__table">
+                <tr>
+                  <th>
+                    <input type="checkbox" disabled></input>
+                  </th>
+                  <th className="text-center">Filial Origem</th>
+                  <th>Código</th>
+                  <th>Descrição</th>
+                  <th className="text-center">Quantidade</th>
+                </tr>
+
+                {registroEntrada.length === 0 ? (
+                  <tr>
+                    <td colSpan="5" className="text-center">
+                      Não há informações para exibir
+                    </td>
+                  </tr>
+                ) : (
+                  registroEntrada.map((registro) => (
+                    <tr key={registro.id}>
+                      <td>
+                        <input type="checkbox" name="saida-checkbox" value={registro.id}></input>
+                      </td>
+                      <td className="text-center">{registro.filialOrigem}</td>
+                      <td>{registro.codigo}</td>
+                      <td>{registro.descricaoProduto}</td>
+                      <td className="text-center">{registro.quantidadeProduto}</td>
+                    </tr>
+                  ))
+                )}
+              </table>
             </div>
 
             <div className="modal-saida__footer">
-              <a href="#" className="modal-saida__btn-confirm btn btn-info">
-                Confirmar
-              </a>
-              <a href="#" className="modal-saida__btn-close btn btn-dark">
-                Fechar
-              </a>
+              <input type="button" value="Confirmar" className="modal-saida__btn-confirm btn btn-info" />
+              <input type="button" className="modal-saida__btn-close btn btn-dark" value="Fechar" onClick={hideModal} />
             </div>
-
-            <a href="#" className="modal-saida__close">
-              &times;
-            </a>
           </div>
         </div>
       </div>
