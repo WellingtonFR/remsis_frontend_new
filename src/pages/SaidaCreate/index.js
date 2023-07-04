@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { FiPlusCircle } from "react-icons/fi";
 import api from "../../services/api";
 import UseLoader from "../../hooks/UseLoader";
+import "./styles.scss";
 
 export default function SaidaCreate() {
   //#region useState
@@ -184,7 +185,7 @@ export default function SaidaCreate() {
   //#endregion
 
   const [loader, showLoader, hideLoader] = UseLoader();
-  const history = useHistory();
+  const history = useNavigate();
 
   const tipoOptions = [
     "PORTARIA",
@@ -500,25 +501,32 @@ export default function SaidaCreate() {
   }
 
   return (
-    <div className="form-create">
-      <h4 className="form-header">Cadastro de saída</h4>
+    <div className="form flex-center">
       <form onSubmit={handleNewSaida} id="form_saida">
+        <h4 className="form__title uppercase">Cadastro de saída</h4>
         <hr />
-        <div className="row">
-          <div className="field-size-2 ml-3">
-            <label htmlFor="date">Data</label>
-            <input type="text" name="date" className="form-control" required disabled value={date} />
+
+        <div className="row mt-3">
+          <div className="col-width-1 mr-3">
+            <label className="mb-1" htmlFor="date">
+              Data
+            </label>
+            <input type="text" name="date" required disabled value={date} />
           </div>
-          <div className="field-size-2 ml-3">
-            <label htmlFor="numeroControle">Controle</label>
-            <input type="text" name="numeroControle" className="form-control" value={numeroControle} disabled />
+          <div className="col-width-1 mr-1">
+            <label className="mb-1" htmlFor="numeroControle">
+              Controle
+            </label>
+            <input type="text" name="numeroControle" value={numeroControle} disabled />
           </div>
         </div>
 
-        <div className="row">
-          <div className="field-size-2 ml-3">
-            <label htmlFor="filialDestino">Filial destino</label>
-            <select name="filialDestino" className="form-control" required onChange={(e) => handlefilialDestino(e.target.value)}>
+        <div className="row mt-2">
+          <div className="col-width-1 mr-3">
+            <label className="mb-1" htmlFor="filialDestino">
+              Filial destino
+            </label>
+            <select name="filialDestino" required onChange={(e) => handlefilialDestino(e.target.value)}>
               <option value="">Selecione</option>
               {filiais.map((filial) => (
                 <option value={filial.numeroFilial} key={filial.id}>
@@ -528,21 +536,27 @@ export default function SaidaCreate() {
             </select>
           </div>
 
-          <div className="field-size-2 ml-3">
-            <label htmlFor="nomefilialDestino">Código Filial</label>
-            <input name="nomefilialDestino" type="text" className="form-control" value={nomeFilialDestino} required disabled />
+          <div className="col-width-3 mr-3">
+            <label className="mb-1" htmlFor="nomefilialDestino">
+              Código Filial
+            </label>
+            <input name="nomefilialDestino" type="text" value={nomeFilialDestino} required disabled />
           </div>
 
-          <div className="field-size-4 ml-3">
-            <label htmlFor="enderecofilialDestino">Endereço</label>
-            <input name="enderecofilialDestino" type="text" className="form-control" value={enderecoFilialDestino} disabled />
+          <div className="col-width-4 mr-3">
+            <label className="mb-1" htmlFor="enderecofilialDestino">
+              Endereço
+            </label>
+            <input name="enderecofilialDestino" type="text" value={enderecoFilialDestino} disabled />
           </div>
         </div>
 
-        <div className="row">
-          <div className="field-size-2 ml-3">
-            <label htmlFor="transportador">Transportador</label>
-            <select name="transportador" className="form-control" required onChange={(e) => handleTransportador(e.target.value)}>
+        <div className="row mt-2">
+          <div className="col-width-3 mr-3">
+            <label className="mb-1" htmlFor="transportador">
+              Transportador
+            </label>
+            <select name="transportador" required onChange={(e) => handleTransportador(e.target.value)}>
               <option value="">Selecione</option>
               {transportadores.map((transportador) => (
                 <option value={transportador.id} key={transportador.id}>
@@ -552,19 +566,25 @@ export default function SaidaCreate() {
             </select>
           </div>
 
-          <div className="field-size-2 ml-3">
-            <label htmlFor="placaVeiculo">Placa</label>
-            <input type="text" name="placaVeiculo" className="form-control" required disabled value={placaVeiculo} />
+          <div className="col-width-1 mr-3">
+            <label className="mb-1" htmlFor="placaVeiculo">
+              Placa
+            </label>
+            <input type="text" name="placaVeiculo" required disabled value={placaVeiculo} />
           </div>
 
-          <div className="field-size-1 ml-3">
-            <label htmlFor="doca">Doca</label>
-            <input type="text" name="doca" className="form-control" required onChange={(e) => setDoca(e.target.value)} />
+          <div className="col-width-1 mr-3">
+            <label className="mb-1" htmlFor="doca">
+              Doca
+            </label>
+            <input type="text" name="doca" required onChange={(e) => setDoca(e.target.value)} />
           </div>
 
-          <div className="field-size-2 ml-3">
-            <label htmlFor="nomeConferente">Conferente</label>
-            <select name="nomeConferente" className="form-control" required onChange={(e) => setConferente(e.target.value)}>
+          <div className="col-width-3 mr-3">
+            <label className="mb-1" htmlFor="nomeConferente">
+              Conferente
+            </label>
+            <select name="nomeConferente" required onChange={(e) => setConferente(e.target.value)}>
               <option value="">Selecione</option>
               {conferentes.map((conferente) => (
                 <option value={conferente.nomeConferente} key={conferente.id}>
@@ -574,32 +594,32 @@ export default function SaidaCreate() {
             </select>
           </div>
 
-          <button type="submit" className="btn btn-primary ml-2 mt-4" style={{ width: "200px", height: "50px" }}>
+          <button type="submit" className="btn btn--primary btn--large" style={{ height: "40px", marginTop: "30px" }}>
             Inserir
           </button>
         </div>
 
-        <div className="form-lines">
+        <div className="form__lines mt-3">
           <div className="row Head">
-            <div className="field-size-1">Filial origem</div>
-            <div className="field-size-1">Nota fiscal</div>
-            <div className="field-size-1">Tipo</div>
-            <div className="field-size-1">Código</div>
-            <div className="field-size-2">Descrição</div>
-            <div className="field-size-1">Quantidade</div>
-            <div className="field-size-2">Observação</div>
+            <div className="col-width-1 mr-1">Filial origem</div>
+            <div className="col-width-1 mr-1">Nota fiscal</div>
+            <div className="col-width-1 mr-1">Tipo</div>
+            <div className="col-width-1 mr-1">Código</div>
+            <div className="col-width-3 mr-1">Descrição</div>
+            <div className="col-width-1 mr-1">Quantidade</div>
+            <div className="col-width-3 mr-1">Observação</div>
           </div>
 
           {/*Line1*/}
-          <div className="row">
-            <div className="field-size-1">
-              <input type="text" name="filialOrigem_1" className="form-control" required onChange={(e) => setFilialorigem_1(e.target.value)} />{" "}
+          <div className="row mt-1">
+            <div className="col-width-1 mr-1">
+              <input type="text" name="filialOrigem_1" required onChange={(e) => setFilialorigem_1(e.target.value)} />{" "}
             </div>
-            <div className="field-size-1">
-              <input type="text" name="notaFiscal_1" className="form-control" required onChange={(e) => setNotafiscal_1(e.target.value)} />{" "}
+            <div className="col-width-1 mr-1">
+              <input type="text" name="notaFiscal_1" required onChange={(e) => setNotafiscal_1(e.target.value)} />{" "}
             </div>
-            <div className="field-size-1">
-              <select name="tipoOperacao_1" className="form-control" required onChange={(e) => setTipoOperacao_1(e.target.value)}>
+            <div className="col-width-1 mr-1">
+              <select name="tipoOperacao_1" required onChange={(e) => setTipoOperacao_1(e.target.value)}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
                   <option value={option} key={option}>
@@ -608,30 +628,30 @@ export default function SaidaCreate() {
                 ))}
               </select>
             </div>
-            <div className="field-size-1">
-              <input type="text" name="codigo_1" className="form-control" required onChange={(e) => setCodigo_1(e.target.value)} />{" "}
+            <div className="col-width-1 mr-1">
+              <input type="text" name="codigo_1" required onChange={(e) => setCodigo_1(e.target.value)} />{" "}
             </div>
-            <div className="field-size-2">
-              <input type="text" name="descricaoProduto_1" className="form-control" maxLength="30" required onChange={(e) => setDescricaoProduto_1(e.target.value)} />{" "}
+            <div className="col-width-3 mr-1">
+              <input type="text" name="descricaoProduto_1" maxLength="30" required onChange={(e) => setDescricaoProduto_1(e.target.value)} />{" "}
             </div>
-            <div className="field-size-1">
-              <input type="number" name="quantidadeProduto_1" className="form-control" required onChange={(e) => setQuantidadeproduto_1(e.target.value)} />{" "}
+            <div className="col-width-1 mr-1">
+              <input type="number" name="quantidadeProduto_1" required onChange={(e) => setQuantidadeproduto_1(e.target.value)} />{" "}
             </div>
-            <div className="field-size-2">
-              <input type="text" maxLength="30" name="observacao_1" className="form-control" onChange={(e) => setObservacao_1(e.target.value)} />{" "}
+            <div className="col-width-3 mr-1">
+              <input type="text" maxLength="30" name="observacao_1" onChange={(e) => setObservacao_1(e.target.value)} />{" "}
             </div>
           </div>
 
           {/*Line2*/}
-          <div className="row">
-            <div className="field-size-1">
-              <input type="text" name="filialOrigem_2" className="form-control" onChange={(e) => setFilialorigem_2(e.target.value)} />{" "}
+          <div className="row mt-1">
+            <div className="col-width-1 mr-1">
+              <input type="text" name="filialOrigem_2" onChange={(e) => setFilialorigem_2(e.target.value)} />{" "}
             </div>
-            <div className="field-size-1">
-              <input type="text" name="notaFiscal_2" className="form-control" onChange={(e) => setNotafiscal_2(e.target.value)} />{" "}
+            <div className="col-width-1 mr-1">
+              <input type="text" name="notaFiscal_2" onChange={(e) => setNotafiscal_2(e.target.value)} />{" "}
             </div>
-            <div className="field-size-1">
-              <select name="tipoOperacao_2" className="form-control" onChange={(e) => setTipoOperacao_2(e.target.value)}>
+            <div className="col-width-1 mr-1">
+              <select name="tipoOperacao_2" onChange={(e) => setTipoOperacao_2(e.target.value)}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
                   <option value={option} key={option}>
@@ -640,30 +660,30 @@ export default function SaidaCreate() {
                 ))}
               </select>
             </div>
-            <div className="field-size-1">
-              <input type="text" name="codigo_2" className="form-control" onChange={(e) => setCodigo_2(e.target.value)} />{" "}
+            <div className="col-width-1 mr-1">
+              <input type="text" name="codigo_2" onChange={(e) => setCodigo_2(e.target.value)} />{" "}
             </div>
-            <div className="field-size-2">
-              <input type="text" name="descricaoProduto_2" className="form-control" maxLength="30" onChange={(e) => setDescricaoProduto_2(e.target.value)} />{" "}
+            <div className="col-width-3 mr-1">
+              <input type="text" name="descricaoProduto_2" maxLength="30" onChange={(e) => setDescricaoProduto_2(e.target.value)} />{" "}
             </div>
-            <div className="field-size-1">
-              <input type="number" name="quantidadeProduto_2" className="form-control" onChange={(e) => setQuantidadeproduto_2(e.target.value)} />{" "}
+            <div className="col-width-1 mr-1">
+              <input type="number" name="quantidadeProduto_2" onChange={(e) => setQuantidadeproduto_2(e.target.value)} />{" "}
             </div>
-            <div className="field-size-2">
-              <input type="text" maxLength="30" name="observacao_2" className="form-control" onChange={(e) => setObservacao_2(e.target.value)} />{" "}
+            <div className="col-width-3 mr-1">
+              <input type="text" maxLength="30" name="observacao_2" onChange={(e) => setObservacao_2(e.target.value)} />{" "}
             </div>
           </div>
 
           {/*Line3*/}
-          <div className="row">
-            <div className="field-size-1">
-              <input type="text" name="filialOrigem_3" className="form-control" onChange={(e) => setFilialorigem_3(e.target.value)} />{" "}
+          <div className="row mt-1">
+            <div className="col-width-1 mr-1">
+              <input type="text" name="filialOrigem_3" onChange={(e) => setFilialorigem_3(e.target.value)} />{" "}
             </div>
-            <div className="field-size-1">
-              <input type="text" name="notaFiscal_3" className="form-control" onChange={(e) => setNotafiscal_3(e.target.value)} />{" "}
+            <div className="col-width-1 mr-1">
+              <input type="text" name="notaFiscal_3" onChange={(e) => setNotafiscal_3(e.target.value)} />{" "}
             </div>
-            <div className="field-size-1">
-              <select name="tipoOperacao_3" className="form-control" onChange={(e) => setTipoOperacao_3(e.target.value)}>
+            <div className="col-width-1 mr-1">
+              <select name="tipoOperacao_3" onChange={(e) => setTipoOperacao_3(e.target.value)}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
                   <option value={option} key={option}>
@@ -672,30 +692,30 @@ export default function SaidaCreate() {
                 ))}
               </select>
             </div>
-            <div className="field-size-1">
-              <input type="text" name="codigo_3" className="form-control" onChange={(e) => setCodigo_3(e.target.value)} />{" "}
+            <div className="col-width-1 mr-1">
+              <input type="text" name="codigo_3" onChange={(e) => setCodigo_3(e.target.value)} />{" "}
             </div>
-            <div className="field-size-2">
-              <input type="text" name="descricaoProduto_3" className="form-control" maxLength="30" onChange={(e) => setDescricaoProduto_3(e.target.value)} />{" "}
+            <div className="col-width-3 mr-1">
+              <input type="text" name="descricaoProduto_3" maxLength="30" onChange={(e) => setDescricaoProduto_3(e.target.value)} />{" "}
             </div>
-            <div className="field-size-1">
-              <input type="number" name="quantidadeProduto_3" className="form-control" onChange={(e) => setQuantidadeproduto_3(e.target.value)} />{" "}
+            <div className="col-width-1 mr-1">
+              <input type="number" name="quantidadeProduto_3" onChange={(e) => setQuantidadeproduto_3(e.target.value)} />{" "}
             </div>
-            <div className="field-size-2">
-              <input type="text" maxLength="30" name="observacao_3" className="form-control" onChange={(e) => setObservacao_3(e.target.value)} />{" "}
+            <div className="col-width-3 mr-1">
+              <input type="text" maxLength="30" name="observacao_3" onChange={(e) => setObservacao_3(e.target.value)} />{" "}
             </div>
           </div>
 
           {/*Line4*/}
-          <div className="row">
-            <div className="field-size-1">
-              <input type="text" name="filialOrigem_4" className="form-control" onChange={(e) => setFilialorigem_4(e.target.value)} />{" "}
+          <div className="row mt-1">
+            <div className="col-width-1 mr-1">
+              <input type="text" name="filialOrigem_4" onChange={(e) => setFilialorigem_4(e.target.value)} />{" "}
             </div>
-            <div className="field-size-1">
-              <input type="text" name="notaFiscal_4" className="form-control" onChange={(e) => setNotafiscal_4(e.target.value)} />{" "}
+            <div className="col-width-1 mr-1">
+              <input type="text" name="notaFiscal_4" onChange={(e) => setNotafiscal_4(e.target.value)} />{" "}
             </div>
-            <div className="field-size-1">
-              <select name="tipoOperacao_4" className="form-control" onChange={(e) => setTipoOperacao_4(e.target.value)}>
+            <div className="col-width-1 mr-1">
+              <select name="tipoOperacao_4" onChange={(e) => setTipoOperacao_4(e.target.value)}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
                   <option value={option} key={option}>
@@ -704,30 +724,30 @@ export default function SaidaCreate() {
                 ))}
               </select>
             </div>
-            <div className="field-size-1">
-              <input type="text" name="codigo_4" className="form-control" onChange={(e) => setCodigo_4(e.target.value)} />{" "}
+            <div className="col-width-1 mr-1">
+              <input type="text" name="codigo_4" onChange={(e) => setCodigo_4(e.target.value)} />{" "}
             </div>
-            <div className="field-size-2">
-              <input type="text" name="descricaoProduto_4" className="form-control" maxLength="30" onChange={(e) => setDescricaoProduto_4(e.target.value)} />{" "}
+            <div className="col-width-3 mr-1">
+              <input type="text" name="descricaoProduto_4" maxLength="30" onChange={(e) => setDescricaoProduto_4(e.target.value)} />{" "}
             </div>
-            <div className="field-size-1">
-              <input type="number" name="quantidadeProduto_4" className="form-control" onChange={(e) => setQuantidadeproduto_4(e.target.value)} />{" "}
+            <div className="col-width-1 mr-1">
+              <input type="number" name="quantidadeProduto_4" onChange={(e) => setQuantidadeproduto_4(e.target.value)} />{" "}
             </div>
-            <div className="field-size-2">
-              <input type="text" maxLength="30" name="observacao_4" className="form-control" onChange={(e) => setObservacao_4(e.target.value)} />{" "}
+            <div className="col-width-3 mr-1">
+              <input type="text" maxLength="30" name="observacao_4" onChange={(e) => setObservacao_4(e.target.value)} />{" "}
             </div>
           </div>
 
           {/*Line5*/}
-          <div className="row">
-            <div className="field-size-1">
-              <input type="text" name="filialOrigem_5" className="form-control" onChange={(e) => setFilialorigem_5(e.target.value)} />{" "}
+          <div className="row mt-1">
+            <div className="col-width-1 mr-1">
+              <input type="text" name="filialOrigem_5" onChange={(e) => setFilialorigem_5(e.target.value)} />{" "}
             </div>
-            <div className="field-size-1">
-              <input type="text" name="notaFiscal_5" className="form-control" onChange={(e) => setNotafiscal_5(e.target.value)} />{" "}
+            <div className="col-width-1 mr-1">
+              <input type="text" name="notaFiscal_5" onChange={(e) => setNotafiscal_5(e.target.value)} />{" "}
             </div>
-            <div className="field-size-1">
-              <select name="tipoOperacao_5" className="form-control" onChange={(e) => setTipoOperacao_5(e.target.value)}>
+            <div className="col-width-1 mr-1">
+              <select name="tipoOperacao_5" onChange={(e) => setTipoOperacao_5(e.target.value)}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
                   <option value={option} key={option}>
@@ -736,30 +756,30 @@ export default function SaidaCreate() {
                 ))}
               </select>
             </div>
-            <div className="field-size-1">
-              <input type="text" name="codigo_5" className="form-control" onChange={(e) => setCodigo_5(e.target.value)} />{" "}
+            <div className="col-width-1 mr-1">
+              <input type="text" name="codigo_5" onChange={(e) => setCodigo_5(e.target.value)} />{" "}
             </div>
-            <div className="field-size-2">
-              <input type="text" name="descricaoProduto_5" className="form-control" maxLength="30" onChange={(e) => setDescricaoProduto_5(e.target.value)} />{" "}
+            <div className="col-width-3 mr-1">
+              <input type="text" name="descricaoProduto_5" maxLength="30" onChange={(e) => setDescricaoProduto_5(e.target.value)} />{" "}
             </div>
-            <div className="field-size-1">
-              <input type="number" name="quantidadeProduto_5" className="form-control" onChange={(e) => setQuantidadeproduto_5(e.target.value)} />{" "}
+            <div className="col-width-1 mr-1">
+              <input type="number" name="quantidadeProduto_5" onChange={(e) => setQuantidadeproduto_5(e.target.value)} />{" "}
             </div>
-            <div className="field-size-2">
-              <input type="text" maxLength="30" name="observacao_5" className="form-control" onChange={(e) => setObservacao_5(e.target.value)} />{" "}
+            <div className="col-width-3 mr-1">
+              <input type="text" maxLength="30" name="observacao_5" onChange={(e) => setObservacao_5(e.target.value)} />{" "}
             </div>
           </div>
 
           {/*Line6*/}
-          <div className="row">
-            <div className="field-size-1">
-              <input type="text" name="filialOrigem_6" className="form-control" onChange={(e) => setFilialorigem_6(e.target.value)} />{" "}
+          <div className="row mt-1">
+            <div className="col-width-1 mr-1">
+              <input type="text" name="filialOrigem_6" onChange={(e) => setFilialorigem_6(e.target.value)} />{" "}
             </div>
-            <div className="field-size-1">
-              <input type="text" name="notaFiscal_6" className="form-control" onChange={(e) => setNotafiscal_6(e.target.value)} />{" "}
+            <div className="col-width-1 mr-1">
+              <input type="text" name="notaFiscal_6" onChange={(e) => setNotafiscal_6(e.target.value)} />{" "}
             </div>
-            <div className="field-size-1">
-              <select name="tipoOperacao_6" className="form-control" onChange={(e) => setTipoOperacao_6(e.target.value)}>
+            <div className="col-width-1 mr-1">
+              <select name="tipoOperacao_6" onChange={(e) => setTipoOperacao_6(e.target.value)}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
                   <option value={option} key={option}>
@@ -768,30 +788,30 @@ export default function SaidaCreate() {
                 ))}
               </select>
             </div>
-            <div className="field-size-1">
-              <input type="text" name="codigo_6" className="form-control" onChange={(e) => setCodigo_6(e.target.value)} />{" "}
+            <div className="col-width-1 mr-1">
+              <input type="text" name="codigo_6" onChange={(e) => setCodigo_6(e.target.value)} />{" "}
             </div>
-            <div className="field-size-2">
-              <input type="text" name="descricaoProduto_6" className="form-control" maxLength="30" onChange={(e) => setDescricaoProduto_6(e.target.value)} />{" "}
+            <div className="col-width-3 mr-1">
+              <input type="text" name="descricaoProduto_6" maxLength="30" onChange={(e) => setDescricaoProduto_6(e.target.value)} />{" "}
             </div>
-            <div className="field-size-1">
-              <input type="number" name="quantidadeProduto_6" className="form-control" onChange={(e) => setQuantidadeproduto_6(e.target.value)} />{" "}
+            <div className="col-width-1 mr-1">
+              <input type="number" name="quantidadeProduto_6" onChange={(e) => setQuantidadeproduto_6(e.target.value)} />{" "}
             </div>
-            <div className="field-size-2">
-              <input type="text" maxLength="30" name="observacao_6" className="form-control" onChange={(e) => setObservacao_6(e.target.value)} />{" "}
+            <div className="col-width-3 mr-1">
+              <input type="text" maxLength="30" name="observacao_6" onChange={(e) => setObservacao_6(e.target.value)} />{" "}
             </div>
           </div>
 
           {/*Line7*/}
-          <div className="row">
-            <div className="field-size-1">
-              <input type="text" name="filialOrigem_7" className="form-control" onChange={(e) => setFilialorigem_7(e.target.value)} />{" "}
+          <div className="row mt-1">
+            <div className="col-width-1 mr-1">
+              <input type="text" name="filialOrigem_7" onChange={(e) => setFilialorigem_7(e.target.value)} />{" "}
             </div>
-            <div className="field-size-1">
-              <input type="text" name="notaFiscal_7" className="form-control" onChange={(e) => setNotafiscal_7(e.target.value)} />{" "}
+            <div className="col-width-1 mr-1">
+              <input type="text" name="notaFiscal_7" onChange={(e) => setNotafiscal_7(e.target.value)} />{" "}
             </div>
-            <div className="field-size-1">
-              <select name="tipoOperacao_7" className="form-control" onChange={(e) => setTipoOperacao_7(e.target.value)}>
+            <div className="col-width-1 mr-1">
+              <select name="tipoOperacao_7" onChange={(e) => setTipoOperacao_7(e.target.value)}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
                   <option value={option} key={option}>
@@ -800,30 +820,30 @@ export default function SaidaCreate() {
                 ))}
               </select>
             </div>
-            <div className="field-size-1">
-              <input type="text" name="codigo_7" className="form-control" onChange={(e) => setCodigo_7(e.target.value)} />{" "}
+            <div className="col-width-1 mr-1">
+              <input type="text" name="codigo_7" onChange={(e) => setCodigo_7(e.target.value)} />{" "}
             </div>
-            <div className="field-size-2">
-              <input type="text" name="descricaoProduto_7" className="form-control" maxLength="30" onChange={(e) => setDescricaoProduto_7(e.target.value)} />{" "}
+            <div className="col-width-3 mr-1">
+              <input type="text" name="descricaoProduto_7" maxLength="30" onChange={(e) => setDescricaoProduto_7(e.target.value)} />{" "}
             </div>
-            <div className="field-size-1">
-              <input type="number" name="quantidadeProduto_7" className="form-control" onChange={(e) => setQuantidadeproduto_7(e.target.value)} />{" "}
+            <div className="col-width-1 mr-1">
+              <input type="number" name="quantidadeProduto_7" onChange={(e) => setQuantidadeproduto_7(e.target.value)} />{" "}
             </div>
-            <div className="field-size-2">
-              <input type="text" maxLength="30" name="observacao_7" className="form-control" onChange={(e) => setObservacao_7(e.target.value)} />{" "}
+            <div className="col-width-3 mr-1">
+              <input type="text" maxLength="30" name="observacao_7" onChange={(e) => setObservacao_7(e.target.value)} />{" "}
             </div>
           </div>
 
           {/*Line8*/}
-          <div className="row">
-            <div className="field-size-1">
-              <input type="text" name="filialOrigem_8" className="form-control" onChange={(e) => setFilialorigem_8(e.target.value)} />{" "}
+          <div className="row mt-1">
+            <div className="col-width-1 mr-1">
+              <input type="text" name="filialOrigem_8" onChange={(e) => setFilialorigem_8(e.target.value)} />{" "}
             </div>
-            <div className="field-size-1">
-              <input type="text" name="notaFiscal_8" className="form-control" onChange={(e) => setNotafiscal_8(e.target.value)} />{" "}
+            <div className="col-width-1 mr-1">
+              <input type="text" name="notaFiscal_8" onChange={(e) => setNotafiscal_8(e.target.value)} />{" "}
             </div>
-            <div className="field-size-1">
-              <select name="tipoOperacao_8" className="form-control" onChange={(e) => setTipoOperacao_8(e.target.value)}>
+            <div className="col-width-1 mr-1">
+              <select name="tipoOperacao_8" onChange={(e) => setTipoOperacao_8(e.target.value)}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
                   <option value={option} key={option}>
@@ -832,30 +852,30 @@ export default function SaidaCreate() {
                 ))}
               </select>
             </div>
-            <div className="field-size-1">
-              <input type="text" name="codigo_8" className="form-control" onChange={(e) => setCodigo_8(e.target.value)} />{" "}
+            <div className="col-width-1 mr-1">
+              <input type="text" name="codigo_8" onChange={(e) => setCodigo_8(e.target.value)} />{" "}
             </div>
-            <div className="field-size-2">
-              <input type="text" name="descricaoProduto_8" className="form-control" maxLength="30" onChange={(e) => setDescricaoProduto_8(e.target.value)} />{" "}
+            <div className="col-width-3 mr-1">
+              <input type="text" name="descricaoProduto_8" maxLength="30" onChange={(e) => setDescricaoProduto_8(e.target.value)} />{" "}
             </div>
-            <div className="field-size-1">
-              <input type="number" name="quantidadeProduto_8" className="form-control" onChange={(e) => setQuantidadeproduto_8(e.target.value)} />{" "}
+            <div className="col-width-1 mr-1">
+              <input type="number" name="quantidadeProduto_8" onChange={(e) => setQuantidadeproduto_8(e.target.value)} />{" "}
             </div>
-            <div className="field-size-2">
-              <input type="text" maxLength="30" name="observacao_8" className="form-control" onChange={(e) => setObservacao_8(e.target.value)} />{" "}
+            <div className="col-width-3 mr-1">
+              <input type="text" maxLength="30" name="observacao_8" onChange={(e) => setObservacao_8(e.target.value)} />{" "}
             </div>
           </div>
 
           {/*Line9*/}
-          <div className="row">
-            <div className="field-size-1">
-              <input type="text" name="filialOrigem_9" className="form-control" onChange={(e) => setFilialorigem_9(e.target.value)} />{" "}
+          <div className="row mt-1">
+            <div className="col-width-1 mr-1">
+              <input type="text" name="filialOrigem_9" onChange={(e) => setFilialorigem_9(e.target.value)} />{" "}
             </div>
-            <div className="field-size-1">
-              <input type="text" name="notaFiscal_9" className="form-control" onChange={(e) => setNotafiscal_9(e.target.value)} />{" "}
+            <div className="col-width-1 mr-1">
+              <input type="text" name="notaFiscal_9" onChange={(e) => setNotafiscal_9(e.target.value)} />{" "}
             </div>
-            <div className="field-size-1">
-              <select name="tipoOperacao_9" className="form-control" onChange={(e) => setTipoOperacao_9(e.target.value)}>
+            <div className="col-width-1 mr-1">
+              <select name="tipoOperacao_9" onChange={(e) => setTipoOperacao_9(e.target.value)}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
                   <option value={option} key={option}>
@@ -864,30 +884,30 @@ export default function SaidaCreate() {
                 ))}
               </select>
             </div>
-            <div className="field-size-1">
-              <input type="text" name="codigo_9" className="form-control" onChange={(e) => setCodigo_9(e.target.value)} />{" "}
+            <div className="col-width-1 mr-1">
+              <input type="text" name="codigo_9" onChange={(e) => setCodigo_9(e.target.value)} />{" "}
             </div>
-            <div className="field-size-2">
-              <input type="text" name="descricaoProduto_9" className="form-control" maxLength="30" onChange={(e) => setDescricaoProduto_9(e.target.value)} />{" "}
+            <div className="col-width-3 mr-1">
+              <input type="text" name="descricaoProduto_9" maxLength="30" onChange={(e) => setDescricaoProduto_9(e.target.value)} />{" "}
             </div>
-            <div className="field-size-1">
-              <input type="number" name="quantidadeProduto_9" className="form-control" onChange={(e) => setQuantidadeproduto_9(e.target.value)} />{" "}
+            <div className="col-width-1 mr-1">
+              <input type="number" name="quantidadeProduto_9" onChange={(e) => setQuantidadeproduto_9(e.target.value)} />{" "}
             </div>
-            <div className="field-size-2">
-              <input type="text" name="filialOrigem_9" className="form-control" onChange={(e) => setObservacao_9(e.target.value)} />{" "}
+            <div className="col-width-3 mr-1">
+              <input type="text" name="observacao_9" onChange={(e) => setObservacao_9(e.target.value)} />{" "}
             </div>
           </div>
 
           {/*Line10*/}
-          <div className="row">
-            <div className="field-size-1">
-              <input type="text" name="filialOrigem_10" className="form-control" onChange={(e) => setFilialorigem_10(e.target.value)} />{" "}
+          <div className="row mt-1">
+            <div className="col-width-1 mr-1">
+              <input type="text" name="filialOrigem_10" onChange={(e) => setFilialorigem_10(e.target.value)} />{" "}
             </div>
-            <div className="field-size-1">
-              <input type="text" name="notaFiscal_10" className="form-control" onChange={(e) => setNotafiscal_10(e.target.value)} />{" "}
+            <div className="col-width-1 mr-1">
+              <input type="text" name="notaFiscal_10" onChange={(e) => setNotafiscal_10(e.target.value)} />{" "}
             </div>
-            <div className="field-size-1">
-              <select name="tipoOperacao_10" className="form-control" onChange={(e) => setTipoOperacao_10(e.target.value)}>
+            <div className="col-width-1 mr-1">
+              <select name="tipoOperacao_10" onChange={(e) => setTipoOperacao_10(e.target.value)}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
                   <option value={option} key={option}>
@@ -896,31 +916,31 @@ export default function SaidaCreate() {
                 ))}
               </select>
             </div>
-            <div className="field-size-1">
-              <input type="text" name="codigo_10" className="form-control" onChange={(e) => setCodigo_10(e.target.value)} />{" "}
+            <div className="col-width-1 mr-1">
+              <input type="text" name="codigo_10" onChange={(e) => setCodigo_10(e.target.value)} />{" "}
             </div>
-            <div className="field-size-2">
-              <input type="text" name="descricaoProduto_10" className="form-control" maxLength="30" onChange={(e) => setDescricaoProduto_10(e.target.value)} />{" "}
+            <div className="col-width-3 mr-1">
+              <input type="text" name="descricaoProduto_10" maxLength="30" onChange={(e) => setDescricaoProduto_10(e.target.value)} />{" "}
             </div>
-            <div className="field-size-1">
-              <input type="number" name="quantidadeProduto_10" className="form-control" onChange={(e) => setQuantidadeproduto_10(e.target.value)} />{" "}
+            <div className="col-width-1 mr-1">
+              <input type="number" name="quantidadeProduto_10" onChange={(e) => setQuantidadeproduto_10(e.target.value)} />{" "}
             </div>
-            <div className="field-size-2">
-              <input type="text" maxLength="30" name="observacao_10" className="form-control" onChange={(e) => setObservacao_10(e.target.value)} />{" "}
+            <div className="col-width-3 mr-1">
+              <input type="text" maxLength="30" name="observacao_10" onChange={(e) => setObservacao_10(e.target.value)} />{" "}
             </div>
           </div>
 
           <div id="moreLines" style={{ display: "none" }}>
             {/*Line11*/}
-            <div className="row">
-              <div className="field-size-1">
-                <input type="text" name="filialOrigem_11" className="form-control" onChange={(e) => setFilialorigem_11(e.target.value)} />
+            <div className="row mt-1">
+              <div className="col-width-1 mr-1">
+                <input type="text" name="filialOrigem_11" onChange={(e) => setFilialorigem_11(e.target.value)} />
               </div>
-              <div className="field-size-1">
-                <input type="text" name="notaFiscal_11" className="form-control" onChange={(e) => setNotafiscal_11(e.target.value)} />
+              <div className="col-width-1 mr-1">
+                <input type="text" name="notaFiscal_11" onChange={(e) => setNotafiscal_11(e.target.value)} />
               </div>
-              <div className="field-size-1">
-                <select name="tipoOperacao_11" className="form-control" onChange={(e) => setTipoOperacao_11(e.target.value)}>
+              <div className="col-width-1 mr-1">
+                <select name="tipoOperacao_11" onChange={(e) => setTipoOperacao_11(e.target.value)}>
                   <option value="">Selecione</option>
                   {tipoOptions.map((option) => (
                     <option value={option} key={option}>
@@ -929,30 +949,30 @@ export default function SaidaCreate() {
                   ))}
                 </select>
               </div>
-              <div className="field-size-1">
-                <input type="text" name="codigo_11" className="form-control" onChange={(e) => setCodigo_11(e.target.value)} />
+              <div className="col-width-1 mr-1">
+                <input type="text" name="codigo_11" onChange={(e) => setCodigo_11(e.target.value)} />
               </div>
-              <div className="field-size-2">
-                <input type="text" name="descricaoProduto_11" className="form-control" maxLength="30" onChange={(e) => setDescricaoProduto_11(e.target.value)} />
+              <div className="col-width-3 mr-1">
+                <input type="text" name="descricaoProduto_11" maxLength="30" onChange={(e) => setDescricaoProduto_11(e.target.value)} />
               </div>
-              <div className="field-size-1">
-                <input type="number" name="quantidadeProduto_11" className="form-control" onChange={(e) => setQuantidadeproduto_11(e.target.value)} />
+              <div className="col-width-1 mr-1">
+                <input type="number" name="quantidadeProduto_11" onChange={(e) => setQuantidadeproduto_11(e.target.value)} />
               </div>
-              <div className="field-size-2">
-                <input type="text" maxLength="30" name="observacao_11" className="form-control" onChange={(e) => setObservacao_11(e.target.value)} />
+              <div className="col-width-3 mr-1">
+                <input type="text" maxLength="30" name="observacao_11" onChange={(e) => setObservacao_11(e.target.value)} />
               </div>
             </div>
 
             {/*Line12*/}
-            <div className="row">
-              <div className="field-size-1">
-                <input type="text" name="filialOrigem_12" className="form-control" onChange={(e) => setFilialorigem_12(e.target.value)} />
+            <div className="row mt-1">
+              <div className="col-width-1 mr-1">
+                <input type="text" name="filialOrigem_12" onChange={(e) => setFilialorigem_12(e.target.value)} />
               </div>
-              <div className="field-size-1">
-                <input type="text" name="notaFiscal_12" className="form-control" onChange={(e) => setNotafiscal_12(e.target.value)} />
+              <div className="col-width-1 mr-1">
+                <input type="text" name="notaFiscal_12" onChange={(e) => setNotafiscal_12(e.target.value)} />
               </div>
-              <div className="field-size-1">
-                <select name="tipoOperacao_12" className="form-control" onChange={(e) => setTipoOperacao_12(e.target.value)}>
+              <div className="col-width-1 mr-1">
+                <select name="tipoOperacao_12" onChange={(e) => setTipoOperacao_12(e.target.value)}>
                   <option value="">Selecione</option>
                   {tipoOptions.map((option) => (
                     <option value={option} key={option}>
@@ -961,30 +981,30 @@ export default function SaidaCreate() {
                   ))}
                 </select>
               </div>
-              <div className="field-size-1">
-                <input type="text" name="codigo_12" className="form-control" onChange={(e) => setCodigo_12(e.target.value)} />
+              <div className="col-width-1 mr-1">
+                <input type="text" name="codigo_12" onChange={(e) => setCodigo_12(e.target.value)} />
               </div>
-              <div className="field-size-2">
-                <input type="text" name="descricaoProduto_12" className="form-control" maxLength="30" onChange={(e) => setDescricaoProduto_12(e.target.value)} />
+              <div className="col-width-3 mr-1">
+                <input type="text" name="descricaoProduto_12" maxLength="30" onChange={(e) => setDescricaoProduto_12(e.target.value)} />
               </div>
-              <div className="field-size-1">
-                <input type="number" name="quantidadeProduto_12" className="form-control" onChange={(e) => setQuantidadeproduto_12(e.target.value)} />
+              <div className="col-width-1 mr-1">
+                <input type="number" name="quantidadeProduto_12" onChange={(e) => setQuantidadeproduto_12(e.target.value)} />
               </div>
-              <div className="field-size-2">
-                <input type="text" maxLength="30" name="observacao_12" className="form-control" onChange={(e) => setObservacao_12(e.target.value)} />
+              <div className="col-width-3 mr-1">
+                <input type="text" maxLength="30" name="observacao_12" onChange={(e) => setObservacao_12(e.target.value)} />
               </div>
             </div>
 
             {/*Line13*/}
-            <div className="row">
-              <div className="field-size-1">
-                <input type="text" name="filialOrigem_13" className="form-control" onChange={(e) => setFilialorigem_13(e.target.value)} />
+            <div className="row mt-1">
+              <div className="col-width-1 mr-1">
+                <input type="text" name="filialOrigem_13" onChange={(e) => setFilialorigem_13(e.target.value)} />
               </div>
-              <div className="field-size-1">
-                <input type="text" name="notaFiscal_13" className="form-control" onChange={(e) => setNotafiscal_13(e.target.value)} />
+              <div className="col-width-1 mr-1">
+                <input type="text" name="notaFiscal_13" onChange={(e) => setNotafiscal_13(e.target.value)} />
               </div>
-              <div className="field-size-1">
-                <select name="tipoOperacao_13" className="form-control" onChange={(e) => setTipoOperacao_13(e.target.value)}>
+              <div className="col-width-1 mr-1">
+                <select name="tipoOperacao_13" onChange={(e) => setTipoOperacao_13(e.target.value)}>
                   <option value="">Selecione</option>
                   {tipoOptions.map((option) => (
                     <option value={option} key={option}>
@@ -993,30 +1013,30 @@ export default function SaidaCreate() {
                   ))}
                 </select>
               </div>
-              <div className="field-size-1">
-                <input type="text" name="codigo_13" className="form-control" onChange={(e) => setCodigo_13(e.target.value)} />
+              <div className="col-width-1 mr-1">
+                <input type="text" name="codigo_13" onChange={(e) => setCodigo_13(e.target.value)} />
               </div>
-              <div className="field-size-2">
-                <input type="text" name="descricaoProduto_13" className="form-control" maxLength="30" onChange={(e) => setDescricaoProduto_13(e.target.value)} />
+              <div className="col-width-3 mr-1">
+                <input type="text" name="descricaoProduto_13" maxLength="30" onChange={(e) => setDescricaoProduto_13(e.target.value)} />
               </div>
-              <div className="field-size-1">
-                <input type="number" name="quantidadeProduto_13" className="form-control" onChange={(e) => setQuantidadeproduto_13(e.target.value)} />
+              <div className="col-width-1 mr-1">
+                <input type="number" name="quantidadeProduto_13" onChange={(e) => setQuantidadeproduto_13(e.target.value)} />
               </div>
-              <div className="field-size-2">
-                <input type="text" maxLength="30" name="observacao_13" className="form-control" onChange={(e) => setObservacao_13(e.target.value)} />
+              <div className="col-width-3 mr-1">
+                <input type="text" maxLength="30" name="observacao_13" onChange={(e) => setObservacao_13(e.target.value)} />
               </div>
             </div>
 
             {/*Line14*/}
-            <div className="row">
-              <div className="field-size-1">
-                <input type="text" name="filialOrigem_14" className="form-control" onChange={(e) => setFilialorigem_14(e.target.value)} />
+            <div className="row mt-1">
+              <div className="col-width-1 mr-1">
+                <input type="text" name="filialOrigem_14" onChange={(e) => setFilialorigem_14(e.target.value)} />
               </div>
-              <div className="field-size-1">
-                <input type="text" name="notaFiscal_14" className="form-control" onChange={(e) => setNotafiscal_14(e.target.value)} />
+              <div className="col-width-1 mr-1">
+                <input type="text" name="notaFiscal_14" onChange={(e) => setNotafiscal_14(e.target.value)} />
               </div>
-              <div className="field-size-1">
-                <select name="tipoOperacao_14" className="form-control" onChange={(e) => setTipoOperacao_14(e.target.value)}>
+              <div className="col-width-1 mr-1">
+                <select name="tipoOperacao_14" onChange={(e) => setTipoOperacao_14(e.target.value)}>
                   <option value="">Selecione</option>
                   {tipoOptions.map((option) => (
                     <option value={option} key={option}>
@@ -1025,30 +1045,30 @@ export default function SaidaCreate() {
                   ))}
                 </select>
               </div>
-              <div className="field-size-1">
-                <input type="text" name="codigo_14" className="form-control" onChange={(e) => setCodigo_14(e.target.value)} />
+              <div className="col-width-1 mr-1">
+                <input type="text" name="codigo_14" onChange={(e) => setCodigo_14(e.target.value)} />
               </div>
-              <div className="field-size-2">
-                <input type="text" name="descricaoProduto_14" className="form-control" maxLength="30" onChange={(e) => setDescricaoProduto_14(e.target.value)} />
+              <div className="col-width-3 mr-1">
+                <input type="text" name="descricaoProduto_14" maxLength="30" onChange={(e) => setDescricaoProduto_14(e.target.value)} />
               </div>
-              <div className="field-size-1">
-                <input type="number" name="quantidadeProduto_14" className="form-control" onChange={(e) => setQuantidadeproduto_14(e.target.value)} />
+              <div className="col-width-1 mr-1">
+                <input type="number" name="quantidadeProduto_14" onChange={(e) => setQuantidadeproduto_14(e.target.value)} />
               </div>
-              <div className="field-size-2">
-                <input type="text" maxLength="30" name="observacao_14" className="form-control" onChange={(e) => setObservacao_14(e.target.value)} />
+              <div className="col-width-3 mr-1">
+                <input type="text" maxLength="30" name="observacao_14" onChange={(e) => setObservacao_14(e.target.value)} />
               </div>
             </div>
 
             {/*Line15*/}
-            <div className="row">
-              <div className="field-size-1">
-                <input type="text" name="filialOrigem_15" className="form-control" onChange={(e) => setFilialorigem_15(e.target.value)} />
+            <div className="row mt-1">
+              <div className="col-width-1 mr-1">
+                <input type="text" name="filialOrigem_15" onChange={(e) => setFilialorigem_15(e.target.value)} />
               </div>
-              <div className="field-size-1">
-                <input type="text" name="notaFiscal_15" className="form-control" onChange={(e) => setNotafiscal_15(e.target.value)} />
+              <div className="col-width-1 mr-1">
+                <input type="text" name="notaFiscal_15" onChange={(e) => setNotafiscal_15(e.target.value)} />
               </div>
-              <div className="field-size-1">
-                <select name="tipoOperacao_15" className="form-control" onChange={(e) => setTipoOperacao_15(e.target.value)}>
+              <div className="col-width-1 mr-1">
+                <select name="tipoOperacao_15" onChange={(e) => setTipoOperacao_15(e.target.value)}>
                   <option value="">Selecione</option>
                   {tipoOptions.map((option) => (
                     <option value={option} key={option}>
@@ -1057,30 +1077,30 @@ export default function SaidaCreate() {
                   ))}
                 </select>
               </div>
-              <div className="field-size-1">
-                <input type="text" name="codigo_15" className="form-control" onChange={(e) => setCodigo_15(e.target.value)} />
+              <div className="col-width-1 mr-1">
+                <input type="text" name="codigo_15" onChange={(e) => setCodigo_15(e.target.value)} />
               </div>
-              <div className="field-size-2">
-                <input type="text" name="descricaoProduto_15" className="form-control" maxLength="30" onChange={(e) => setDescricaoProduto_15(e.target.value)} />
+              <div className="col-width-3 mr-1">
+                <input type="text" name="descricaoProduto_15" maxLength="30" onChange={(e) => setDescricaoProduto_15(e.target.value)} />
               </div>
-              <div className="field-size-1">
-                <input type="number" name="quantidadeProduto_15" className="form-control" onChange={(e) => setQuantidadeproduto_15(e.target.value)} />
+              <div className="col-width-1 mr-1">
+                <input type="number" name="quantidadeProduto_15" onChange={(e) => setQuantidadeproduto_15(e.target.value)} />
               </div>
-              <div className="field-size-2">
-                <input type="text" maxLength="30" name="observacao_15" className="form-control" onChange={(e) => setObservacao_15(e.target.value)} />
+              <div className="col-width-3 mr-1">
+                <input type="text" maxLength="30" name="observacao_15" onChange={(e) => setObservacao_15(e.target.value)} />
               </div>
             </div>
 
             {/*Line16*/}
-            <div className="row">
-              <div className="field-size-1">
-                <input type="text" name="filialOrigem_16" className="form-control" onChange={(e) => setFilialorigem_16(e.target.value)} />
+            <div className="row mt-1">
+              <div className="col-width-1 mr-1">
+                <input type="text" name="filialOrigem_16" onChange={(e) => setFilialorigem_16(e.target.value)} />
               </div>
-              <div className="field-size-1">
-                <input type="text" name="notaFiscal_16" className="form-control" onChange={(e) => setNotafiscal_16(e.target.value)} />
+              <div className="col-width-1 mr-1">
+                <input type="text" name="notaFiscal_16" onChange={(e) => setNotafiscal_16(e.target.value)} />
               </div>
-              <div className="field-size-1">
-                <select name="tipoOperacao_16" className="form-control" onChange={(e) => setTipoOperacao_16(e.target.value)}>
+              <div className="col-width-1 mr-1">
+                <select name="tipoOperacao_16" onChange={(e) => setTipoOperacao_16(e.target.value)}>
                   <option value="">Selecione</option>
                   {tipoOptions.map((option) => (
                     <option value={option} key={option}>
@@ -1089,30 +1109,30 @@ export default function SaidaCreate() {
                   ))}
                 </select>
               </div>
-              <div className="field-size-1">
-                <input type="text" name="codigo_16" className="form-control" onChange={(e) => setCodigo_16(e.target.value)} />
+              <div className="col-width-1 mr-1">
+                <input type="text" name="codigo_16" onChange={(e) => setCodigo_16(e.target.value)} />
               </div>
-              <div className="field-size-2">
-                <input type="text" name="descricaoProduto_16" className="form-control" maxLength="30" onChange={(e) => setDescricaoProduto_16(e.target.value)} />
+              <div className="col-width-3 mr-1">
+                <input type="text" name="descricaoProduto_16" maxLength="30" onChange={(e) => setDescricaoProduto_16(e.target.value)} />
               </div>
-              <div className="field-size-1">
-                <input type="number" name="quantidadeProduto_16" className="form-control" onChange={(e) => setQuantidadeproduto_16(e.target.value)} />
+              <div className="col-width-1 mr-1">
+                <input type="number" name="quantidadeProduto_16" onChange={(e) => setQuantidadeproduto_16(e.target.value)} />
               </div>
-              <div className="field-size-2">
-                <input type="text" maxLength="30" name="observacao_16" className="form-control" onChange={(e) => setObservacao_16(e.target.value)} />
+              <div className="col-width-3 mr-1">
+                <input type="text" maxLength="30" name="observacao_16" onChange={(e) => setObservacao_16(e.target.value)} />
               </div>
             </div>
 
             {/*Line17*/}
-            <div className="row">
-              <div className="field-size-1">
-                <input type="text" name="filialOrigem_17" className="form-control" onChange={(e) => setFilialorigem_17(e.target.value)} />
+            <div className="row mt-1">
+              <div className="col-width-1 mr-1">
+                <input type="text" name="filialOrigem_17" onChange={(e) => setFilialorigem_17(e.target.value)} />
               </div>
-              <div className="field-size-1">
-                <input type="text" name="notaFiscal_17" className="form-control" onChange={(e) => setNotafiscal_17(e.target.value)} />
+              <div className="col-width-1 mr-1">
+                <input type="text" name="notaFiscal_17" onChange={(e) => setNotafiscal_17(e.target.value)} />
               </div>
-              <div className="field-size-1">
-                <select name="tipoOperacao_17" className="form-control" onChange={(e) => setTipoOperacao_17(e.target.value)}>
+              <div className="col-width-1 mr-1">
+                <select name="tipoOperacao_17" onChange={(e) => setTipoOperacao_17(e.target.value)}>
                   <option value="">Selecione</option>
                   {tipoOptions.map((option) => (
                     <option value={option} key={option}>
@@ -1121,30 +1141,30 @@ export default function SaidaCreate() {
                   ))}
                 </select>
               </div>
-              <div className="field-size-1">
-                <input type="text" name="codigo_17" className="form-control" onChange={(e) => setCodigo_17(e.target.value)} />
+              <div className="col-width-1 mr-1">
+                <input type="text" name="codigo_17" onChange={(e) => setCodigo_17(e.target.value)} />
               </div>
-              <div className="field-size-2">
-                <input type="text" name="descricaoProduto_17" className="form-control" maxLength="30" onChange={(e) => setDescricaoProduto_17(e.target.value)} />
+              <div className="col-width-3 mr-1">
+                <input type="text" name="descricaoProduto_17" maxLength="30" onChange={(e) => setDescricaoProduto_17(e.target.value)} />
               </div>
-              <div className="field-size-1">
-                <input type="number" name="quantidadeProduto_17" className="form-control" onChange={(e) => setQuantidadeproduto_17(e.target.value)} />
+              <div className="col-width-1 mr-1">
+                <input type="number" name="quantidadeProduto_17" onChange={(e) => setQuantidadeproduto_17(e.target.value)} />
               </div>
-              <div className="field-size-2">
-                <input type="text" maxLength="30" name="observacao_17" className="form-control" onChange={(e) => setObservacao_17(e.target.value)} />
+              <div className="col-width-3 mr-1">
+                <input type="text" maxLength="30" name="observacao_17" onChange={(e) => setObservacao_17(e.target.value)} />
               </div>
             </div>
 
             {/*Line18*/}
-            <div className="row">
-              <div className="field-size-1">
-                <input type="text" name="filialOrigem_18" className="form-control" onChange={(e) => setFilialorigem_18(e.target.value)} />
+            <div className="row mt-1">
+              <div className="col-width-1 mr-1">
+                <input type="text" name="filialOrigem_18" onChange={(e) => setFilialorigem_18(e.target.value)} />
               </div>
-              <div className="field-size-1">
-                <input type="text" name="notaFiscal_18" className="form-control" onChange={(e) => setNotafiscal_18(e.target.value)} />
+              <div className="col-width-1 mr-1">
+                <input type="text" name="notaFiscal_18" onChange={(e) => setNotafiscal_18(e.target.value)} />
               </div>
-              <div className="field-size-1">
-                <select name="tipoOperacao_18" className="form-control" onChange={(e) => setTipoOperacao_18(e.target.value)}>
+              <div className="col-width-1 mr-1">
+                <select name="tipoOperacao_18" onChange={(e) => setTipoOperacao_18(e.target.value)}>
                   <option value="">Selecione</option>
                   {tipoOptions.map((option) => (
                     <option value={option} key={option}>
@@ -1153,30 +1173,30 @@ export default function SaidaCreate() {
                   ))}
                 </select>
               </div>
-              <div className="field-size-1">
-                <input type="text" name="codigo_18" className="form-control" onChange={(e) => setCodigo_18(e.target.value)} />
+              <div className="col-width-1 mr-1">
+                <input type="text" name="codigo_18" onChange={(e) => setCodigo_18(e.target.value)} />
               </div>
-              <div className="field-size-2">
-                <input type="text" name="descricaoProduto_18" className="form-control" maxLength="30" onChange={(e) => setDescricaoProduto_18(e.target.value)} />
+              <div className="col-width-3 mr-1">
+                <input type="text" name="descricaoProduto_18" maxLength="30" onChange={(e) => setDescricaoProduto_18(e.target.value)} />
               </div>
-              <div className="field-size-1">
-                <input type="number" name="quantidadeProduto_18" className="form-control" onChange={(e) => setQuantidadeproduto_18(e.target.value)} />
+              <div className="col-width-1 mr-1">
+                <input type="number" name="quantidadeProduto_18" onChange={(e) => setQuantidadeproduto_18(e.target.value)} />
               </div>
-              <div className="field-size-2">
-                <input type="text" maxLength="30" name="observacao_18" className="form-control" onChange={(e) => setObservacao_18(e.target.value)} />
+              <div className="col-width-3 mr-1">
+                <input type="text" maxLength="30" name="observacao_18" onChange={(e) => setObservacao_18(e.target.value)} />
               </div>
             </div>
 
             {/*Line19*/}
-            <div className="row">
-              <div className="field-size-1">
-                <input type="text" name="filialOrigem_19" className="form-control" onChange={(e) => setFilialorigem_19(e.target.value)} />
+            <div className="row mt-1">
+              <div className="col-width-1 mr-1">
+                <input type="text" name="filialOrigem_19" onChange={(e) => setFilialorigem_19(e.target.value)} />
               </div>
-              <div className="field-size-1">
-                <input type="text" name="notaFiscal_19" className="form-control" onChange={(e) => setNotafiscal_19(e.target.value)} />
+              <div className="col-width-1 mr-1">
+                <input type="text" name="notaFiscal_19" onChange={(e) => setNotafiscal_19(e.target.value)} />
               </div>
-              <div className="field-size-1">
-                <select name="tipoOperacao_19" className="form-control" onChange={(e) => setTipoOperacao_19(e.target.value)}>
+              <div className="col-width-1 mr-1">
+                <select name="tipoOperacao_19" onChange={(e) => setTipoOperacao_19(e.target.value)}>
                   <option value="">Selecione</option>
                   {tipoOptions.map((option) => (
                     <option value={option} key={option}>
@@ -1185,30 +1205,30 @@ export default function SaidaCreate() {
                   ))}
                 </select>
               </div>
-              <div className="field-size-1">
-                <input type="text" name="codigo_19" className="form-control" onChange={(e) => setCodigo_19(e.target.value)} />
+              <div className="col-width-1 mr-1">
+                <input type="text" name="codigo_19" onChange={(e) => setCodigo_19(e.target.value)} />
               </div>
-              <div className="field-size-2">
-                <input type="text" name="descricaoProduto_19" className="form-control" maxLength="30" onChange={(e) => setDescricaoProduto_19(e.target.value)} />
+              <div className="col-width-3 mr-1">
+                <input type="text" name="descricaoProduto_19" maxLength="30" onChange={(e) => setDescricaoProduto_19(e.target.value)} />
               </div>
-              <div className="field-size-1">
-                <input type="number" name="quantidadeProduto_19" className="form-control" onChange={(e) => setQuantidadeproduto_19(e.target.value)} />
+              <div className="col-width-1 mr-1">
+                <input type="number" name="quantidadeProduto_19" onChange={(e) => setQuantidadeproduto_19(e.target.value)} />
               </div>
-              <div className="field-size-2">
-                <input type="text" maxLength="30" name="observacao_19" className="form-control" onChange={(e) => setObservacao_19(e.target.value)} />
+              <div className="col-width-3 mr-1">
+                <input type="text" maxLength="30" name="observacao_19" onChange={(e) => setObservacao_19(e.target.value)} />
               </div>
             </div>
 
             {/*Line20*/}
-            <div className="row">
-              <div className="field-size-1">
-                <input type="text" name="filialOrigem_20" className="form-control" onChange={(e) => setFilialorigem_20(e.target.value)} />
+            <div className="row mt-1">
+              <div className="col-width-1 mr-1">
+                <input type="text" name="filialOrigem_20" onChange={(e) => setFilialorigem_20(e.target.value)} />
               </div>
-              <div className="field-size-1">
-                <input type="text" name="notaFiscal_20" className="form-control" onChange={(e) => setNotafiscal_20(e.target.value)} />
+              <div className="col-width-1 mr-1">
+                <input type="text" name="notaFiscal_20" onChange={(e) => setNotafiscal_20(e.target.value)} />
               </div>
-              <div className="field-size-1">
-                <select name="tipoOperacao_20" className="form-control" onChange={(e) => setTipoOperacao_20(e.target.value)}>
+              <div className="col-width-1 mr-1">
+                <select name="tipoOperacao_20" onChange={(e) => setTipoOperacao_20(e.target.value)}>
                   <option value="">Selecione</option>
                   {tipoOptions.map((option) => (
                     <option value={option} key={option}>
@@ -1217,24 +1237,24 @@ export default function SaidaCreate() {
                   ))}
                 </select>
               </div>
-              <div className="field-size-1">
-                <input type="text" name="codigo_20" className="form-control" onChange={(e) => setCodigo_20(e.target.value)} />
+              <div className="col-width-1 mr-1">
+                <input type="text" name="codigo_20" onChange={(e) => setCodigo_20(e.target.value)} />
               </div>
-              <div className="field-size-2">
-                <input type="text" name="descricaoProduto_20" className="form-control" maxLength="30" onChange={(e) => setDescricaoProduto_20(e.target.value)} />
+              <div className="col-width-3 mr-1">
+                <input type="text" name="descricaoProduto_20" maxLength="30" onChange={(e) => setDescricaoProduto_20(e.target.value)} />
               </div>
-              <div className="field-size-1">
-                <input type="number" name="quantidadeProduto_20" className="form-control" onChange={(e) => setQuantidadeproduto_20(e.target.value)} />
+              <div className="col-width-1 mr-1">
+                <input type="number" name="quantidadeProduto_20" onChange={(e) => setQuantidadeproduto_20(e.target.value)} />
               </div>
-              <div className="field-size-2">
-                <input type="text" maxLength="30" name="observacao_20" className="form-control" onChange={(e) => setObservacao_20(e.target.value)} />
+              <div className="col-width-3 mr-1">
+                <input type="text" maxLength="30" name="observacao_20" onChange={(e) => setObservacao_20(e.target.value)} />
               </div>
             </div>
           </div>
 
-          <div className="row">
+          <div className="row mt-1">
             <div className="col pl-0">
-              <button className="btn btn-primary my-2" id="btnShowMoreLines" onClick={showMoreLines}>
+              <button className="btn btn--primary btn--icon" id="btnShowMoreLines" onClick={showMoreLines}>
                 <FiPlusCircle size="30" />
               </button>
             </div>
@@ -1243,10 +1263,10 @@ export default function SaidaCreate() {
       </form>
 
       <div className="overlay">
-        <div id="modal-saida" className="modal-saida">
+        <div id="modal-saida" className="modal modal-saida">
           <div className="modal-saida__body">
-            <div className="modal-saida__content">
-              <table className="modal-saida__table">
+            <table className="modal-saida__table">
+              <thead>
                 <tr>
                   <th>
                     <input type="checkbox" disabled></input>
@@ -1256,16 +1276,20 @@ export default function SaidaCreate() {
                   <th>Descrição</th>
                   <th className="text-center">Quantidade</th>
                 </tr>
+              </thead>
 
-                {registroEntrada.length === 0 ? (
+              {registroEntrada.length === 0 ? (
+                <tbody>
                   <tr>
-                    <td colSpan="5" className="text-center">
+                    <td colSpan="5" className="text-center mt-3">
                       Não há informações para exibir
                     </td>
                   </tr>
-                ) : (
-                  registroEntrada.map((registro) => (
-                    <tr key={registro.id}>
+                </tbody>
+              ) : (
+                registroEntrada.map((registro) => (
+                  <tbody key={registro.id}>
+                    <tr>
                       <td>
                         <input type="checkbox" name="saida-checkbox" value={registro.id}></input>
                       </td>
@@ -1274,16 +1298,15 @@ export default function SaidaCreate() {
                       <td>{registro.descricaoProduto}</td>
                       <td className="text-center">{registro.quantidadeProduto}</td>
                     </tr>
-                  ))
-                )}
-              </table>
-            </div>
-
-            <div className="modal-saida__footer">
-              <input type="button" value="Confirmar" className="modal-saida__btn-confirm btn btn-info" />
-              <input type="button" className="modal-saida__btn-close btn btn-dark" value="Fechar" onClick={hideModal} />
-            </div>
+                  </tbody>
+                ))
+              )}
+            </table>
           </div>
+        </div>
+        <div className="modal-saida__footer">
+          <input type="button" value="Confirmar" className="btn btn--primary btn--medium mr-3" />
+          <input type="button" className="btn btn--secondary btn--medium" value="Fechar" onClick={hideModal} />
         </div>
       </div>
 

@@ -1,0 +1,94 @@
+$search--background: #2b3035;
+
+.form {
+  padding: 0px 20px;
+  background-color: $search--background;
+  color: #fff;
+  min-width: 1366px;
+}
+
+.form__title {
+  text-align: center;
+  font-weight: bold;
+}
+
+.form__search-bar {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  flex-direction: row;
+}
+
+.form__search-bar label {
+  margin-right: 10px;
+}
+
+.form-custom {
+  width: 500px;
+  min-width: 500px;
+  margin: 0 auto;
+}
+
+.form-custom hr {
+  background-color: #fff;
+  margin-bottom: 30px;
+}
+
+.form-custom .div-btn-form-submit {
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.form-custom .div-btn-form-submit .btn-form-submit {
+  margin: 50px;
+  width: 300px;
+}
+
+.form-create .form-lines {
+  margin-top: 20px;
+  padding-left: 15px !important;
+}
+
+.form-create hr {
+  background-color: #fff;
+  margin-bottom: 30px;
+}
+
+.form-create .btn-submit {
+  width: 150px;
+  height: 40px !important;
+  margin-left: 10px;
+  margin-top: 30px;
+  border: none !important;
+}
+
+.form-create .btn-submit-saida {
+  width: 150px;
+  height: 40px;
+  margin-left: 10px;
+  border: none !important;
+}
+
+:disabled {
+  background-color: #999 !important;
+  border: 0px !important;
+}
+
+.form-create .btn-cancel {
+  width: 150px;
+  height: 40px !important;
+  margin-left: 10px;
+  margin-top: 30px;
+  background-color: #222;
+  border: none;
+}
+
+.form-create small {
+  text-align: center !important;
+  display: block;
+}
+
+.form-create .buttons-form-group {
+  width: fit-content;
+  margin: 0 auto;
+}

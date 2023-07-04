@@ -1,0 +1,80 @@
+$btn--primary: #008aca;
+$btn--primary_hover: #009ee7;
+$btn--secondary: #940000;
+$btn--secondary_hover: #a80000;
+$btn--dark: #2c2c2c;
+$btn--dark_hover: #333333;
+
+.btn {
+  padding: 10px;
+  height: inherit;
+  border: none;
+  border-radius: 20px;
+  color: #fff;
+  transition: 0.3s !important;
+}
+
+.btn--small {
+  width: 150px;
+}
+
+.btn--medium {
+  width: 150px;
+}
+
+.btn--large {
+  width: 300px;
+}
+
+.btn--primary {
+  background-color: $btn--primary;
+}
+
+.btn--primary:hover {
+  background-color: $btn--primary_hover;
+}
+
+.btn--secondary {
+  background-color: $btn--secondary;
+}
+
+.btn--secondary:hover {
+  background-color: $btn--secondary_hover;
+}
+
+.btn--dark {
+  background-color: $btn--dark;
+}
+
+.btn--dark:hover {
+  background-color: $btn--dark_hover;
+}
+
+.btn--icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#subirTopo {
+  width: 50px;
+  height: 50px;
+  font-size: 30px;
+  background: #0095da;
+  box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.9);
+  border-radius: 30px;
+  bottom: 10px;
+  right: 10px;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: uppercase;
+  position: fixed;
+  font-family: sans-serif;
+  transition: 0.3s;
+}
+
+#subirTopo:hover {
+  background-color: #1cb7ff;
+}

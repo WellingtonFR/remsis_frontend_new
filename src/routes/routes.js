@@ -1,5 +1,5 @@
-import React from "react";
-import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
+import React, { Fragment } from "react";
+import { BrowserRouter, Route, Navigate, Routes } from "react-router-dom";
 
 import Home from "../pages/Home";
 import FiliaisCreate from "../pages/FiliaisCreate";
@@ -21,59 +21,57 @@ import EntradaIndex from "../pages/EntradaIndex";
 import EstoqueIndex from "../pages/EstoqueIndex";
 import Navbar from "../components/Navbar";
 
-export default function Routes() {
+export default function App() {
   const token = localStorage.getItem("token");
   const isLoggedIn = localStorage.getItem("isLoggedIn");
   const isAuthenticated = () => token !== "" && isLoggedIn === "true";
 
-  const PrivateRoute = ({ component: Component, ...rest }) => (
-    <Route {...rest} render={(props) => (isAuthenticated() ? <Component {...props} /> : <Redirect to={{ pathname: "/login", state: { from: props.location } }} />)} />
+  const PrivateRoute = ({ element: Element, ...rest }) => (
+    <Route {...rest} render={(props) => (isAuthenticated() ? <Element {...props} /> : <Navigate to={{ pathname: "/login", state: { from: props.location } }} />)} />
   );
 
   return (
     <BrowserRouter>
-      <Switch>
-        <Route exact path="/login" component={Login} />
+      <Fragment>
+        <Navbar />
 
-        <div>
-          <Navbar />
-          <PrivateRoute exact path="/" component={Home} />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
 
           {/*Filial*/}
-          <PrivateRoute exact path="/filiais" component={FiliaisIndex} />
-          <PrivateRoute path="/filiais/create" component={FiliaisCreate} />
-          <PrivateRoute path="/filiais/update/:id" component={FiliaisUpdate} />
+          <Route path="/filiais" element={<FiliaisIndex />} />
+          <Route path="/filiais/create" element={<FiliaisCreate />} />
+          <Route path="/filiais/update/:id" element={<FiliaisUpdate />} />
 
           {/*Saida */}
-          <PrivateRoute exact path="/saida" component={SaidaIndex} />
-          <PrivateRoute path="/saida/create" component={SaidaCreate} />
-          <PrivateRoute path="/saida/update/:id" component={SaidaUpdate} />
-          <PrivateRoute path="/saida/report/:id" component={SaidaReport} />
+          <Route path="/saida" element={<SaidaIndex />} />
+          <Route path="/saida/create" element={<SaidaCreate />} />
+          <Route path="/saida/update/:id" element={<SaidaUpdate />} />
+          <Route path="/saida/report/:id" element={<SaidaReport />} />
 
           {/*Entrada */}
-          <PrivateRoute exact path="/entrada" component={EntradaIndex} />
-          <PrivateRoute path="/entrada/create" component={EntradaCreate} />
-          {/* <PrivateRoute path="/saida/update/:id" component={SaidaUpdate} /> */}
-          {/* <PrivateRoute path="/saida/report/:id" component={SaidaReport} /> */}
+          <Route path="/entrada" element={<EntradaIndex />} />
+          <Route path="/entrada/create" element={<EntradaCreate />} />
+          {/* <Route path="/saida/update/:id" element={<SaidaUpdate} /> */}
+          {/* <Route path="/saida/report/:id" element={<SaidaReport} /> */}
 
           {/* Estoque */}
-          <PrivateRoute exact path="/estoque" component={EstoqueIndex} />
+          <Route path="/estoque" element={<EstoqueIndex />} />
 
           {/*Transportador*/}
-          <PrivateRoute exact path="/transportador" component={TransportadorIndex} />
-          <PrivateRoute path="/transportador/create" component={TransportadorCreate} />
-          <PrivateRoute path="/transportador/update/:id" component={TransportadorUpdate} />
+          <Route path="/transportador" element={<TransportadorIndex />} />
+          <Route path="/transportador/create" element={<TransportadorCreate />} />
+          <Route path="/transportador/update/:id" element={<TransportadorUpdate />} />
 
           {/*Conferente*/}
-          <PrivateRoute exact path="/conferente" component={ConferenteIndex} />
-          <PrivateRoute path="/conferente/create" component={ConferenteCreate} />
-
-          {/*Login*/}
+          <Route path="/conferente" element={<ConferenteIndex />} />
+          <Route path="/conferente/create" element={<ConferenteCreate />} />
 
           {/* 404 error */}
-        </div>
-        <Route component={NotFoundPage} />
-      </Switch>
+          <Route path="/*" element={<NotFoundPage />} />
+        </Routes>
+      </Fragment>
     </BrowserRouter>
   );
 }

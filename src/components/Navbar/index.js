@@ -59,7 +59,7 @@ export default function Navbar() {
         </div>
       </div>
       <div className="navbar__btn-logout">
-        <button className="btn btn__primary btn--medium" onClick={handleLogout}>
+        <button className="btn btn--primary btn--medium" onClick={handleLogout}>
           SAIR
         </button>
       </div>

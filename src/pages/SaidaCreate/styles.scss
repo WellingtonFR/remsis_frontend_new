@@ -1,0 +1,53 @@
+.modal-saida {
+  width: 800px;
+  min-width: 800px;
+  background: #464646;
+  height: fit-content;
+  max-height: 600px;
+  padding: 10px;
+}
+
+.modal-saida__content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.modal-saida__body {
+  width: 100%;
+  min-height: 500px;
+  max-height: 500px;
+  overflow-x: scroll;
+}
+
+.modal-saida__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.modal-saida__table th {
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 5px;
+}
+
+.modal-saida__table td {
+  padding: 5px 10px;
+  border: none;
+}
+
+.modal-saida__table tbody tr:hover {
+  background-color: #555;
+}
+
+.modal-saida__footer {
+  position: fixed;
+  bottom: 50px;
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

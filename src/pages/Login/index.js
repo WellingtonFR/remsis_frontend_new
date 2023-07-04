@@ -53,7 +53,7 @@ export default function Login() {
             </div>
 
             <div className="form__row mt-3 flex-center">
-              <button className="btn btn__primary btn--large">Entrar</button>
+              <button className="btn btn--primary btn--large">Entrar</button>
             </div>
           </form>
         </div>

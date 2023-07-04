@@ -1,0 +1,24 @@
+.table {
+  width: 100%;
+  background-color: #e7e7e7;
+  min-width: 1366px;
+}
+
+.table thead {
+  font-weight: 600;
+  background-color: #282d33;
+}
+
+.table td,
+.table th {
+  padding-left: 20px !important;
+}
+
+.table .form-buttons {
+  text-align: center;
+  padding: 0px;
+}
+
+.table-hover tr:hover td {
+  background-color: #3e454d !important;
+}

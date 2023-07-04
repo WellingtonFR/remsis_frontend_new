@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import $ from "jquery";
+
 import api from "../../services/api";
 import Swal from "sweetalert2";
 import { FiTrash2, FiEdit, FiArrowUp, FiPrinter } from "react-icons/fi";

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
-import { useParams, useHistory, Link } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 // eslint-disable-next-line
 import styles from "./styles.css";
 import api from "../../services/api";
@@ -9,7 +9,7 @@ export default function TransportadoUpdate() {
   const [transportador, setTransportador] = useState("");
   const { id } = useParams();
 
-  const history = useHistory();
+  const history = useNavigate();
 
   useEffect(() => {
     (async () => {

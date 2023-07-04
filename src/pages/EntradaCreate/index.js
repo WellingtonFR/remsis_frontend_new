@@ -5,9 +5,6 @@ import api from "../../services/api";
 import UseLoader from "../../hooks/UseLoader";
 
 export default function EntradaCreate() {
-  //#region useState
-
-  //Parte superior do formulário
   const [data, setdata] = useState("");
   const [loader, showLoader, hideLoader] = UseLoader();
 
@@ -156,19 +153,19 @@ export default function EntradaCreate() {
   }
 
   return (
-    <div className="form-create">
-      <h4 className="form-header">Cadastro de entrada</h4>
-      <form onSubmit={onSubmit} id="form_entrada">
+    <div className="form flex-center">
+      <form onSubmit={onSubmit}>
+        <h4 className="form__title uppercase">Cadastro de entrada</h4>
         <hr />
-        <div className="row">
-          <div className="field-size-2 ml-3">
+        <div className="form__search-bar mt-3">
+          <div className="">
             <label htmlFor="data">Data</label>
-            <input type="text" name="data" className="form-control" required disabled value={data} />
+            <input type="text" name="data" className="input input--width-1 text-center" required disabled value={data} />
           </div>
 
-          <div className="field-size-2 ml-3">
+          <div className="ml-3">
             <label htmlFor="filialOrigem">Filial origem</label>
-            <select name="filialOrigem" className="form-control" required disabled={filialOrigem !== "" ? true : false} onChange={(e) => setFilialOrigem(e.target.value)}>
+            <select name="filialOrigem" className="input input--width-2" required disabled={filialOrigem !== "" ? true : false} onChange={(e) => setFilialOrigem(e.target.value)}>
               <option value="">Selecione</option>
               {filiais.map((filial) => (
                 <option value={filial.numeroFilial} key={filial.numeroFilial}>
@@ -178,9 +175,9 @@ export default function EntradaCreate() {
             </select>
           </div>
 
-          <div className="field-size-2 ml-3">
+          <div className="ml-3">
             <label htmlFor="nomeConferente">Conferente</label>
-            <select name="nomeConferente" className="form-control" required disabled={conferente !== "" ? true : false} onChange={(e) => setConferente(e.target.value)}>
+            <select name="nomeConferente" className="input input--width-5 " required disabled={conferente !== "" ? true : false} onChange={(e) => setConferente(e.target.value)}>
               <option value="">Selecione</option>
               {conferentes.map((conferente) => (
                 <option value={conferente.nomeConferente} key={conferente.nomeConferente}>
@@ -190,73 +187,75 @@ export default function EntradaCreate() {
             </select>
           </div>
 
-          <div className="field-size-1 ml-3">
+          <div className="ml-3">
             <label htmlFor="doca">Doca</label>
-            <input type="number" name="doca" className="form-control" required value={doca} onChange={(e) => setDoca(e.target.value)} />
+            <input type="number" name="doca" className="input input--width-2 " required value={doca} onChange={(e) => setDoca(e.target.value)} />
           </div>
 
-          <div className="">
-            <button type="submit" className="btn btn-primary btn-submit" id="btn-submit" disabled style={{ height: "50px" }}>
+          <div className="ml-3">
+            <button type="submit" id="btn-submit" className="btn btn--primary btn--medium" disabled style={{ height: "50px" }}>
               Inserir
             </button>
           </div>
         </div>
 
-        <div className="form-lines">
-          <div className="row Head">
-            <div className="field-size-1">Nota fiscal</div>
-            <div className="field-size-1">Código</div>
-            <div className="field-size-2">Descrição</div>
-            <div className="field-size-1">Quantidade</div>
-            <div className="field-size-1">Filial Destino</div>
-            <div className="field-size-2">Observação</div>
-          </div>
+        <div className="row mt-3">
+          <div className="form__header col-width-1 mr-2 bold">Nota fiscal</div>
+          <div className="form__header col-width-1 mr-2 bold">Código</div>
+          <div className="form__header col-width-3 mr-2 bold">Descrição</div>
+          <div className="form__header col-width-1 mr-2 bold">Quantidade</div>
+          <div className="form__header col-width-1 mr-2 bold">Filial Destino</div>
+          <div className="form__header col-width-3 mr-2 bold">Observação</div>
+          <div className="form__header col-width-1"></div>
+        </div>
 
-          {formFields.map((form, index) => {
-            return (
-              <div className="row" key={index}>
-                <div className="field-size-1">
-                  <input
-                    type="text"
-                    name="notaFiscal"
-                    className="form-control"
-                    required
-                    value={form.notaFiscal}
-                    onChange={(event) => handleFormBodyChange(event, index)}
-                    onClick={() => (document.querySelector("#btn-submit").disabled = false)}
-                  />
-                </div>
-                <div className="field-size-1">
-                  <input type="text" name="codigo" className="form-control" required value={form.codigo} onChange={(event) => handleFormBodyChange(event, index)} />
-                </div>
-                <div className="field-size-2">
-                  <input type="text" name="descricaoProduto" className=" form-control" maxLength="30" value={form.descricaoProduto} required onChange={(event) => handleFormBodyChange(event, index)} />
-                </div>
-                <div className="field-size-1">
-                  <input type="number" name="quantidadeProduto" className="form-control" required value={form.quantidadeProduto} onChange={(event) => handleFormBodyChange(event, index)} />
-                </div>
-                <div className="field-size-1">
-                  <input type="number" name="filialDestino" className="form-control" required value={form.filialDestino} onChange={(event) => handleFormBodyChange(event, index)} />
-                </div>
-                <div className="field-size-2">
-                  <input type="text" name="observacao" className="form-control" maxLength="30" value={form.observacao} onChange={(event) => handleFormBodyChange(event, index)} />
-                </div>
-                <div className="field-size-1">
-                  <button type="button" className="btn btn-primary" id="btn-remove-fields" style={{ height: "40px", paddingTop: "5px" }} onClick={() => removeFields(index)}>
-                    <FiMinusCircle size="30" />
-                  </button>
-                </div>
+        {formFields.map((form, index) => {
+          return (
+            <div key={index} className="row mt-1">
+              <div className="col-width-1 mr-2">
+                <input
+                  type="text"
+                  name="notaFiscal"
+                  required
+                  value={form.notaFiscal}
+                  onChange={(event) => handleFormBodyChange(event, index)}
+                  onClick={() => (document.querySelector("#btn-submit").disabled = false)}
+                />
               </div>
-            );
-          })}
 
-          <div className="row">
-            <div className="col-md-1 p-0">
-              <button type="button" className="btn btn-primary my-2" id="btn-add-fields" disabled={conferente === "" || filialOrigem === "" || doca === "" ? true : false} onClick={addFields}>
-                <FiPlusCircle size="30" />
-              </button>
+              <div className="col-width-1 mr-2">
+                <input type="text" name="codigo" maxLength="10" value={form.codigoProduto} required onChange={(event) => handleFormBodyChange(event, index)} />
+              </div>
+
+              <div className="col-width-3 mr-2">
+                <input type="text" name="descricaoProduto" maxLength="30" value={form.descricaoProduto} required onChange={(event) => handleFormBodyChange(event, index)} />
+              </div>
+
+              <div className="col-width-1 mr-2">
+                <input type="number" name="quantidadeProduto" required value={form.quantidadeProduto} onChange={(event) => handleFormBodyChange(event, index)} />
+              </div>
+
+              <div className="col-width-1 mr-2">
+                <input type="number" name="filialDestino" required value={form.filialDestino} onChange={(event) => handleFormBodyChange(event, index)} />
+              </div>
+
+              <div className="col-width-3 mr-2">
+                <input type="text" name="observacao" maxLength="30" value={form.observacao} onChange={(event) => handleFormBodyChange(event, index)} />
+              </div>
+
+              <div className="col-width-1 mr-2">
+                <button type="button" className="btn btn--primary btn--icon" id="btn-remove-fields" onClick={() => removeFields(index)}>
+                  <FiMinusCircle size="30" />
+                </button>
+              </div>
             </div>
-          </div>
+          );
+        })}
+
+        <div className="row mt-2">
+          <button className="btn btn--primary btn--icon" id="btn-add-fields" disabled={conferente === "" || filialOrigem === "" || doca === "" ? true : false} onClick={addFields}>
+            <FiPlusCircle size="30" />
+          </button>
         </div>
       </form>
       {loader}

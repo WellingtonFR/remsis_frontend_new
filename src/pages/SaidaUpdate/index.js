@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useHistory, useParams, Link } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import api from "../../services/api";
 import UseLoader from "../../hooks/UseLoader";
@@ -26,7 +26,7 @@ export default function SaidaUpdate() {
     "SUP-USO E CONSUMO",
   ];
 
-  const history = useHistory();
+  const history = useNavigate();
   const { id } = useParams();
 
   useEffect(() => {
@@ -240,7 +240,6 @@ export default function SaidaUpdate() {
 
     try {
       showLoader();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
       await api.put(`/saida/update/${id}`, data).then(() => {
         hideLoader();
         Swal.fire({
@@ -249,7 +248,6 @@ export default function SaidaUpdate() {
           icon: "success",
           preConfirm: () => {
             document.querySelector("form").reset();
-            // eslint-disable-next-line react-hooks/exhaustive-deps
             history.push(`/saida/report/${id}`);
           },
         });

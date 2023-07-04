@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
-import { useParams, useHistory, Link } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import api from "../../services/api";
 import UseLoader from "../../hooks/UseLoader";
 
@@ -9,7 +9,7 @@ export default function FiliaisUpdate() {
   const [filial, setFilial] = useState([]);
   const { id } = useParams();
 
-  const history = useHistory();
+  const history = useNavigate();
 
   useEffect(() => {
     (async () => {
