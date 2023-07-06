@@ -1,5 +1,6 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { BrowserRouter, Route, Navigate, Routes } from "react-router-dom";
+import { Outlet } from "react-router";
 
 import Home from "../pages/Home";
 import FiliaisCreate from "../pages/FiliaisCreate";
@@ -32,46 +33,49 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <Fragment>
-        <Navbar />
-
-        <Routes>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route
+          element={
+            <>
+              <Navbar />
+              <Outlet />
+            </>
+          }
+        >
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
 
           {/*Filial*/}
-          <Route path="/filiais" element={<FiliaisIndex />} />
-          <Route path="/filiais/create" element={<FiliaisCreate />} />
-          <Route path="/filiais/update/:id" element={<FiliaisUpdate />} />
+          <Route path="filiais" element={<FiliaisIndex />} />
+          <Route path="filiais/create" element={<FiliaisCreate />} />
+          <Route path="filiais/update/:id" element={<FiliaisUpdate />} />
 
           {/*Saida */}
-          <Route path="/saida" element={<SaidaIndex />} />
-          <Route path="/saida/create" element={<SaidaCreate />} />
-          <Route path="/saida/update/:id" element={<SaidaUpdate />} />
-          <Route path="/saida/report/:id" element={<SaidaReport />} />
+          <Route path="saida" element={<SaidaIndex />} />
+          <Route path="saida/create" element={<SaidaCreate />} />
+          <Route path="saida/update/:id" element={<SaidaUpdate />} />
+          <Route path="saida/report/:id" element={<SaidaReport />} />
 
           {/*Entrada */}
-          <Route path="/entrada" element={<EntradaIndex />} />
-          <Route path="/entrada/create" element={<EntradaCreate />} />
-          {/* <Route path="/saida/update/:id" element={<SaidaUpdate} /> */}
-          {/* <Route path="/saida/report/:id" element={<SaidaReport} /> */}
+          <Route path="entrada" element={<EntradaIndex />} />
+          <Route path="entrada/create" element={<EntradaCreate />} />
 
           {/* Estoque */}
-          <Route path="/estoque" element={<EstoqueIndex />} />
+          <Route path="estoque" element={<EstoqueIndex />} />
 
           {/*Transportador*/}
-          <Route path="/transportador" element={<TransportadorIndex />} />
-          <Route path="/transportador/create" element={<TransportadorCreate />} />
-          <Route path="/transportador/update/:id" element={<TransportadorUpdate />} />
+          <Route path="transportador" element={<TransportadorIndex />} />
+          <Route path="transportador/create" element={<TransportadorCreate />} />
+          <Route path="transportador/update/:id" element={<TransportadorUpdate />} />
 
           {/*Conferente*/}
-          <Route path="/conferente" element={<ConferenteIndex />} />
-          <Route path="/conferente/create" element={<ConferenteCreate />} />
+          <Route path="conferente" element={<ConferenteIndex />} />
+          <Route path="conferente/create" element={<ConferenteCreate />} />
 
           {/* 404 error */}
-          <Route path="/*" element={<NotFoundPage />} />
-        </Routes>
-      </Fragment>
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+      </Routes>
     </BrowserRouter>
   );
 }

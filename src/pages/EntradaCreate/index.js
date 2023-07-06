@@ -5,7 +5,7 @@ import api from "../../services/api";
 import UseLoader from "../../hooks/UseLoader";
 
 export default function EntradaCreate() {
-  const [data, setdata] = useState("");
+  const date = new Date().toLocaleDateString();
   const [loader, showLoader, hideLoader] = UseLoader();
 
   const [conferente, setConferente] = useState("");
@@ -16,7 +16,6 @@ export default function EntradaCreate() {
 
   const [formFields, setFormFields] = useState([
     {
-      data: data,
       filialOrigem: filialOrigem,
       conferente: conferente,
       doca: doca,
@@ -39,19 +38,6 @@ export default function EntradaCreate() {
       await api.get("conferente").then((response) => {
         setConferentes(response.data);
       });
-
-      let filialOrigem = document.querySelector("select[name='filialOrigem']");
-      let conferente = document.querySelector("select[name='nomeConferente']");
-      let doca = document.querySelector("input[name='doca']");
-
-      filialOrigem.removeAttribute("disabled");
-      conferente.removeAttribute("disabled");
-      doca.removeAttribute("disabled");
-      setDoca("");
-      setdata(new Date().toLocaleDateString("pt-br"));
-
-      filialOrigem.querySelector("option").selected = "selected";
-      conferente.querySelector("option").selected = "selected";
     })();
   }, []);
 
@@ -66,9 +52,9 @@ export default function EntradaCreate() {
 
     filialOrigem.removeAttribute("disabled");
     conferente.removeAttribute("disabled");
+
     doca.removeAttribute("disabled");
     setDoca("");
-    setdata(new Date().toLocaleDateString("pt-br"));
 
     filialOrigem.querySelector("option").selected = "selected";
     conferente.querySelector("option").selected = "selected";
@@ -95,7 +81,6 @@ export default function EntradaCreate() {
   const addFields = () => {
     if (conferente !== "" && filialOrigem !== "") {
       let object = {
-        data: data,
         filialOrigem: filialOrigem,
         conferente: conferente,
         doca: doca,
@@ -153,19 +138,19 @@ export default function EntradaCreate() {
   }
 
   return (
-    <div className="form flex-center">
+    <div className="container">
       <form onSubmit={onSubmit}>
         <h4 className="form__title uppercase">Cadastro de entrada</h4>
         <hr />
-        <div className="form__search-bar mt-3">
+        <div className="search-bar mt-3">
           <div className="">
             <label htmlFor="data">Data</label>
-            <input type="text" name="data" className="input input--width-1 text-center" required disabled value={data} />
+            <input type="text" name="data" className="input--width-1" required disabled value={date} />
           </div>
 
           <div className="ml-3">
             <label htmlFor="filialOrigem">Filial origem</label>
-            <select name="filialOrigem" className="input input--width-2" required disabled={filialOrigem !== "" ? true : false} onChange={(e) => setFilialOrigem(e.target.value)}>
+            <select name="filialOrigem" className="input--width-2" required disabled={filialOrigem !== "" ? true : false} onChange={(e) => setFilialOrigem(e.target.value)}>
               <option value="">Selecione</option>
               {filiais.map((filial) => (
                 <option value={filial.numeroFilial} key={filial.numeroFilial}>
@@ -177,7 +162,7 @@ export default function EntradaCreate() {
 
           <div className="ml-3">
             <label htmlFor="nomeConferente">Conferente</label>
-            <select name="nomeConferente" className="input input--width-5 " required disabled={conferente !== "" ? true : false} onChange={(e) => setConferente(e.target.value)}>
+            <select name="nomeConferente" className="input--width-5 " required disabled={conferente !== "" ? true : false} onChange={(e) => setConferente(e.target.value)}>
               <option value="">Selecione</option>
               {conferentes.map((conferente) => (
                 <option value={conferente.nomeConferente} key={conferente.nomeConferente}>
@@ -189,7 +174,7 @@ export default function EntradaCreate() {
 
           <div className="ml-3">
             <label htmlFor="doca">Doca</label>
-            <input type="number" name="doca" className="input input--width-2 " required value={doca} onChange={(e) => setDoca(e.target.value)} />
+            <input type="number" name="doca" className="input--width-2 " required value={doca} onChange={(e) => setDoca(e.target.value)} />
           </div>
 
           <div className="ml-3">

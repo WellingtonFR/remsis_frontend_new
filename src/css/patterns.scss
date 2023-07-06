@@ -32,3 +32,8 @@ select {
 input[type="checkbox"] {
   width: 20px;
 }
+
+:disabled {
+  background-color: #999 !important;
+  border: 0px !important;
+}

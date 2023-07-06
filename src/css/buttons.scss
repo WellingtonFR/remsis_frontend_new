@@ -1,21 +1,22 @@
 $btn--primary: #008aca;
 $btn--primary_hover: #009ee7;
-$btn--secondary: #940000;
-$btn--secondary_hover: #a80000;
+$btn--danger: #940000;
+$btn--danger_hover: #a80000;
 $btn--dark: #2c2c2c;
 $btn--dark_hover: #333333;
 
 .btn {
+  height: 40px !important;
   padding: 10px;
   height: inherit;
   border: none;
   border-radius: 20px;
   color: #fff;
-  transition: 0.3s !important;
+  transition: 0.3s;
 }
 
 .btn--small {
-  width: 150px;
+  width: 100px;
 }
 
 .btn--medium {
@@ -34,14 +35,6 @@ $btn--dark_hover: #333333;
   background-color: $btn--primary_hover;
 }
 
-.btn--secondary {
-  background-color: $btn--secondary;
-}
-
-.btn--secondary:hover {
-  background-color: $btn--secondary_hover;
-}
-
 .btn--dark {
   background-color: $btn--dark;
 }
@@ -50,10 +43,24 @@ $btn--dark_hover: #333333;
   background-color: $btn--dark_hover;
 }
 
+.btn--danger {
+  background-color: $btn--danger;
+}
+
+.btn--danger:hover {
+  background-color: $btn--danger_hover;
+}
+
 .btn--icon {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.btn--icon_table {
+  width: 25px;
+  height: 25px;
+  color: #000000;
 }
 
 #subirTopo {
@@ -73,6 +80,9 @@ $btn--dark_hover: #333333;
   position: fixed;
   font-family: sans-serif;
   transition: 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #subirTopo:hover {

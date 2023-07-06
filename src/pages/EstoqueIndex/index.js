@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-// eslint-disable-next-line
-import styles from "./styles.css";
 import api from "../../services/api";
 import Swal from "sweetalert2";
-import { FiArrowUp } from "react-icons/fi";
 import UseLoader from "../../hooks/UseLoader";
 
 export default function EstoqueIndex() {
@@ -17,15 +14,8 @@ export default function EstoqueIndex() {
 
   useEffect(() => {
     (async () => {
-      const data = {
-        initialDate: new Date().toLocaleDateString("pt-br"),
-        finalDate: new Date().toLocaleDateString("pt-br"),
-        filialOrigem: filialOrigem,
-        filialDestino: filialDestino,
-      };
-
       try {
-        await api.get("/estoque", data).then((response) => {
+        await api.get("/estoque").then((response) => {
           setEstoque(response.data);
         });
       } catch (err) {
@@ -38,7 +28,7 @@ export default function EstoqueIndex() {
         });
       }
     })();
-  }, [filialOrigem, filialDestino]);
+  }, []);
   async function handleSearch(e) {
     e.preventDefault();
 
@@ -77,78 +67,31 @@ export default function EstoqueIndex() {
     }
   }
 
-  document.addEventListener("DOMContentLoaded", function (e) {
-    let btnSubir = document.querySelector("#subirTopo");
-    btnSubir.style.display = "none";
-
-    document.addEventListener("DOMContentLoaded", function (e) {
-      let btnSubir = document.querySelector("#subirTopo");
-      btnSubir.style.display = "none";
-
-      document.addEventListener("scroll", function (e) {
-        if (document.scrollTop() > 100) {
-          btnSubir.fadeIn();
-        } else {
-          btnSubir.fadeOut();
-        }
-      });
-    });
-  });
-
-  function handleDate(_date) {
-    let origin_date = new Date(_date);
-    origin_date.setDate(origin_date.getDate() + 1);
-    let return_date = origin_date.toLocaleDateString("pt-br");
-    return return_date;
-  }
-
-  function btnSubir(e) {
-    e.preventDefault();
-    $("html").animate(
-      {
-        scrollTop: 0,
-      },
-      800
-    );
-    return false;
-  }
-
   return (
-    <div className="lista-estoque">
-      <div className="top-search">
-        <form onSubmit={handleSearch}>
-          <div className="form-inline">
-            <div className="input-group">
-              <label htmlFor="initialDate" className="col-form-label ml-1 mr-2">
-                Data inicial
-              </label>
-              <input type="date" name="initialDate" className="form-control" placeholder="dd/mm/aaaa" maxLength="10" onChange={(e) => setInitialDate(handleDate(e.target.value))} />
-            </div>
-            <div className="input-group">
-              <label htmlFor="finalDate" className="ml-1 mr-2">
-                Data final
-              </label>
-              <input type="date" name="finalDate" className="form-control" placeholder="dd/mm/aaaa" onChange={(e) => setFinalDate(handleDate(e.target.value))} />
-            </div>
-            <div className="input-group">
-              <label htmlFor="filialOrigem" className="ml-1 mr-2">
-                Filial origem
-              </label>
-              <input type="text" name="filialOrigem" className="form-control" onChange={(e) => setFilialOrigem(e.target.value)}></input>
-            </div>
-            <div className="input-group">
-              <label htmlFor="filialDestino" className="ml-1 mr-2">
-                Filial destino
-              </label>
-              <input type="text" name="filialDestino" className="form-control" onChange={(e) => setFilialDestino(e.target.value)}></input>
-            </div>
-            <button type="submit" className="btn btn-primary ml-3" id="btn-submit-search" onClick={() => handleSearch}>
-              Pesquisar
-            </button>
-          </div>
+    <div className="container">
+      <div className="search-bar">
+        <form onSubmit={handleSearch} className="form">
+          <label htmlFor="initialDate">Data inicial</label>
+          <input type="date" name="initialDate" placeholder="dd/mm/aaaa" maxLength="10" className="input--width-2 mr-3" onChange={(e) => setInitialDate(e.target.value)} />
+
+          <label htmlFor="finalDate" className="ml-1 mr-2">
+            Data final
+          </label>
+          <input type="date" name="finalDate" placeholder="dd/mm/aaaa" className="input--width-2 mr-3" onChange={(e) => setFinalDate(e.target.value)} />
+
+          <label htmlFor="filialOrigem" className="ml-1 mr-2">
+            Filial origem
+          </label>
+          <input type="text" name="filialOrigem" className="input--width-2 mr-3" onChange={(e) => setFilialOrigem(e.target.value)}></input>
+
+          <label htmlFor="filialDestino">Filial destino</label>
+          <input type="text" name="filialDestino" className="input--width-2 mr-3" onChange={(e) => setFilialDestino(e.target.value)}></input>
+          <button type="submit" className="btn btn--primary btn--small" id="btn-submit-search" onClick={() => handleSearch}>
+            Pesquisar
+          </button>
         </form>
       </div>
-      <table className="table table-hover table-dark">
+      <table className="table table--white table--freeze-header" style={{ width: "1024px", margin: "0px auto", marginTop: "20px" }}>
         <thead>
           <tr>
             <th>Data Entrada</th>
@@ -166,7 +109,7 @@ export default function EstoqueIndex() {
           ) : (
             estoque.map((estoque) => (
               <tr key={estoque.id}>
-                <td>{estoque.data}</td>
+                <td>{new Date(estoque.created_at).toLocaleDateString()}</td>
                 <td>{estoque.filialOrigem}</td>
                 <td>{estoque.filialDestino}</td>
                 <td>{estoque.codigo}</td>
@@ -176,9 +119,6 @@ export default function EstoqueIndex() {
           )}
         </tbody>
       </table>
-      <div id="subirTopo" onClick={btnSubir}>
-        <FiArrowUp />
-      </div>
       {loader}
     </div>
   );

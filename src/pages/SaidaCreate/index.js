@@ -8,7 +8,7 @@ import "./styles.scss";
 
 export default function SaidaCreate() {
   //#region useState
-  const [date] = useState(new Date().toLocaleDateString("pt-br"));
+  const date = new Date().toLocaleDateString();
   const [numeroControle] = useState(generateId(10));
   const [filialDestino, setFilialDestino] = useState("");
   const [nomeFilialDestino, setNomeFilialDestino] = useState("");
@@ -227,7 +227,6 @@ export default function SaidaCreate() {
     e.preventDefault();
 
     const data = {
-      data: date,
       numeroControle,
       filialDestino,
       nomeFilialDestino,
@@ -470,7 +469,7 @@ export default function SaidaCreate() {
   }
 
   const showModal = () => {
-    const modal = document.querySelector("#modal-saida");
+    const modal = document.querySelector("#modal__saida");
     const overlay = document.querySelector(".overlay");
 
     modal.style.visibility = "visible";
@@ -478,7 +477,7 @@ export default function SaidaCreate() {
   };
 
   const hideModal = () => {
-    const modal = document.querySelector("#modal-saida");
+    const modal = document.querySelector("#modal__saida");
     const overlay = document.querySelector(".overlay");
 
     modal.style.visibility = "hidden";
@@ -501,7 +500,7 @@ export default function SaidaCreate() {
   }
 
   return (
-    <div className="form flex-center">
+    <div className="container">
       <form onSubmit={handleNewSaida} id="form_saida">
         <h4 className="form__title uppercase">Cadastro de saída</h4>
         <hr />
@@ -1263,13 +1262,13 @@ export default function SaidaCreate() {
       </form>
 
       <div className="overlay">
-        <div id="modal-saida" className="modal modal-saida">
-          <div className="modal-saida__body">
-            <table className="modal-saida__table">
+        <div id="modal__saida" className="modal">
+          <div className="modal__body">
+            <table className="table modal__table">
               <thead>
                 <tr>
                   <th>
-                    <input type="checkbox" disabled></input>
+                    <input type="checkbox" disabled className="ml-1"></input>
                   </th>
                   <th className="text-center">Filial Origem</th>
                   <th>Código</th>
@@ -1304,7 +1303,7 @@ export default function SaidaCreate() {
             </table>
           </div>
         </div>
-        <div className="modal-saida__footer">
+        <div className="modal__saida__footer">
           <input type="button" value="Confirmar" className="btn btn--primary btn--medium mr-3" />
           <input type="button" className="btn btn--secondary btn--medium" value="Fechar" onClick={hideModal} />
         </div>

@@ -1,17 +1,34 @@
 .table {
   width: 100%;
-  background-color: #e7e7e7;
-  min-width: 1366px;
+  position: relative;
+  text-align: left;
+  border-collapse: collapse;
 }
 
 .table thead {
+  height: 40px;
   font-weight: 600;
-  background-color: #282d33;
+  text-transform: uppercase;
+  padding: 5px;
+  background-color: #222;
+  color: #fff;
 }
 
-.table td,
-.table th {
-  padding-left: 20px !important;
+.table thead th {
+  padding-left: 15px;
+}
+
+.table td {
+  padding: 5px 15px;
+  border: none;
+}
+
+.table tr {
+  border-bottom: 1px solid #cacaca;
+}
+
+.table tbody tr:hover {
+  background-color: #e9e9e9;
 }
 
 .table .form-buttons {
@@ -19,6 +36,18 @@
   padding: 0px;
 }
 
-.table-hover tr:hover td {
-  background-color: #3e454d !important;
+.table--freeze-header th {
+  background-color: #222;
+  position: sticky;
+  top: 0;
+}
+
+.table--white {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.table--dark {
+  background-color: #444444;
+  color: #ffffff;
 }

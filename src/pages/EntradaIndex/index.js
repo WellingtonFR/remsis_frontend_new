@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-// eslint-disable-next-line
-import styles from "./styles.css";
 import api from "../../services/api";
 import Swal from "sweetalert2";
-import { FiTrash2, FiArrowUp } from "react-icons/fi";
+import { FiMoreHorizontal } from "react-icons/fi";
 import UseLoader from "../../hooks/UseLoader";
 
 export default function EntradaIndex() {
@@ -17,9 +15,11 @@ export default function EntradaIndex() {
 
   useEffect(() => {
     (async () => {
+      let hoje = new Date().toJSON().slice(0, 10);
+
       const data = {
-        initialDate: new Date().toLocaleDateString("pt-br"),
-        finalDate: new Date().toLocaleDateString("pt-br"),
+        initialDate: hoje,
+        finalDate: hoje,
         filialOrigem: filialOrigem,
         filialDestino: filialDestino,
       };
@@ -39,13 +39,10 @@ export default function EntradaIndex() {
         });
       }
     })();
-  }, [filialOrigem, filialDestino]);
+  }, []);
 
   async function handleSearch(e) {
     e.preventDefault();
-
-    console.log(filialOrigem);
-    console.log(filialDestino);
 
     const data = {
       initialDate: initialDate,
@@ -85,11 +82,11 @@ export default function EntradaIndex() {
   async function excluirEntrada(id) {
     try {
       const { value: userConfirmAction } = await Swal.fire({
-        title: "Deseja excluir essa transferência ?",
+        title: "Deseja excluir ?",
         icon: "question",
         showConfirmButton: true,
         showCancelButton: true,
-        confirmButtonText: "Excluir",
+        confirmButtonText: "Confirmar",
         cancelButtonText: "Cancelar",
         confirmButtonColor: "#af0600",
       });
@@ -129,78 +126,34 @@ export default function EntradaIndex() {
     }
   }
 
-  document.addEventListener("DOMContentLoaded", function (e) {
-    let btnSubir = document.querySelector("#subirTopo");
-    btnSubir.style.display = "none";
-
-    document.addEventListener("DOMContentLoaded", function (e) {
-      let btnSubir = document.querySelector("#subirTopo");
-      btnSubir.style.display = "none";
-
-      document.addEventListener("scroll", function (e) {
-        if (document.scrollTop() > 100) {
-          btnSubir.fadeIn();
-        } else {
-          btnSubir.fadeOut();
-        }
-      });
-    });
-  });
-
-  function handleDate(_date) {
-    let origin_date = new Date(_date);
-    origin_date.setDate(origin_date.getDate() + 1);
-    let return_date = origin_date.toLocaleDateString("pt-br");
-    return return_date;
-  }
-
-  function btnSubir(e) {
-    e.preventDefault();
-    $("html").animate(
-      {
-        scrollTop: 0,
-      },
-      800
-    );
-    return false;
-  }
-
   return (
-    <div className="lista-entrada">
-      <div className="top-search">
+    <div className="container">
+      <div className="search-bar">
         <form onSubmit={handleSearch}>
-          <div className="form-inline">
-            <div className="input-group">
-              <label htmlFor="initialDate" className="col-form-label ml-1 mr-2">
-                Data inicial
-              </label>
-              <input type="date" name="initialDate" className="form-control" placeholder="dd/mm/aaaa" maxLength="10" onChange={(e) => setInitialDate(handleDate(e.target.value))} />
-            </div>
-            <div className="input-group">
-              <label htmlFor="finalDate" className="ml-1 mr-2">
-                Data final
-              </label>
-              <input type="date" name="finalDate" className="form-control" placeholder="dd/mm/aaaa" onChange={(e) => setFinalDate(handleDate(e.target.value))} />
-            </div>
-            <div className="input-group">
-              <label htmlFor="filialOrigem" className="ml-1 mr-2">
-                Filial origem
-              </label>
-              <input type="text" name="filialOrigem" className="form-control" onChange={(e) => setFilialOrigem(e.target.value)}></input>
-            </div>
-            <div className="input-group">
-              <label htmlFor="filialDestino" className="ml-1 mr-2">
-                Filial destino
-              </label>
-              <input type="text" name="filialDestino" className="form-control" onChange={(e) => setFilialDestino(e.target.value)}></input>
-            </div>
-            <button type="submit" className="btn btn-primary ml-3" id="btn-submit-search" onClick={() => handleSearch}>
-              Pesquisar
-            </button>
-          </div>
+          <label htmlFor="initialDate">Data inicial</label>
+          <input type="date" name="initialDate" className="input--width-2 mr-3" placeholder="dd/mm/aaaa" maxLength="10" onChange={(e) => setInitialDate(e.target.value)} />
+
+          <label htmlFor="finalDate" className="ml-1 mr-2">
+            Data final
+          </label>
+          <input type="date" name="finalDate" className="input--width-2 mr-3" placeholder="dd/mm/aaaa" onChange={(e) => setFinalDate(e.target.value)} />
+
+          <label htmlFor="filialOrigem" className="ml-1 mr-2">
+            Filial origem
+          </label>
+          <input type="text" name="filialOrigem" className="input--width-1 mr-3" onChange={(e) => setFilialOrigem(e.target.value)}></input>
+
+          <label htmlFor="filialDestino" className="ml-1 mr-2">
+            Filial destino
+          </label>
+          <input type="text" name="filialDestino" className="input--width-1 mr-3" onChange={(e) => setFilialDestino(e.target.value)}></input>
+
+          <button type="submit" className="btn btn--primary" onClick={() => handleSearch}>
+            Pesquisar
+          </button>
         </form>
       </div>
-      <table className="table table-hover table-dark">
+      <table className="table table--white mt-3">
         <thead>
           <tr>
             <th>Data</th>
@@ -218,12 +171,14 @@ export default function EntradaIndex() {
         <tbody>
           {entrada.length === 0 ? (
             <tr>
-              <td>Não há informações para exibir</td>
+              <td colSpan="8" className="text-center">
+                Não há informações para exibir
+              </td>
             </tr>
           ) : (
             entrada.map((entrada) => (
               <tr key={entrada.id}>
-                <td>{entrada.data}</td>
+                <td>{new Date(entrada.created_at).toLocaleDateString()}</td>
                 <td>{entrada.filialOrigem}</td>
                 <td>{entrada.filialDestino}</td>
                 <td>{entrada.notaFiscal}</td>
@@ -231,16 +186,13 @@ export default function EntradaIndex() {
                 <td>{entrada.quantidadeProduto}</td>
                 <td>{entrada.observacao}</td>
                 <td className="form-buttons">
-                  <FiTrash2 className="btn-icon-custom btn-icon-excluir mt-2" onClick={() => excluirEntrada(entrada.id)} />
+                  <FiMoreHorizontal className="btn--icon_table" onClick={() => excluirEntrada(entrada.id)} />
                 </td>
               </tr>
             ))
           )}
         </tbody>
       </table>
-      <div id="subirTopo" onClick={btnSubir}>
-        <FiArrowUp />
-      </div>
       {loader}
     </div>
   );
