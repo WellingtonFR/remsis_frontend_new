@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import api from "../../services/api";
 import Swal from "sweetalert2";
-import { FiTrash2, FiEdit, FiArrowUp, FiPrinter } from "react-icons/fi";
+import { FiMoreHorizontal } from "react-icons/fi";
 import UseLoader from "../../hooks/UseLoader";
 
 export default function SaidaIndex() {
@@ -13,12 +13,15 @@ export default function SaidaIndex() {
   const [finalDate, setFinalDate] = useState("");
   const [numeroControle, setNumeroControle] = useState("");
   const [filialDestino, setFilialDestino] = useState("");
+  const [idToRemove, setIdToRemove] = useState("");
 
   useEffect(() => {
     (async () => {
+      let hoje = new Date().toJSON().slice(0, 10);
+
       const data = {
-        initialDate: new Date().toLocaleDateString("pt-br"),
-        finalDate: new Date().toLocaleDateString("pt-br"),
+        initialDate: hoje,
+        finalDate: hoje,
         numeroControle: numeroControle,
         filialDestino: filialDestino,
       };
@@ -36,7 +39,8 @@ export default function SaidaIndex() {
         });
       }
     })();
-  }, [numeroControle, filialDestino]);
+  }, []);
+
   async function handleSearch(e) {
     e.preventDefault();
 
@@ -85,7 +89,27 @@ export default function SaidaIndex() {
     }
   }
 
-  async function excluirsaida(id) {
+  const showModal = (id) => {
+    const modal = document.querySelector("#modal__saida");
+    const overlay = document.querySelector(".overlay");
+
+    modal.style.visibility = "visible";
+    overlay.style.visibility = "visible";
+
+    setIdToRemove(id);
+  };
+
+  const hideModal = () => {
+    const modal = document.querySelector("#modal__saida");
+    const overlay = document.querySelector(".overlay");
+
+    modal.style.visibility = "hidden";
+    overlay.style.visibility = "hidden";
+  };
+
+  async function excluirItemSaida(id) {
+    hideModal();
+
     try {
       const { value: userConfirmAction } = await Swal.fire({
         title: "Deseja excluir essa transferência ?",
@@ -97,7 +121,7 @@ export default function SaidaIndex() {
         confirmButtonColor: "#af0600",
       });
       if (userConfirmAction) {
-        await api.delete(`/saida/delete/${id}`).then((data) => {
+        await api.delete(`/saida/delete/${id}`).then(() => {
           Swal.fire({
             title: "Transferência excluída com sucesso",
             icon: "success",
@@ -129,73 +153,28 @@ export default function SaidaIndex() {
     }
   }
 
-  document.addEventListener("DOMContentLoaded", function (e) {
-    let btnSubir = document.querySelector("#subirTopo");
-    btnSubir.style.display = "none";
-
-    document.addEventListener("scroll", function (e) {
-      if (window.scrollY > 100) {
-        btnSubir.style.display = "block";
-      } else {
-        btnSubir.style.display = "none";
-      }
-    });
-  });
-
-  function handleDate(_date) {
-    let origin_date = new Date(_date);
-    origin_date.setDate(origin_date.getDate() + 1);
-    let return_date = origin_date.toLocaleDateString("pt-br");
-    return return_date;
-  }
-
-  function btnSubir(e) {
-    e.preventDefault();
-    $("html").animate(
-      {
-        scrollTop: 0,
-      },
-      800
-    );
-    return false;
-  }
-
   return (
-    <div className="lista-saidas">
-      <div className="top-search">
-        <form onSubmit={handleSearch}>
-          <div className="form-inline">
-            <div className="input-group">
-              <label htmlFor="initialDate" className="col-form-label ml-1 mr-2">
-                Data inicial
-              </label>
-              <input type="date" name="initialDate" className="form-control" placeholder="dd/mm/aaaa" maxLength="10" onChange={(e) => setInitialDate(handleDate(e.target.value))} />
-            </div>
-            <div className="input-group">
-              <label htmlFor="finalDate" className="ml-1 mr-2">
-                Data final
-              </label>
-              <input type="date" name="finalDate" className="form-control" placeholder="dd/mm/aaaa" onChange={(e) => setFinalDate(handleDate(e.target.value))} />
-            </div>
-            <div className="input-group">
-              <label htmlFor="numeroControle" className="ml-1 mr-2">
-                Nº controle
-              </label>
-              <input type="text" name="numeroControle" maxLength="10" className="form-control" onChange={(e) => setNumeroControle(e.target.value)}></input>
-            </div>
-            <div className="input-group">
-              <label htmlFor="filialDestino" className="ml-1 mr-2">
-                Filial destino
-              </label>
-              <input type="text" name="filialDestino" className="form-control" onChange={(e) => setFilialDestino(e.target.value)}></input>
-            </div>
-            <button type="submit" className="btn btn-primary ml-3" id="btn-submit-search" onClick={() => handleSearch}>
-              Pesquisar
-            </button>
-          </div>
+    <div className="container">
+      <div className="search-bar">
+        <form onSubmit={handleSearch} className="form">
+          <label htmlFor="initialDate">Data inicial</label>
+          <input type="date" name="initialDate" className="input--width-2 mr-3" placeholder="dd/mm/aaaa" maxLength="10" onChange={(e) => setInitialDate(e.target.value)} />
+          <label htmlFor="finalDate" className="ml-1 mr-2">
+            Data final
+          </label>
+          <input type="date" name="finalDate" className="input--width-2 mr-3" placeholder="dd/mm/aaaa" onChange={(e) => setFinalDate(e.target.value)} />
+          <label htmlFor="numeroControle">Nº controle</label>
+          <input type="text" name="numeroControle" maxLength="10" className="input--width-2 mr-3" onChange={(e) => setNumeroControle(e.target.value)}></input>
+          <label htmlFor="filialDestino" className="ml-1 mr-2">
+            Filial destino
+          </label>
+          <input type="text" name="filialDestino" className="input--width-2 mr-3" onChange={(e) => setFilialDestino(e.target.value)}></input>
+          <button type="submit" className="btn btn--primary" id="btn-submit-search" onClick={() => handleSearch}>
+            Pesquisar
+          </button>
         </form>
       </div>
-      <table className="table table-hover table-dark">
+      <table className="table table--white table--freeze-header">
         <thead>
           <tr>
             <th>Data</th>
@@ -203,42 +182,48 @@ export default function SaidaIndex() {
             <th>Filial destino</th>
             <th>Transportador</th>
             <th>Doca</th>
-            <th colSpan="2" style={{ textAlign: "center" }}>
-              Opções
-            </th>
+            <th>Opções</th>
           </tr>
         </thead>
         <tbody>
           {saidas.length === 0 ? (
             <tr>
-              <td>Não há informações para exibir</td>
+              <td colSpan="6" className="text-center">
+                Não há informações para exibir hoje, para dias anteriores utilize a pesquisa
+              </td>
             </tr>
           ) : (
             saidas.map((saida) => (
               <tr key={saida.id}>
-                <td>{saida.data}</td>
+                <td>{new Date(saida.created_at).toLocaleDateString()}</td>
                 <td>{saida.numeroControle}</td>
                 <td>{saida.filialDestino}</td>
                 <td>{saida.transportador}</td>
                 <td>{saida.doca}</td>
-                <td className="form-buttons">
-                  <Link to={`/saida/report/${saida.id}`}>
-                    <FiPrinter className="btn-icon-custom btn-icon-imprimir mr-2 mt-2" />
-                  </Link>
-                  <Link to={`/saida/update/${saida.id}`}>
-                    <FiEdit className="btn-icon-custom btn-icon-alterar mr-2 mt-2" />
-                  </Link>
-                  <FiTrash2 className="btn-icon-custom btn-icon-excluir mt-2" onClick={() => excluirsaida(saida.id)} />
+                <td>
+                  <FiMoreHorizontal className="btn--icon_table" onClick={() => showModal(saida.id)} />
                 </td>
               </tr>
             ))
           )}
         </tbody>
       </table>
-      <div id="subirTopo" onClick={btnSubir}>
-        <FiArrowUp />
-      </div>
       {loader}
+
+      <div className="overlay">
+        <div id="modal__saida" className="modal" style={{ backgroundColor: "transparent", width: "fit-content", height: "fit-content" }}>
+          <div className="modal__body">
+            <Link to={`/saida/update/${idToRemove}`}>
+              <button className="btn btn--primary btn--medium mr-3">Alterar</button>
+            </Link>
+            <Link to={`/saida/report/${idToRemove}`}>
+              <button className="btn btn--primary btn--medium mr-3">Relatório</button>
+            </Link>
+            <input type="button" value="Excluir" className="btn btn--danger btn--medium mr-3" onClick={() => excluirItemSaida(idToRemove)} />
+            <input type="button" className="btn btn--dark btn--medium" value="Fechar" onClick={hideModal} />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

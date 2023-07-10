@@ -1,21 +1,26 @@
-$link-hover-color: #cecece;
+$navbar-color: #2b2b2b;
+$color: #ffffff;
+$color-hover: #63ceff;
+$font-size: 14px;
+$font-weight: 500;
 
 .navbar {
   overflow: hidden;
-  background-color: #111111;
+  background-color: $navbar-color;
   z-index: 9999;
-  color: #fff;
+  color: $color;
+  font-weight: $font-weight;
 }
 
 .navbar a {
   float: left;
-  font-size: 16px;
-  color: white;
+  color: $color;
+  font-size: $font-size;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
   &:hover {
-    color: $link-hover-color;
+    color: $color-hover;
   }
 }
 
@@ -25,23 +30,24 @@ $link-hover-color: #cecece;
 }
 
 .navbar__dropdown-item {
-  font-size: 16px;
+  font-size: $font-size;
   border: none;
   outline: none;
-  color: white;
   padding: 14px 16px;
   background-color: inherit;
   font-family: inherit;
   margin: 0;
+  font-weight: $font-weight;
+  color: $color;
   &:hover {
-    color: $link-hover-color;
+    color: $color-hover;
   }
 }
 
 .navbar__dropdown-content {
   display: none;
   position: absolute;
-  background-color: #414141;
+  background-color: $navbar-color;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
@@ -62,6 +68,5 @@ $link-hover-color: #cecece;
 .navbar__btn-logout {
   float: right;
   margin-right: 20px;
-  margin-top: 5px;
   cursor: pointer;
 }

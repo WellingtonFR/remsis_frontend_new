@@ -2,8 +2,8 @@ $btn--primary: #008aca;
 $btn--primary_hover: #009ee7;
 $btn--danger: #940000;
 $btn--danger_hover: #a80000;
-$btn--dark: #2c2c2c;
-$btn--dark_hover: #333333;
+$btn--dark: #1b1b1b;
+$btn--dark_hover: #2c2c2c;
 
 .btn {
   height: 40px !important;
@@ -37,6 +37,7 @@ $btn--dark_hover: #333333;
 
 .btn--dark {
   background-color: $btn--dark;
+  border: 1px solid #777;
 }
 
 .btn--dark:hover {

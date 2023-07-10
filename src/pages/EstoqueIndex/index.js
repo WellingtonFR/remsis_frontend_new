@@ -91,7 +91,7 @@ export default function EstoqueIndex() {
           </button>
         </form>
       </div>
-      <table className="table table--white table--freeze-header" style={{ width: "1024px", margin: "0px auto", marginTop: "20px" }}>
+      <table className="table table--white table--freeze-header">
         <thead>
           <tr>
             <th>Data Entrada</th>
@@ -104,7 +104,9 @@ export default function EstoqueIndex() {
         <tbody>
           {estoque.length === 0 ? (
             <tr>
-              <td>Não há informações para exibir</td>
+              <td colSpan="5" className="text-center">
+                Não há informações para exibir
+              </td>
             </tr>
           ) : (
             estoque.map((estoque) => (

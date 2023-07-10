@@ -142,7 +142,7 @@ export default function EntradaCreate() {
       <form onSubmit={onSubmit}>
         <h4 className="form__title uppercase">Cadastro de entrada</h4>
         <hr />
-        <div className="search-bar mt-3">
+        <div className="search-bar mt-2">
           <div className="">
             <label htmlFor="data">Data</label>
             <input type="text" name="data" className="input--width-1" required disabled value={date} />
@@ -184,7 +184,7 @@ export default function EntradaCreate() {
           </div>
         </div>
 
-        <div className="row mt-3">
+        <div className="row">
           <div className="form__header col-width-1 mr-2 bold">Nota fiscal</div>
           <div className="form__header col-width-1 mr-2 bold">Código</div>
           <div className="form__header col-width-3 mr-2 bold">Descrição</div>

@@ -576,7 +576,7 @@ export default function SaidaCreate() {
             <label className="mb-1" htmlFor="doca">
               Doca
             </label>
-            <input type="text" name="doca" required onChange={(e) => setDoca(e.target.value)} />
+            <input type="number" name="doca" required onChange={(e) => setDoca(e.target.value)} />
           </div>
 
           <div className="col-width-3 mr-3">
@@ -1305,7 +1305,7 @@ export default function SaidaCreate() {
         </div>
         <div className="modal__saida__footer">
           <input type="button" value="Confirmar" className="btn btn--primary btn--medium mr-3" />
-          <input type="button" className="btn btn--secondary btn--medium" value="Fechar" onClick={hideModal} />
+          <input type="button" className="btn btn--danger btn--medium" value="Fechar" onClick={hideModal} />
         </div>
       </div>
 

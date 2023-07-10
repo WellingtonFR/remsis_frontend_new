@@ -8,15 +8,18 @@ import UseLoader from "../../hooks/UseLoader";
 
 export default function TransportadorIndex() {
   const [loader, showLoader, hideLoader] = UseLoader();
-  const [transportador, setTransportador] = useState([]);
+  const [feedData, setFeedData] = useState([]);
+  const [nomeTransportador, setNomeTransportador] = useState("");
+  const [filialAtendida, setFilialAtendida] = useState("");
 
   useEffect(() => {
     (async () => {
       await api.get("transportador").then((response) => {
-        setTransportador(response.data);
+        setFeedData(response.data);
       });
     })();
   }, []);
+
   async function excluirTransportador(id) {
     try {
       const { value: userConfirmAction } = await Swal.fire({
@@ -33,7 +36,7 @@ export default function TransportadorIndex() {
         await api.delete(`/transportador/delete/${id}`).then(() => {});
 
         await api.get("transportador").then((response) => {
-          setTransportador(response.data);
+          setFeedData(response.data);
         });
 
         hideLoader();
@@ -58,39 +61,62 @@ export default function TransportadorIndex() {
     }
   }
 
-  //Botão de retorno ao topo página
-  document.addEventListener("DOMContentLoaded", function (e) {
-    let btnSubir = document.querySelector("#subirTopo");
-    btnSubir.style.display = "none";
-
-    document.addEventListener("DOMContentLoaded", function (e) {
-      let btnSubir = document.querySelector("#subirTopo");
-      btnSubir.style.display = "none";
-
-      document.addEventListener("scroll", function (e) {
-        if (document.scrollTop() > 100) {
-          btnSubir.fadeIn();
-        } else {
-          btnSubir.fadeOut();
-        }
-      });
-    });
-  });
-
-  function btnSubir(e) {
+  async function handleSearch(e) {
     e.preventDefault();
-    $("html").animate(
-      {
-        scrollTop: 0,
-      },
-      800
-    );
-    return false;
+
+    const data = {
+      nomeTransportador: nomeTransportador,
+      filialAtendida: filialAtendida,
+    };
+
+    if (nomeTransportador === "" && filialAtendida === "") {
+      Swal.fire({
+        title: "Atenção",
+        text: "É necessário algum campo da pesquisa",
+        icon: "info",
+        confirmButtonText: "Voltar",
+      });
+      return;
+    }
+
+    try {
+      showLoader();
+      await api.post("/transportador/search", data).then((response) => {
+        setFeedData(response.data);
+      });
+      hideLoader();
+    } catch (err) {
+      hideLoader();
+      const { data } = err.response;
+      Swal.fire({
+        title: "Atenção",
+        text: data.message,
+        icon: "info",
+        confirmButtonText: "Voltar",
+      });
+    }
   }
 
   return (
-    <div>
-      <table className="table table-dark  table-hover">
+    <div className="container">
+      <div className="search-bar">
+        <form onSubmit={handleSearch}>
+          <label htmlFor="nomeTransportador" className="ml-1 mr-2">
+            Nome
+          </label>
+          <input type="text" name="nomeTransportador" className="input--width-1 mr-3" onChange={(e) => setNomeTransportador(e.target.value)}></input>
+
+          <label htmlFor="filialAtendida" className="ml-1 mr-2">
+            Filial Atendida
+          </label>
+          <input type="text" name="filialAtendida" className="input--width-1 mr-3" onChange={(e) => setFilialAtendida(e.target.value)}></input>
+
+          <button type="submit" className="btn btn--primary" onClick={() => handleSearch}>
+            Pesquisar
+          </button>
+        </form>
+      </div>
+      <table className="table table--white">
         <thead>
           <tr>
             <th>Nome</th>
@@ -107,12 +133,12 @@ export default function TransportadorIndex() {
           </tr>
         </thead>
         <tbody>
-          {transportador.length === 0 ? (
+          {feedData.length === 0 ? (
             <tr>
               <td>Não há informações para exibir</td>
             </tr>
           ) : (
-            transportador.map((transportador) => (
+            feedData.map((transportador) => (
               <tr key={transportador.id}>
                 <td>{transportador.nomeTransportador}</td>
                 <td>{transportador.placaVeiculo}</td>
@@ -128,9 +154,6 @@ export default function TransportadorIndex() {
           )}
         </tbody>
       </table>
-      <div id="subirTopo" onClick={btnSubir}>
-        <FiArrowUp />
-      </div>
       {loader}
     </div>
   );

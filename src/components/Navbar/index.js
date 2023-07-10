@@ -18,7 +18,7 @@ export default function Navbar() {
     <div className="navbar">
       <div className="navbar__brand">
         <Link to="/" className="navbar__item">
-          RemSis
+          | REMSIS |
         </Link>
       </div>
       <div className="navbar__item">

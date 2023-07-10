@@ -153,7 +153,7 @@ export default function EntradaIndex() {
           </button>
         </form>
       </div>
-      <table className="table table--white mt-3">
+      <table className="table table--white table--freeze-header">
         <thead>
           <tr>
             <th>Data</th>
@@ -172,7 +172,7 @@ export default function EntradaIndex() {
           {entrada.length === 0 ? (
             <tr>
               <td colSpan="8" className="text-center">
-                Não há informações para exibir
+                Não há informações para exibir hoje, para dias anteriores utilize a pesquisa
               </td>
             </tr>
           ) : (
