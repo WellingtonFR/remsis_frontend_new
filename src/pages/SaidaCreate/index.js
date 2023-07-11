@@ -535,14 +535,14 @@ export default function SaidaCreate() {
             </select>
           </div>
 
-          <div className="col-width-3 mr-3">
+          <div className="col-width-1 mr-3">
             <label className="mb-1" htmlFor="nomefilialDestino">
               Código Filial
             </label>
             <input name="nomefilialDestino" type="text" value={nomeFilialDestino} required disabled />
           </div>
 
-          <div className="col-width-4 mr-3">
+          <div className="col-width-7 mr-3">
             <label className="mb-1" htmlFor="enderecofilialDestino">
               Endereço
             </label>

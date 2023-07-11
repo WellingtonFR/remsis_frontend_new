@@ -60,80 +60,79 @@ export default function FiliaisCreate() {
   }
 
   return (
-    <div className="form-create">
-      <div className="form-custom">
-        <h4 className="form-header">Cadastro de Filiais</h4>
-        <form onSubmit={handleNewFilial} id="formCreateFiliais">
+    <div className="container">
+      <div className="form__single-collumn">
+        <div className="form__title">
+          <h4>Cadastro de Filiais</h4>
           <hr />
-          <div className="form-group">
-            <label htmlFor="numeroFilial">Número da filial</label>
-            <input type="number" name="numeroFilial" className="form-control" maxLength="6" required onChange={handleChange}></input>
-          </div>
+        </div>
 
-          <div className="form-row">
-            <div className="form-group col-md-9">
-              <label htmlFor="endereco">Endereço</label>
-              <input type="text" name="endereco" className="form-control" required maxLength="70" onChange={handleChange}></input>
-            </div>
-            <div className="form-group col-md-3">
+        <form onSubmit={handleNewFilial} id="formCreateFiliais">
+          <label htmlFor="numeroFilial">Número da filial</label>
+          <input type="number" name="numeroFilial" maxLength="10" required onChange={handleChange}></input>
+
+          <label htmlFor="endereco">Endereço</label>
+          <input type="text" name="endereco" maxLength="100" required onChange={handleChange}></input>
+
+          <div className="row">
+            <div className="col-width-6 mr-3">
               <label htmlFor="numeroEndereco">Número</label>
-              <input type="number" name="numeroEndereco" className="form-control" required onChange={handleChange}></input>
+              <input type="number" name="numeroEndereco" required onChange={handleChange}></input>
+            </div>
+
+            <div className="col-width-10">
+              <label htmlFor="complemento">Complemento</label>
+              <input type="text" name="complemento" onChange={handleChange}></input>
             </div>
           </div>
 
-          <div className="form-group">
-            <label htmlFor="complemento">Complemento</label>
-            <input type="text" name="complemento" className="form-control" onChange={handleChange}></input>
-          </div>
+          <div className="row">
+            <div className="col-width-9 mr-3">
+              <label htmlFor="cidade">Cidade</label>
+              <input type="text" name="cidade" required onChange={handleChange}></input>
+            </div>
 
-          <div className="form-group">
-            <label htmlFor="cidade">Cidade</label>
-            <input type="text" name="cidade" className="form-control" required onChange={handleChange}></input>
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="estado">Estado</label>
-            <select name="estado" className="form-control" required onChange={handleChange}>
-              <option value="">Selecione</option>
-              <option value="AC">Acre</option>
-              <option value="AL">Alagoas</option>
-              <option value="AP">Amapá</option>
-              <option value="AM">Amazonas</option>
-              <option value="BA">Bahia</option>
-              <option value="CE">Ceará</option>
-              <option value="DF">Distrito Federal</option>
-              <option value="ES">Espírito Santo</option>
-              <option value="GO">Goiás</option>
-              <option value="MA">Maranhão</option>
-              <option value="MT">Mato Grosso</option>
-              <option value="MS">Mato Grosso do Sul</option>
-              <option value="MG">Minas Gerais</option>
-              <option value="PA">Pará</option>
-              <option value="PB">Paraíba</option>
-              <option value="PR">Paraná</option>
-              <option value="PE">Pernambuco</option>
-              <option value="PI">Piauí</option>
-              <option value="RJ">Rio de Janeiro</option>
-              <option value="RN">Rio Grande do Norte</option>
-              <option value="RS">Rio Grande do Sul</option>
-              <option value="RO">Rondônia</option>
-              <option value="RR">Roraima</option>
-              <option value="SC">Santa Catarina</option>
-              <option value="SP">São Paulo</option>
-              <option value="SE">Sergipe</option>
-              <option value="TO">Tocantins</option>
-            </select>
-          </div>
-          <div className="form-group">
-            <label htmlFor="nomeFantasia">Nome Fantasia</label>
-            <input type="text" name="nomeFantasia" className="form-control" placeholder="Exemplo: LD182" maxLength="20" required onChange={handleChange}></input>
-
-            <div className="div-btn-form-submit">
-              <button type="submit" className="btn btn-primary btn-form-submit">
-                Cadastrar
-              </button>
+            <div className="col-width-7 mr-3">
+              <label htmlFor="estado">Estado</label>
+              <select name="estado" required onChange={handleChange}>
+                <option value="">Selecione</option>
+                <option value="AC">Acre</option>
+                <option value="AL">Alagoas</option>
+                <option value="AP">Amapá</option>
+                <option value="AM">Amazonas</option>
+                <option value="BA">Bahia</option>
+                <option value="CE">Ceará</option>
+                <option value="DF">Distrito Federal</option>
+                <option value="ES">Espírito Santo</option>
+                <option value="GO">Goiás</option>
+                <option value="MA">Maranhão</option>
+                <option value="MT">Mato Grosso</option>
+                <option value="MS">Mato Grosso do Sul</option>
+                <option value="MG">Minas Gerais</option>
+                <option value="PA">Pará</option>
+                <option value="PB">Paraíba</option>
+                <option value="PR">Paraná</option>
+                <option value="PE">Pernambuco</option>
+                <option value="PI">Piauí</option>
+                <option value="RJ">Rio de Janeiro</option>
+                <option value="RN">Rio Grande do Norte</option>
+                <option value="RS">Rio Grande do Sul</option>
+                <option value="RO">Rondônia</option>
+                <option value="RR">Roraima</option>
+                <option value="SC">Santa Catarina</option>
+                <option value="SP">São Paulo</option>
+                <option value="SE">Sergipe</option>
+                <option value="TO">Tocantins</option>
+              </select>
             </div>
           </div>
+
+          <label htmlFor="nomeFantasia">Nome Fantasia</label>
+          <input type="text" name="nomeFantasia" placeholder="Exemplo: LD182" maxLength="20" required onChange={handleChange}></input>
+
+          <button type="submit" className="btn btn--primary btn--medium mt-2">
+            Cadastrar
+          </button>
         </form>
         {loader}
       </div>

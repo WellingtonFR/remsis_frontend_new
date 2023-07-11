@@ -1,18 +1,17 @@
 import React from "react";
-// eslint-disable-next-line
-import "./styles.css";
+import "./styles.scss";
 import logoMagalu from "../../img/logoMagalu.png";
 
 export default function Home() {
   return (
-    <div className="">
-      <div className="row">
-        <div className="col-md-3">
-          <img src={logoMagalu} className="img-fluid" alt="logoMagalu" />
+    <div className="container--home">
+      <div className="home__content">
+        <div className="home__image-container">
+          <img src={logoMagalu} alt="logoMagalu" />
         </div>
-        <div className="col-md-6">
+        <div className="home__title">
           <h1>REMSIS</h1>
-          <p>Sistemas de transferência de produtos entre cds e filiais</p>
+          <p className="uppercase">Sistemas de controle de transferência entre cds e filiais</p>
         </div>
       </div>
     </div>

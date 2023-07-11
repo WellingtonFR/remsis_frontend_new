@@ -41,48 +41,26 @@ export default function TransportadorCreate() {
   }
 
   return (
-    <div className="form-create">
-      <div className="form-custom">
-        <h4 className="form-header">Cadastro de transportador</h4>
+    <div className="container">
+      <div className="form__single-collumn">
         <form onSubmit={handleNewTransportador}>
-          <hr />
-          <div className="form-group">
-            <label htmlFor="nomeTransportador">Nome</label>
-            <input
-              type="text"
-              name="nomeTransportador"
-              className="form-control"
-              maxLength="50"
-              required
-              onChange={(e) => setNomeTransportador(e.target.value)}
-            />
+          <div className="form__title">
+            <h4>Cadastro de transportador</h4>
+            <hr />
           </div>
-          <div className="form-group">
-            <label htmlFor="placaVeiculo">Placa do veículo</label>
-            <input
-              type="text"
-              name="placaVeiculo"
-              className="form-control"
-              maxLength="8"
-              required
-              onChange={(e) => setPlacaVeiculo(e.target.value)}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="filialAtendida">Filial atendida</label>
-            <input
-              type="text"
-              name="filialAtendida"
-              className="form-control"
-              maxLength="30"
-              onChange={(e) => setFilialAtendida(e.target.value)}
-            />
-          </div>
-          <div className="div-btn-form-submit">
-            <button type="submit" className="btn btn-primary btn-form-submit">
-              Cadastrar
-            </button>
-          </div>
+
+          <label htmlFor="nomeTransportador">Nome completo</label>
+          <input type="text" name="nomeTransportador" maxLength="80" required onChange={(e) => setNomeTransportador(e.target.value)} />
+
+          <label htmlFor="placaVeiculo">Placa do veículo</label>
+          <input type="text" name="placaVeiculo" className="form-control" maxLength="8" required onChange={(e) => setPlacaVeiculo(e.target.value)} />
+
+          <label htmlFor="filialAtendida">Filial atendida</label>
+          <input type="number" name="filialAtendida" className="form-control" maxLength="10" required onChange={(e) => setFilialAtendida(e.target.value)} />
+
+          <button type="submit" className="btn btn--primary btn--medium mt-2">
+            Cadastrar
+          </button>
         </form>
         {loader}
       </div>

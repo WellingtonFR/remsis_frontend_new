@@ -1,0 +1,26 @@
+.container--home {
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home__content {
+  width: fit-content;
+  height: fit-content;
+  padding: 40px;
+  border-radius: 20px;
+  background-color: #fff;
+  color: #444;
+  box-shadow: -5px 5px 10px 2px #2c2c2c;
+}
+
+.home__title {
+  text-align: center;
+}
+
+.home__content img {
+  display: block;
+  width: 400px;
+  margin: 0 auto;
+}

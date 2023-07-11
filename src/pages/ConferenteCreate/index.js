@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import Swal from "sweetalert2";
-// eslint-disable-next-line
-import styles from "./styles.css";
 import api from "../../services/api";
 import UseLoader from "../../hooks/UseLoader";
 
@@ -41,45 +39,24 @@ export default function ConferenteCreate() {
   }
 
   return (
-    <div className="form-create">
-      <div className="form-custom">
-        <h4 className="form-header">Cadastro de conferentes</h4>
-        <form onSubmit={handleNewConferente} id="formCreateConferente">
+    <div className="container">
+      <div className="form__single-collumn">
+        <div className="form__title">
+          <h4 className="form-header">Cadastro de conferentes</h4>
           <hr />
-          <div className="form-group">
-            <label htmlFor="nomeConferente">Nome completo</label>
-            <input
-              type="text"
-              name="nomeConferente"
-              className="form-control"
-              maxLength="50"
-              pattern="^[A-Za-zÀ-ÿ]+(\s[A-Za-zÀ-ÿ]+){1,10}$"
-              required
-              onChange={(e) => setNomeConferente(e.target.value)}
-            ></input>
-          </div>
+        </div>
+        <form onSubmit={handleNewConferente} id="formCreateConferente">
+          <label htmlFor="nomeConferente">Nome completo</label>
+          <input type="text" name="nomeConferente" maxLength="50" pattern="^[A-Za-zÀ-ÿ]+(\s[A-Za-zÀ-ÿ]+){1,10}$" required onChange={(e) => setNomeConferente(e.target.value)}></input>
 
-          <div className="form-row">
-            <div className="form-group col">
-              <label htmlFor="idConferente">ID</label>
-              <input
-                type="number"
-                name="idConferente"
-                className="form-control"
-                required
-                max="99999999"
-                onChange={(e) => setIdConferente(e.target.value)}
-              ></input>
-            </div>
-          </div>
-          <div className="div-btn-form-submit">
-            <button type="submit" className="btn btn-primary btn-form-submit">
-              Cadastrar
-            </button>
-          </div>
+          <label htmlFor="idConferente">ID</label>
+          <input type="number" name="idConferente" required max="99999999" onChange={(e) => setIdConferente(e.target.value)}></input>
+          <button type="submit" className="btn btn--primary btn--medium mt-2">
+            Cadastrar
+          </button>
         </form>
-        {loader}
       </div>
+      {loader}
     </div>
   );
 }

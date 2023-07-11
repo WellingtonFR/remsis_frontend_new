@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
 import api from "../../services/api";
-import { FiTrash2, FiEdit, FiArrowUp } from "react-icons/fi";
+import { FiMoreHorizontal } from "react-icons/fi";
 import UseLoader from "../../hooks/UseLoader";
 
 export default function TransportadorIndex() {
@@ -121,15 +120,8 @@ export default function TransportadorIndex() {
           <tr>
             <th>Nome</th>
             <th>Placa</th>
-            <th>Filial atendida</th>
-            <th
-              colSpan="2"
-              style={{
-                textAlign: "center",
-              }}
-            >
-              Opções
-            </th>
+            <th className="text-center">Filial atendida</th>
+            <th className="text-center">Opções</th>
           </tr>
         </thead>
         <tbody>
@@ -142,12 +134,9 @@ export default function TransportadorIndex() {
               <tr key={transportador.id}>
                 <td>{transportador.nomeTransportador}</td>
                 <td>{transportador.placaVeiculo}</td>
-                <td>{transportador.filialAtendida}</td>
+                <td className="text-center">{transportador.filialAtendida}</td>
                 <td className="form-buttons">
-                  <Link to={`/transportador/update/${transportador.id}`}>
-                    <FiEdit className="btn-icon-custom btn-icon-alterar mr-2 mt-1" />
-                  </Link>
-                  <FiTrash2 className="btn-icon-custom btn-icon-excluir mt-1" onClick={() => excluirTransportador(`${transportador.id}`)} />
+                  <FiMoreHorizontal className="btn--icon_table" onClick={() => excluirTransportador(transportador.id)} />
                 </td>
               </tr>
             ))

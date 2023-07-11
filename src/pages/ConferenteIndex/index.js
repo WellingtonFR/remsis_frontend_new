@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import api from "../../services/api";
-import { FiTrash2 } from "react-icons/fi";
+import { FiMoreHorizontal } from "react-icons/fi";
 import UseLoader from "../../hooks/UseLoader";
 
 export default function FiliaisIndex() {
@@ -15,6 +15,7 @@ export default function FiliaisIndex() {
       });
     })();
   }, []);
+
   async function excluirConferente(id) {
     try {
       const { value: userConfirmAction } = await Swal.fire({
@@ -60,37 +61,33 @@ export default function FiliaisIndex() {
   }
 
   return (
-    <div>
-      <div>
-        <table className="table table-dark table-hover">
-          <thead>
+    <div className="container">
+      <table className="table table--white mt-3">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>ID</th>
+            <th className="text-center">Opções</th>
+          </tr>
+        </thead>
+        <tbody>
+          {conferente.length === 0 ? (
             <tr>
-              <th>Nome</th>
-              <th>ID</th>
-              <th colSpan="2" style={{ textAlign: "center" }}>
-                Opções
-              </th>
+              <td>Não há informações para exibir</td>
             </tr>
-          </thead>
-          <tbody>
-            {conferente.length === 0 ? (
-              <tr>
-                <td>Não há informações para exibir</td>
+          ) : (
+            conferente.map((conferente) => (
+              <tr key={conferente.id}>
+                <td>{conferente.nomeConferente}</td>
+                <td>{conferente.idConferente}</td>
+                <td className="form-buttons">
+                  <FiMoreHorizontal className="btn--icon_table" onClick={() => excluirConferente(conferente.id)} />
+                </td>
               </tr>
-            ) : (
-              conferente.map((conferente) => (
-                <tr key={conferente.id}>
-                  <td>{conferente.nomeConferente}</td>
-                  <td>{conferente.idConferente}</td>
-                  <td className="form-buttons">
-                    <FiTrash2 className="btn-icon-custom btn-icon-excluir mt-1" onClick={() => excluirConferente(conferente.id)} />
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
+            ))
+          )}
+        </tbody>
+      </table>
       {loader}
     </div>
   );

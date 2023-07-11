@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import logoMagalu from "../../img/logoMagalu.png";
-// eslint-disable-next-line
-import styles from "./styles.css";
+import "./styles.scss";
 import api from "../../services/api";
 
 export default function TransferenciaReport() {
@@ -25,46 +24,45 @@ export default function TransferenciaReport() {
 
   return (
     <div className="report">
-      <div className="overlay-print d-print-none">
-        <button type="button" name="imprimir" className="btn btn-danger btn-print" onClick={handlePrint}>
-          Imprimir
-        </button>
-      </div>
-      <div className="report-header">
+      <button type="button" name="imprimir" className="btn btn--primary btn--print no-print" onClick={handlePrint}>
+        Imprimir
+      </button>
+
+      <div className="report__header">
         <div className="row">
-          <div className="col-sm">
-            <img src={logoMagalu} className="img-fluid" alt="logoMagalu" />
+          <div className="col--width-3">
+            <img src={logoMagalu} className="report__logo" alt="Logomarca Magalu" />
           </div>
-          <div className="col">
-            <div className="label">Data</div>
-            <div className="data">{report.data}</div>
-            <div className="label">Controle</div>
+          <div className="col-width-2 mr-2 report__header__fields">
+            <label>Data</label>
+            <div className="data">{new Date(report.created_at).toLocaleDateString()}</div>
+
+            <label>Controle</label>
             <div className="data">{report.numeroControle}</div>
           </div>
-          <div className="col">
-            <div className="label">Filial de destino</div>
+          <div className="col-width-5 mr-2 report__header__fields">
+            <label>Filial de destino</label>
             <div className="data">{report.nomeFilialDestino}</div>
-            <div className="label">Endereço</div>
+
+            <label>Endereço</label>
             <div className="data">{report.enderecoFilialDestino}</div>
           </div>
 
-          <div className="col">
-            <div className="label">Transportador</div>
+          <div className="col-width-5 report__header__fields">
+            <label>Transportador</label>
             <div className="data">{report.transportador}</div>
 
-            <div className="label">Placa do veículo</div>
+            <label>Placa do veículo</label>
             <div className="data">{report.placaVeiculo}</div>
           </div>
         </div>
       </div>
 
-      <div className="row report-table-header">
-        <div className="col">Relatório de remanejamento CD 94 - Londrina</div>
-      </div>
+      <div className="row report__title">Relatório de remanejamento CD 94 - Londrina</div>
 
-      <div className="report-body">
-        <table className="table table-report">
-          <thead>
+      <div className="report__body">
+        <table className="report__table">
+          <thead className="report__table__header">
             <tr>
               <th>Origem</th>
               <th>NF</th>
@@ -302,36 +300,36 @@ export default function TransferenciaReport() {
           </tbody>
         </table>
       </div>
-      <div className="report-footer">
+      <div className="report__footer">
         <div className="row">
-          <div className="col footer-divisions">
+          <div className="col-width-4 report__footer__fields">
             <div className="sign">
-              <div className="label">Conferente do CD</div>
-              <div className="sign-line">
-                <h6>{report.conferente}</h6>
+              <label>Conferente do CD</label>
+              <div className="report__sign-line">
+                <p>{report.conferente}</p>
               </div>
             </div>
           </div>
-          <div className="col footer-divisions">
-            <div className="orientations">
+          <div className="col-width-6 mr-3 report__footer__fields">
+            <div className="report__footer__orientations">
               Declaro que efetuei a conferência dos produtos relacionados e que estes foram carregados em perfeitas condições e nas quantidades de acordo com o relatório descrito acima.
             </div>
             <div className="sign">
-              <div className="label">Transportador</div>
-              <div className="sign-line">_______________________________________________________________________________</div>
-              <div className="label mt-2">RG ou CPF</div>
-              <div className="sign-line">_______________________________________________________________________________</div>
+              <label>Transportador</label>
+              <div className="report__sign-line">___________________________________________________________</div>
+              <label className="mt-2">RG ou CPF</label>
+              <div className="report__sign-line">___________________________________________________________</div>
             </div>
           </div>
-          <div className="col footer-divisions">
-            <div className="orientations">
+          <div className="col report__footer__fields">
+            <div className="report__footer__orientations">
               Declaro que efetuei a conferência dos produtos relacionados e que recebi em perfeitas condições e nas quantidades de acordo com o relatório descrito acima.
             </div>
             <div className="sign">
-              <div className="label">Conferente de loja</div>
-              <div className="sign-line">_______________________________________________________________________________</div>
-              <div className="label mt-2">Data do recebimento</div>
-              <div className="sign-line">__________ / __________ / _____________________</div>
+              <label>Conferente de loja</label>
+              <div className="report__sign-line">___________________________________________________________</div>
+              <label className="label mt-2">Data do recebimento</label>
+              <div className="report__sign-line">__________ / __________ / _____________________</div>
             </div>
           </div>
         </div>
