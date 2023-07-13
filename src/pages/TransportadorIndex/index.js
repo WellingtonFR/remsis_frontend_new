@@ -74,6 +74,7 @@ export default function TransportadorIndex() {
         text: "É necessário algum campo da pesquisa",
         icon: "info",
         confirmButtonText: "Voltar",
+        confirmButtonColor: "#008aca",
       });
       return;
     }
@@ -92,6 +93,7 @@ export default function TransportadorIndex() {
         text: data.message,
         icon: "info",
         confirmButtonText: "Voltar",
+        confirmButtonColor: "#008aca",
       });
     }
   }
@@ -99,20 +101,24 @@ export default function TransportadorIndex() {
   return (
     <div className="container">
       <div className="search-bar">
-        <form onSubmit={handleSearch}>
-          <label htmlFor="nomeTransportador" className="ml-1 mr-2">
-            Nome
-          </label>
-          <input type="text" name="nomeTransportador" className="input--width-1 mr-3" onChange={(e) => setNomeTransportador(e.target.value)}></input>
+        <form onSubmit={handleSearch} className="form">
+          <div className="row">
+            <div className="col-6 mr-2">
+              <label htmlFor="nomeTransportador">Nome</label>
+              <input type="text" name="nomeTransportador" onChange={(e) => setNomeTransportador(e.target.value)}></input>
+            </div>
 
-          <label htmlFor="filialAtendida" className="ml-1 mr-2">
-            Filial Atendida
-          </label>
-          <input type="text" name="filialAtendida" className="input--width-1 mr-3" onChange={(e) => setFilialAtendida(e.target.value)}></input>
+            <div className="col-6 mr-2">
+              <label htmlFor="filialAtendida">Filial Atendida</label>
+              <input type="text" name="filialAtendida" onChange={(e) => setFilialAtendida(e.target.value)}></input>
+            </div>
 
-          <button type="submit" className="btn btn--primary" onClick={() => handleSearch}>
-            Pesquisar
-          </button>
+            <div className="col-3 mr-2 mt-2">
+              <button type="submit" className="btn btn--primary btn--small" onClick={() => handleSearch}>
+                Pesquisar
+              </button>
+            </div>
+          </div>
         </form>
       </div>
       <table className="table table--white">

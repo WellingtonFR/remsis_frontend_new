@@ -36,6 +36,7 @@ export default function TransportadorCreate() {
         text: data.message,
         icon: "error",
         confirmButtonText: "Voltar",
+        confirmButtonColor: "#008aca",
       });
     }
   }
@@ -45,7 +46,7 @@ export default function TransportadorCreate() {
       <div className="form__single-collumn">
         <form onSubmit={handleNewTransportador}>
           <div className="form__title">
-            <h4>Cadastro de transportador</h4>
+            <p>Cadastro de transportador</p>
             <hr />
           </div>
 

@@ -7,7 +7,7 @@ html {
   font-family: $font;
   color: $color;
   font-size: 14px;
-  min-width: 1366px;
+  min-width: 1024px;
 }
 
 button,
@@ -46,6 +46,10 @@ select {
 
 #swal2-title {
   font-size: 20px;
+}
+
+.swal2-popup {
+  z-index: 3;
 }
 
 @media print {

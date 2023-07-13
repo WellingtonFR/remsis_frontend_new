@@ -34,6 +34,7 @@ export default function ConferenteCreate() {
         text: data.message,
         icon: "error",
         confirmButtonText: "Voltar",
+        confirmButtonColor: "#008aca",
       });
     }
   }
@@ -42,7 +43,7 @@ export default function ConferenteCreate() {
     <div className="container">
       <div className="form__single-collumn">
         <div className="form__title">
-          <h4 className="form-header">Cadastro de conferentes</h4>
+          <p> Cadastro de conferentes</p>
           <hr />
         </div>
         <form onSubmit={handleNewConferente} id="formCreateConferente">
@@ -51,6 +52,7 @@ export default function ConferenteCreate() {
 
           <label htmlFor="idConferente">ID</label>
           <input type="number" name="idConferente" required max="99999999" onChange={(e) => setIdConferente(e.target.value)}></input>
+
           <button type="submit" className="btn btn--primary btn--medium mt-2">
             Cadastrar
           </button>

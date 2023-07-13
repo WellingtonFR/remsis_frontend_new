@@ -36,6 +36,7 @@ export default function EntradaIndex() {
           text: data.message,
           icon: "info",
           confirmButtonText: "Voltar",
+          confirmButtonColor: "#008aca",
         });
       }
     })();
@@ -57,6 +58,7 @@ export default function EntradaIndex() {
         text: "É necessário preencher a data inicial e final",
         icon: "info",
         confirmButtonText: "Voltar",
+        confirmButtonColor: "#008aca",
       });
       return;
     }
@@ -75,6 +77,7 @@ export default function EntradaIndex() {
         text: data.message,
         icon: "info",
         confirmButtonText: "Voltar",
+        confirmButtonColor: "#008aca",
       });
     }
   }
@@ -130,29 +133,42 @@ export default function EntradaIndex() {
     <div className="container">
       <div className="search-bar">
         <form onSubmit={handleSearch}>
-          <label htmlFor="initialDate">Data inicial</label>
-          <input type="date" name="initialDate" className="input--width-2 mr-3" placeholder="dd/mm/aaaa" maxLength="10" onChange={(e) => setInitialDate(e.target.value)} />
+          <div className="row">
+            <div className="col-2 mr-2">
+              <label htmlFor="initialDate">Data inicial</label>
+              <input type="date" name="initialDate" placeholder="dd/mm/aaaa" maxLength="10" onChange={(e) => setInitialDate(e.target.value)} />
+            </div>
 
-          <label htmlFor="finalDate" className="ml-1 mr-2">
-            Data final
-          </label>
-          <input type="date" name="finalDate" className="input--width-2 mr-3" placeholder="dd/mm/aaaa" onChange={(e) => setFinalDate(e.target.value)} />
+            <div className="col-2 mr-2">
+              <label htmlFor="finalDate" className="ml-1 mr-2">
+                Data final
+              </label>
+              <input type="date" name="finalDate" placeholder="dd/mm/aaaa" onChange={(e) => setFinalDate(e.target.value)} />
+            </div>
 
-          <label htmlFor="filialOrigem" className="ml-1 mr-2">
-            Filial origem
-          </label>
-          <input type="text" name="filialOrigem" className="input--width-1 mr-3" onChange={(e) => setFilialOrigem(e.target.value)}></input>
+            <div className="col-2 mr-2">
+              <label htmlFor="filialOrigem" className="ml-1 mr-2">
+                Filial origem
+              </label>
+              <input type="text" name="filialOrigem" onChange={(e) => setFilialOrigem(e.target.value)}></input>
+            </div>
 
-          <label htmlFor="filialDestino" className="ml-1 mr-2">
-            Filial destino
-          </label>
-          <input type="text" name="filialDestino" className="input--width-1 mr-3" onChange={(e) => setFilialDestino(e.target.value)}></input>
+            <div className="col-2 mr-2">
+              <label htmlFor="filialDestino" className="ml-1 mr-2">
+                Filial destino
+              </label>
+              <input type="text" name="filialDestino" onChange={(e) => setFilialDestino(e.target.value)}></input>
+            </div>
 
-          <button type="submit" className="btn btn--primary" onClick={() => handleSearch}>
-            Pesquisar
-          </button>
+            <div className="col-2 mt-2">
+              <button type="submit" className="btn btn--primary btn--small " onClick={() => handleSearch}>
+                Pesquisar
+              </button>
+            </div>
+          </div>
         </form>
       </div>
+
       <table className="table table--white table--freeze-header">
         <thead>
           <tr>

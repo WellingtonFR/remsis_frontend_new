@@ -9,7 +9,7 @@ export default function FiliaisUpdate() {
   const [filial, setFilial] = useState([]);
   const { id } = useParams();
 
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -48,7 +48,7 @@ export default function FiliaisUpdate() {
           showConfirmButton: false,
         });
       });
-      history.push("/filiais");
+      navigate("/filiais");
     } catch (err) {
       hideLoader();
       const { data } = err.response;
@@ -57,87 +57,83 @@ export default function FiliaisUpdate() {
         text: data.message,
         icon: "error",
         confirmButtonText: "Voltar",
+        confirmButtonColor: "#008aca",
       });
     }
   }
 
   return (
-    <div className="form-create">
-      <div className="form-custom">
-        <h4 className="form-header">Alteração de dados da Filial</h4>
-        <small>Modifique as informações e clique em alterar</small>
-        <form onSubmit={handleUpdateFilial} id="formCreateFiliais">
+    <div className="container">
+      <div className="form__single-collumn">
+        <div className="form__title">
+          <p>Alteração de dados da Filial</p>
+          <small>Modifique as informações e clique em alterar</small>
           <hr />
-          <div className="form-group">
-            <label htmlFor="numeroFilial">Número da filial</label>
-            <input type="number" name="numeroFilial" className="form-control disabled" maxLength="6" value={filial.numeroFilial || ""} disabled required></input>
-          </div>
+        </div>
 
-          <div className="form-row">
-            <div className="form-group col-md-9">
-              <label htmlFor="endereco">Endereço</label>
-              <input type="text" name="endereco" className="form-control" required maxLength="50" value={filial.endereco || ""} onChange={handleInputChange}></input>
-            </div>
-            <div className="form-group col-md-3">
+        <form onSubmit={handleUpdateFilial}>
+          <label htmlFor="numeroFilial">Número da filial</label>
+          <input type="number" name="numeroFilial" className=" disabled" maxLength="6" value={filial.numeroFilial || ""} disabled required></input>
+
+          <label htmlFor="endereco">Endereço</label>
+          <input type="text" name="endereco" className="" required maxLength="50" value={filial.endereco || ""} onChange={handleInputChange}></input>
+
+          <div className="row">
+            <div className="col-5 mr-3">
               <label htmlFor="numeroEndereco">Número</label>
-              <input type="number" name="numeroEndereco" className="form-control" value={filial.numeroEndereco || ""} required onChange={handleInputChange}></input>
+              <input type="number" name="numeroEndereco" className="" value={filial.numeroEndereco || ""} required onChange={handleInputChange}></input>
+            </div>
+
+            <div className="col">
+              <label htmlFor="complemento">Complemento</label>
+              <input type="text" name="complemento" className="" value={filial.complemento || ""} onChange={handleInputChange}></input>
             </div>
           </div>
 
-          <div className="form-group">
-            <label htmlFor="complemento">Complemento</label>
-            <input type="text" name="complemento" className="form-control" value={filial.complemento || ""} onChange={handleInputChange}></input>
-          </div>
+          <label htmlFor="cidade">Cidade</label>
+          <input type="text" name="cidade" className="" value={filial.cidade || ""} required onChange={handleInputChange}></input>
 
-          <div className="form-group">
-            <label htmlFor="cidade">Cidade</label>
-            <input type="text" name="cidade" className="form-control" value={filial.cidade || ""} required onChange={handleInputChange}></input>
-          </div>
+          <label htmlFor="estado">Estado</label>
+          <select name="estado" className="" required value={filial.estado || ""} onChange={handleInputChange}>
+            <option value="AC">Acre</option>
+            <option value="AL">Alagoas</option>
+            <option value="AP">Amapá</option>
+            <option value="AM">Amazonas</option>
+            <option value="BA">Bahia</option>
+            <option value="CE">Ceará</option>
+            <option value="DF">Distrito Federal</option>
+            <option value="ES">Espírito Santo</option>
+            <option value="GO">Goiás</option>
+            <option value="MA">Maranhão</option>
+            <option value="MT">Mato Grosso</option>
+            <option value="MS">Mato Grosso do Sul</option>
+            <option value="MG">Minas Gerais</option>
+            <option value="PA">Pará</option>
+            <option value="PB">Paraíba</option>
+            <option value="PR">Paraná</option>
+            <option value="PE">Pernambuco</option>
+            <option value="PI">Piauí</option>
+            <option value="RJ">Rio de Janeiro</option>
+            <option value="RN">Rio Grande do Norte</option>
+            <option value="RS">Rio Grande do Sul</option>
+            <option value="RO">Rondônia</option>
+            <option value="RR">Roraima</option>
+            <option value="SC">Santa Catarina</option>
+            <option value="SP">São Paulo</option>
+            <option value="SE">Sergipe</option>
+            <option value="TO">Tocantins</option>
+          </select>
 
-          <div className="form-group">
-            <label htmlFor="estado">Estado</label>
-            <select name="estado" className="form-control" required value={filial.estado || ""} onChange={handleInputChange}>
-              <option value="AC">Acre</option>
-              <option value="AL">Alagoas</option>
-              <option value="AP">Amapá</option>
-              <option value="AM">Amazonas</option>
-              <option value="BA">Bahia</option>
-              <option value="CE">Ceará</option>
-              <option value="DF">Distrito Federal</option>
-              <option value="ES">Espírito Santo</option>
-              <option value="GO">Goiás</option>
-              <option value="MA">Maranhão</option>
-              <option value="MT">Mato Grosso</option>
-              <option value="MS">Mato Grosso do Sul</option>
-              <option value="MG">Minas Gerais</option>
-              <option value="PA">Pará</option>
-              <option value="PB">Paraíba</option>
-              <option value="PR">Paraná</option>
-              <option value="PE">Pernambuco</option>
-              <option value="PI">Piauí</option>
-              <option value="RJ">Rio de Janeiro</option>
-              <option value="RN">Rio Grande do Norte</option>
-              <option value="RS">Rio Grande do Sul</option>
-              <option value="RO">Rondônia</option>
-              <option value="RR">Roraima</option>
-              <option value="SC">Santa Catarina</option>
-              <option value="SP">São Paulo</option>
-              <option value="SE">Sergipe</option>
-              <option value="TO">Tocantins</option>
-            </select>
-          </div>
-          <div className="form-group">
-            <label htmlFor="nomeFantasia">Nome Fantasia</label>
-            <input type="text" name="nomeFantasia" className="form-control" placeholder="Exemplo: LD182" maxLength="20" value={filial.nomeFantasia || ""} required onChange={handleInputChange}></input>
+          <label htmlFor="nomeFantasia">Nome Fantasia</label>
+          <input type="text" name="nomeFantasia" className="" placeholder="Exemplo: LD182" maxLength="20" value={filial.nomeFantasia || ""} required onChange={handleInputChange}></input>
 
-            <div className="row buttons-form-group">
-              <button type="submit" className="btn btn-primary btn-submit">
-                Alterar
-              </button>
-              <Link to="/filiais" className="btn btn-dark btn-cancel">
-                Cancelar
-              </Link>
-            </div>
+          <div className="flex-center mt-2">
+            <button type="submit" className="btn btn--primary btn--medium mr-2">
+              Alterar
+            </button>
+            <Link to="/filiais">
+              <button className="btn btn--dark btn--medium">Cancelar</button>
+            </Link>
           </div>
         </form>
         {loader}

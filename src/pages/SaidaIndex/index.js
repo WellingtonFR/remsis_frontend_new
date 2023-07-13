@@ -13,12 +13,12 @@ export default function SaidaIndex() {
   const [finalDate, setFinalDate] = useState("");
   const [numeroControle, setNumeroControle] = useState("");
   const [filialDestino, setFilialDestino] = useState("");
-  const [idToRemove, setIdToRemove] = useState("");
+  const [item_ID, setItem_ID] = useState("");
+
+  let hoje = new Date().toJSON().slice(0, 10);
 
   useEffect(() => {
     (async () => {
-      let hoje = new Date().toJSON().slice(0, 10);
-
       const data = {
         initialDate: hoje,
         finalDate: hoje,
@@ -36,6 +36,7 @@ export default function SaidaIndex() {
           text: data.message,
           icon: "info",
           confirmButtonText: "Voltar",
+          confirmButtonColor: "#008aca",
         });
       }
     })();
@@ -57,6 +58,7 @@ export default function SaidaIndex() {
         text: "É necessário preencher a data inicial e final",
         icon: "info",
         confirmButtonText: "Voltar",
+        confirmButtonColor: "#008aca",
       });
       return;
     }
@@ -67,6 +69,7 @@ export default function SaidaIndex() {
         text: "É necessário preencher a data inicial e final",
         icon: "info",
         confirmButtonText: "Voltar",
+        confirmButtonColor: "#008aca",
       });
       return;
     }
@@ -85,22 +88,23 @@ export default function SaidaIndex() {
         text: data.message,
         icon: "info",
         confirmButtonText: "Voltar",
+        confirmButtonColor: "#008aca",
       });
     }
   }
 
   const showModal = (id) => {
-    const modal = document.querySelector("#modal__saida");
+    const modal = document.querySelector(".modal");
     const overlay = document.querySelector(".overlay");
 
     modal.style.visibility = "visible";
     overlay.style.visibility = "visible";
 
-    setIdToRemove(id);
+    setItem_ID(id);
   };
 
   const hideModal = () => {
-    const modal = document.querySelector("#modal__saida");
+    const modal = document.querySelector(".modal");
     const overlay = document.querySelector(".overlay");
 
     modal.style.visibility = "hidden";
@@ -131,8 +135,8 @@ export default function SaidaIndex() {
         });
 
         const data = {
-          initialDate: new Date().toLocaleDateString("pt-br"),
-          finalDate: new Date().toLocaleDateString("pt-br"),
+          initialDate: hoje,
+          finalDate: hoje,
           numeroControle: numeroControle,
           filialDestino: filialDestino,
         };
@@ -157,21 +161,33 @@ export default function SaidaIndex() {
     <div className="container">
       <div className="search-bar">
         <form onSubmit={handleSearch} className="form">
-          <label htmlFor="initialDate">Data inicial</label>
-          <input type="date" name="initialDate" className="input--width-2 mr-3" placeholder="dd/mm/aaaa" maxLength="10" onChange={(e) => setInitialDate(e.target.value)} />
-          <label htmlFor="finalDate" className="ml-1 mr-2">
-            Data final
-          </label>
-          <input type="date" name="finalDate" className="input--width-2 mr-3" placeholder="dd/mm/aaaa" onChange={(e) => setFinalDate(e.target.value)} />
-          <label htmlFor="numeroControle">Nº controle</label>
-          <input type="text" name="numeroControle" maxLength="10" className="input--width-2 mr-3" onChange={(e) => setNumeroControle(e.target.value)}></input>
-          <label htmlFor="filialDestino" className="ml-1 mr-2">
-            Filial destino
-          </label>
-          <input type="text" name="filialDestino" className="input--width-2 mr-3" onChange={(e) => setFilialDestino(e.target.value)}></input>
-          <button type="submit" className="btn btn--primary" id="btn-submit-search" onClick={() => handleSearch}>
-            Pesquisar
-          </button>
+          <div className="row">
+            <div className="col-2 mr-1">
+              <label htmlFor="initialDate">Data inicial</label>
+              <input type="date" name="initialDate" placeholder="dd/mm/aaaa" maxLength="10" onChange={(e) => setInitialDate(e.target.value)} />
+            </div>
+
+            <div className="col-2 mr-1">
+              <label htmlFor="finalDate">Data final</label>
+              <input type="date" name="finalDate" placeholder="dd/mm/aaaa" onChange={(e) => setFinalDate(e.target.value)} />
+            </div>
+
+            <div className="col-2 mr-1">
+              <label htmlFor="numeroControle">Nº controle</label>
+              <input type="text" name="numeroControle" maxLength="10" onChange={(e) => setNumeroControle(e.target.value)}></input>
+            </div>
+
+            <div className="col-2 mr-3">
+              <label htmlFor="filialDestino">Filial destino</label>
+              <input type="text" name="filialDestino" onChange={(e) => setFilialDestino(e.target.value)}></input>
+            </div>
+
+            <div className="col-2 mt-2">
+              <button type="submit" className="btn btn--primary btn--small" id="btn-submit-search" onClick={() => handleSearch}>
+                Pesquisar
+              </button>
+            </div>
+          </div>
         </form>
       </div>
       <table className="table table--white table--freeze-header">
@@ -211,15 +227,15 @@ export default function SaidaIndex() {
       {loader}
 
       <div className="overlay">
-        <div id="modal__saida" className="modal" style={{ backgroundColor: "transparent", width: "fit-content", height: "fit-content" }}>
+        <div className="modal" style={{ backgroundColor: "transparent", width: "fit-content", height: "fit-content" }}>
           <div className="modal__body">
-            <Link to={`/saida/update/${idToRemove}`}>
+            <Link to={`/saida/update/${item_ID}`}>
               <button className="btn btn--primary btn--medium mr-3">Alterar</button>
             </Link>
-            <Link to={`/saida/report/${idToRemove}`}>
+            <Link to={`/saida/report/${item_ID}`}>
               <button className="btn btn--primary btn--medium mr-3">Relatório</button>
             </Link>
-            <input type="button" value="Excluir" className="btn btn--danger btn--medium mr-3" onClick={() => excluirItemSaida(idToRemove)} />
+            <input type="button" value="Excluir" className="btn btn--danger btn--medium mr-3" onClick={() => excluirItemSaida(item_ID)} />
             <input type="button" className="btn btn--dark btn--medium" value="Fechar" onClick={hideModal} />
           </div>
         </div>

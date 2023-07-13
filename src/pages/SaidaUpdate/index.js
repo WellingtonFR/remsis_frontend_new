@@ -27,7 +27,7 @@ export default function SaidaUpdate() {
     "SUP-USO E CONSUMO",
   ];
 
-  const history = useNavigate();
+  const navigate = useNavigate();
   const { id } = useParams();
 
   useEffect(() => {
@@ -249,7 +249,7 @@ export default function SaidaUpdate() {
           icon: "success",
           preConfirm: () => {
             document.querySelector("form").reset();
-            history.push(`/saida/report/${id}`);
+            navigate(`/saida/report/${id}`);
           },
         });
       });
@@ -261,6 +261,7 @@ export default function SaidaUpdate() {
         text: data.message,
         icon: "error",
         confirmButtonText: "Voltar",
+        confirmButtonColor: "#008aca",
       });
     }
   }
@@ -268,20 +269,20 @@ export default function SaidaUpdate() {
   return (
     <div className="container">
       <div className="form__title">
-        <h4 className="uppercase">Alterar saída</h4>
+        <p>Alterar saída</p>
         <small>Altere as informações e clique em salvar</small>
         <hr />
       </div>
 
       <form onSubmit={handleNewSaida}>
         <div className="row mt-1 mt-3">
-          <div className="col-width-1 mr-3">
+          <div className="col-1 mr-3">
             <label className="mb-1" htmlFor="data">
               Data
             </label>
             <input type="text" name="data" disabled value={new Date(saida.created_at).toLocaleDateString()} />
           </div>
-          <div className="col-width-1 mr-3">
+          <div className="col-1 mr-3">
             <label className="mb-1" htmlFor="numeroControle">
               Controle
             </label>
@@ -290,21 +291,21 @@ export default function SaidaUpdate() {
         </div>
 
         <div className="row mt-3">
-          <div className="col-width-1 mr-3">
+          <div className="col-1 mr-3">
             <label className="mb-1" htmlFor="filialDestino">
               Unidade destino
             </label>
             <input name="filialDestino" value={saida.filialDestino} disabled />
           </div>
 
-          <div className="col-width-1 mr-3">
+          <div className="col-1 mr-3">
             <label className="mb-1" htmlFor="nomeFilialDestino">
               Código filial
             </label>
             <input name="nomeFilialDestino" type="text" value={saida.nomeFilialDestino} disabled />
           </div>
 
-          <div className="col-width-7 mr-3">
+          <div className="col-7 mr-3">
             <label className="mb-1" htmlFor="enderecoFilialDestino">
               Endereço
             </label>
@@ -313,7 +314,7 @@ export default function SaidaUpdate() {
         </div>
 
         <div className="row mt-3">
-          <div className="col-width-3 mr-3">
+          <div className="col-3 mr-3">
             <label className="mb-1" htmlFor="transportador">
               Transportador
             </label>
@@ -327,21 +328,21 @@ export default function SaidaUpdate() {
             </select>
           </div>
 
-          <div className="col-width-1 mr-3">
+          <div className="col-1 mr-3">
             <label className="mb-1" htmlFor="placaVeiculo">
               Placa do veículo
             </label>
             <input type="text" name="placaVeiculo" className="" value={placaVeiculo} disabled required />
           </div>
 
-          <div className="col-width-1 mr-3">
+          <div className="col-1 mr-3">
             <label className="mb-1" htmlFor="doca">
               Doca
             </label>
             <input type="number" name="doca" required onChange={(e) => setDoca(e.target.value)} />
           </div>
 
-          <div className="col-width-3 mr-3">
+          <div className="col-3 mr-3">
             <label className="mb-1" htmlFor="nomeConferente">
               Conferente
             </label>
@@ -365,24 +366,24 @@ export default function SaidaUpdate() {
 
         <div className="form__lines mt-3 mb-3">
           <div className="row mt-1 Head">
-            <div className="col-width-1 mr-1">Filial origem</div>
-            <div className="col-width-1 mr-1">Nota fiscal</div>
-            <div className="col-width-1 mr-1">Tipo</div>
-            <div className="col-width-1 mr-1">Código</div>
-            <div className="col-width-3 mr-1">Descrição</div>
-            <div className="col-width-1 mr-1">Quantidade</div>
-            <div className="col-width-3 mr-1">Observação</div>
+            <div className="col-1 mr-1">Filial origem</div>
+            <div className="col-1 mr-1">Nota fiscal</div>
+            <div className="col-1 mr-1">Tipo</div>
+            <div className="col-1 mr-1">Código</div>
+            <div className="col-3 mr-1">Descrição</div>
+            <div className="col-1 mr-1">Quantidade</div>
+            <div className="col-3 mr-1">Observação</div>
           </div>
 
           {/*Line1*/}
           <div className="row mt-1 mt-1">
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="filialOrigem_1" className="" required value={saida.filialOrigem_1} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="notaFiscal_1" className="" required value={saida.notaFiscal_1} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <select name="tipoOperacao_1" className="" required value={saida.tipoOperacao_1} onChange={handleInputChange}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
@@ -392,29 +393,29 @@ export default function SaidaUpdate() {
                 ))}
               </select>
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="codigo_1" className="" required value={saida.codigo_1} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" maxLength="30" name="descricaoProduto_1" className="" required value={saida.descricaoProduto_1} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="number" name="quantidadeProduto_1" className="" required value={saida.quantidadeProduto_1} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" maxLength="30" name="observacao_1" className="" required value={saida.observacao_1} onChange={handleInputChange} />
             </div>
           </div>
 
           {/*Line2*/}
           <div className="row mt-1">
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="filialOrigem_2" className="" value={saida.filialOrigem_2} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="notaFiscal_2" className="" value={saida.notaFiscal_2} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <select name="tipoOperacao_2" className="" value={saida.tipoOperacao_2} onChange={handleInputChange}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
@@ -422,29 +423,29 @@ export default function SaidaUpdate() {
                 ))}
               </select>
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="codigo_2" className="" value={saida.codigo_2} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" maxLength="30" name="descricaoProduto_2" className="" value={saida.descricaoProduto_2} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="number" name="quantidadeProduto_2" className="" value={saida.quantidadeProduto_2} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" maxLength="30" name="observacao_2" className="" value={saida.observacao_2} onChange={handleInputChange} />
             </div>
           </div>
 
           {/*Line3*/}
           <div className="row mt-1">
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="filialOrigem_3" className="" value={saida.filialOrigem_3} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="notaFiscal_3" className="" value={saida.notaFiscal_3} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <select name="tipoOperacao_3" className="" value={saida.tipoOperacao_3} onChange={handleInputChange}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
@@ -452,29 +453,29 @@ export default function SaidaUpdate() {
                 ))}
               </select>
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="codigo_3" className="" value={saida.codigo_3} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" maxLength="30" name="descricaoProduto_3" className="" value={saida.descricaoProduto_3} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="number" name="quantidadeProduto_3" className="" value={saida.quantidadeProduto_3} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" maxLength="30" name="observacao_3" className="" value={saida.observacao_3} onChange={handleInputChange} />
             </div>
           </div>
 
           {/*Line4*/}
           <div className="row mt-1">
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="filialOrigem_4" className="" value={saida.filialOrigem_4} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="notaFiscal_4" className="" value={saida.notaFiscal_4} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <select name="tipoOperacao_4" className="" value={saida.tipoOperacao_4} onChange={handleInputChange}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
@@ -482,29 +483,29 @@ export default function SaidaUpdate() {
                 ))}
               </select>
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="codigo_4" className="" value={saida.codigo_4} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" maxLength="30" name="descricaoProduto_4" className="" value={saida.descricaoProduto_4} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="number" name="quantidadeProduto_4" className="" value={saida.quantidadeProduto_4} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" maxLength="30" name="observacao_4" className="" value={saida.observacao_4} onChange={handleInputChange} />
             </div>
           </div>
 
           {/*Line5*/}
           <div className="row mt-1">
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="filialOrigem_5" className="" value={saida.filialOrigem_5} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="notaFiscal_5" className="" value={saida.notaFiscal_5} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <select name="tipoOperacao_5" className="" value={saida.tipoOperacao_5} onChange={handleInputChange}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
@@ -512,29 +513,29 @@ export default function SaidaUpdate() {
                 ))}
               </select>
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="codigo_5" className="" value={saida.codigo_5} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" maxLength="30" name="descricaoProduto_5" className="" value={saida.descricaoProduto_5} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="number" name="quantidadeProduto_5" className="" value={saida.quantidadeProduto_5} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" maxLength="30" name="observacao_5" className="" value={saida.observacao_5} onChange={handleInputChange} />
             </div>
           </div>
 
           {/*Line6*/}
           <div className="row mt-1">
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="filialOrigem_6" className="" value={saida.filialOrigem_6} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="notaFiscal_6" className="" value={saida.notaFiscal_6} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <select name="tipoOperacao_6" className="" value={saida.tipoOperacao_6} onChange={handleInputChange}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
@@ -542,29 +543,29 @@ export default function SaidaUpdate() {
                 ))}
               </select>
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="codigo_6" className="" value={saida.codigo_6} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" maxLength="30" name="descricaoProduto_6" className="" value={saida.descricaoProduto_6} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="number" name="quantidadeProduto_6" className="" value={saida.quantidadeProduto_6} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" maxLength="30" name="observacao_6" className="" value={saida.observacao_6} onChange={handleInputChange} />
             </div>
           </div>
 
           {/*Line7*/}
           <div className="row mt-1">
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="filialOrigem_7" className="" value={saida.filialOrigem_7} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="notaFiscal_7" className="" value={saida.notaFiscal_7} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <select name="tipoOperacao_7" className="" value={saida.tipoOperacao_7} onChange={handleInputChange}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
@@ -572,29 +573,29 @@ export default function SaidaUpdate() {
                 ))}
               </select>
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="codigo_7" className="" value={saida.codigo_7} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" maxLength="30" name="descricaoProduto_7" className="" value={saida.descricaoProduto_7} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="number" name="quantidadeProduto_7" className="" value={saida.quantidadeProduto_7} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" maxLength="30" name="observacao_7" className="" value={saida.observacao_7} onChange={handleInputChange} />
             </div>
           </div>
 
           {/*Line8*/}
           <div className="row mt-1">
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="filialOrigem_8" className="" value={saida.filialOrigem_8} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="notaFiscal_8" className="" value={saida.notaFiscal_8} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <select name="tipoOperacao_8" className="" value={saida.tipoOperacao_8} onChange={handleInputChange}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
@@ -602,29 +603,29 @@ export default function SaidaUpdate() {
                 ))}
               </select>
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="codigo_8" className="" value={saida.codigo_8} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" maxLength="30" name="descricaoProduto_8" className="" value={saida.descricaoProduto_8} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="number" name="quantidadeProduto_8" className="" value={saida.quantidadeProduto_8} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" maxLength="30" name="observacao_8" className="" value={saida.observacao_8} onChange={handleInputChange} />
             </div>
           </div>
 
           {/*Line9*/}
           <div className="row mt-1">
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="filialOrigem_9" className="" value={saida.filialOrigem_9} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="notaFiscal_9" className="" value={saida.notaFiscal_9} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <select name="tipoOperacao_9" className="" value={saida.tipoOperacao_9} onChange={handleInputChange}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
@@ -632,29 +633,29 @@ export default function SaidaUpdate() {
                 ))}
               </select>
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="codigo_9" className="" value={saida.codigo_9} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" maxLength="30" name="descricaoProduto_9" className="" value={saida.descricaoProduto_9} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="number" name="quantidadeProduto_9" className="" value={saida.quantidadeProduto_9} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" name="observacao_9" className="" value={saida.observacao_9} onChange={handleInputChange} />
             </div>
           </div>
 
           {/*Line10*/}
           <div className="row mt-1">
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="filialOrigem_10" className="" value={saida.filialOrigem_10} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="notaFiscal_10" className="" value={saida.notaFiscal_10} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <select name="tipoOperacao_10" className="" value={saida.tipoOperacao_10} onChange={handleInputChange}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
@@ -662,28 +663,28 @@ export default function SaidaUpdate() {
                 ))}
               </select>
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="codigo_10" className="" value={saida.codigo_10} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" maxLength="30" name="descricaoProduto_10" className="" value={saida.descricaoProduto_10} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="number" name="quantidadeProduto_10" className="" value={saida.quantidadeProduto_10} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" maxLength="30" name="observacao_10" className="" value={saida.observacao_10} onChange={handleInputChange} />
             </div>
           </div>
           {/*Line11*/}
           <div className="row mt-1">
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="filialOrigem_11" className="" value={saida.filialOrigem_11} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="notaFiscal_11" className="" value={saida.notaFiscal_11} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <select name="tipoOperacao_11" className="" value={saida.tipoOperacao_11} onChange={handleInputChange}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
@@ -691,29 +692,29 @@ export default function SaidaUpdate() {
                 ))}
               </select>
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="codigo_11" className="" value={saida.codigo_11} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" maxLength="30" name="descricaoProduto_11" className="" value={saida.descricaoProduto_11} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="number" name="quantidadeProduto_11" className="" value={saida.quantidadeProduto_11} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" maxLength="30" name="observacao_11" className="" value={saida.observacao_11} onChange={handleInputChange} />
             </div>
           </div>
 
           {/*Line12*/}
           <div className="row mt-1">
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="filialOrigem_12" className="" value={saida.filialOrigem_12} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="notaFiscal_12" className="" value={saida.notaFiscal_12} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <select name="tipoOperacao_12" className="" value={saida.tipoOperacao_12} onChange={handleInputChange}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
@@ -721,29 +722,29 @@ export default function SaidaUpdate() {
                 ))}
               </select>
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="codigo_12" className="" value={saida.codigo_12} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" maxLength="30" name="descricaoProduto_12" className="" value={saida.descricaoProduto_12} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="number" name="quantidadeProduto_12" className="" value={saida.quantidadeProduto_12} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" maxLength="30" name="observacao_12" className="" value={saida.observacao_12} onChange={handleInputChange} />
             </div>
           </div>
 
           {/*Line13*/}
           <div className="row mt-1">
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="filialOrigem_13" className="" value={saida.filialOrigem_13} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="notaFiscal_13" className="" value={saida.notaFiscal_13} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <select name="tipoOperacao_13" className="" value={saida.tipoOperacao_13} onChange={handleInputChange}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
@@ -751,29 +752,29 @@ export default function SaidaUpdate() {
                 ))}
               </select>
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="codigo_13" className="" value={saida.codigo_13} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" maxLength="30" name="descricaoProduto_13" className="" value={saida.descricaoProduto_13} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="number" name="quantidadeProduto_13" className="" value={saida.quantidadeProduto_13} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" maxLength="30" name="observacao_13" className="" value={saida.observacao_13} onChange={handleInputChange} />
             </div>
           </div>
 
           {/*Line14*/}
           <div className="row mt-1">
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="filialOrigem_14" className="" value={saida.filialOrigem_14} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="notaFiscal_14" className="" value={saida.notaFiscal_14} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <select name="tipoOperacao_14" className="" value={saida.tipoOperacao_14} onChange={handleInputChange}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
@@ -781,29 +782,29 @@ export default function SaidaUpdate() {
                 ))}
               </select>
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="codigo_14" className="" value={saida.codigo_14} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" maxLength="30" name="descricaoProduto_14" className="" value={saida.descricaoProduto_14} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="number" name="quantidadeProduto_14" className="" value={saida.quantidadeProduto_14} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" maxLength="30" name="observacao_14" className="" value={saida.observacao_14} onChange={handleInputChange} />
             </div>
           </div>
 
           {/*Line15*/}
           <div className="row mt-1">
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="filialOrigem_15" className="" value={saida.filialOrigem_15} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="notaFiscal_15" className="" value={saida.notaFiscal_15} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <select name="tipoOperacao_15" className="" value={saida.tipoOperacao_15} onChange={handleInputChange}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
@@ -811,29 +812,29 @@ export default function SaidaUpdate() {
                 ))}
               </select>
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="codigo_15" className="" value={saida.codigo_15} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" maxLength="30" name="descricaoProduto_15" className="" value={saida.descricaoProduto_15} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="number" name="quantidadeProduto_15" className="" value={saida.quantidadeProduto_15} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" maxLength="30" name="observacao_15" className="" value={saida.observacao_15} onChange={handleInputChange} />
             </div>
           </div>
 
           {/*Line16*/}
           <div className="row mt-1">
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="filialOrigem_16" className="" value={saida.filialOrigem_16} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="notaFiscal_16" className="" value={saida.notaFiscal_16} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <select name="tipoOperacao_16" className="" value={saida.tipoOperacao_16} onChange={handleInputChange}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
@@ -841,29 +842,29 @@ export default function SaidaUpdate() {
                 ))}
               </select>
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="codigo_16" className="" value={saida.codigo_16} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" maxLength="30" name="descricaoProduto_16" className="" value={saida.descricaoProduto_16} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="number" name="quantidadeProduto_16" className="" value={saida.quantidadeProduto_16} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" maxLength="30" name="observacao_16" className="" value={saida.observacao_16} onChange={handleInputChange} />
             </div>
           </div>
 
           {/*Line17*/}
           <div className="row mt-1">
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="filialOrigem_17" className="" value={saida.filialOrigem_17} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="notaFiscal_17" className="" value={saida.notaFiscal_17} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <select name="tipoOperacao_17" className="" value={saida.tipoOperacao_17} onChange={handleInputChange}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
@@ -871,29 +872,29 @@ export default function SaidaUpdate() {
                 ))}
               </select>
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="codigo_17" className="" value={saida.codigo_17} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" maxLength="30" name="descricaoProduto_17" className="" value={saida.descricaoProduto_17} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="number" name="quantidadeProduto_17" className="" value={saida.quantidadeProduto_17} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" maxLength="30" name="observacao_17" className="" value={saida.observacao_17} onChange={handleInputChange} />
             </div>
           </div>
 
           {/*Line18*/}
           <div className="row mt-1">
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="filialOrigem_18" className="" value={saida.filialOrigem_18} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="notaFiscal_18" className="" value={saida.notaFiscal_18} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <select name="tipoOperacao_18" className="" value={saida.tipoOperacao_18} onChange={handleInputChange}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
@@ -901,29 +902,29 @@ export default function SaidaUpdate() {
                 ))}
               </select>
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="codigo_18" className="" value={saida.codigo_18} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" maxLength="30" name="descricaoProduto_18" className="" value={saida.descricaoProduto_18} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="number" name="quantidadeProduto_18" className="" value={saida.quantidadeProduto_18} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" maxLength="30" name="observacao_18" className="" value={saida.observacao_18} onChange={handleInputChange} />
             </div>
           </div>
 
           {/*Line19*/}
           <div className="row mt-1">
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="filialOrigem_19" className="" value={saida.filialOrigem_19} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="notaFiscal_19" className="" value={saida.notaFiscal_19} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <select name="tipoOperacao_19" className="" value={saida.tipoOperacao_19} onChange={handleInputChange}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
@@ -931,29 +932,29 @@ export default function SaidaUpdate() {
                 ))}
               </select>
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="codigo_19" className="" value={saida.codigo_19} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" maxLength="30" name="descricaoProduto_19" className="" value={saida.descricaoProduto_19} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="number" name="quantidadeProduto_19" className="" value={saida.quantidadeProduto_19} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" maxLength="30" name="observacao_19" className="" value={saida.observacao_19} onChange={handleInputChange} />
             </div>
           </div>
 
           {/*Line20*/}
           <div className="row mt-1">
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="filialOrigem_20" className="" value={saida.filialOrigem_20} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="notaFiscal_20" className="" value={saida.notaFiscal_20} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <select name="tipoOperacao_20" className="" value={saida.tipoOperacao_20} onChange={handleInputChange}>
                 <option value="">Selecione</option>
                 {tipoOptions.map((option) => (
@@ -961,16 +962,16 @@ export default function SaidaUpdate() {
                 ))}
               </select>
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="text" name="codigo_20" className="" value={saida.codigo_20} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" maxLength="30" name="descricaoProduto_20" className="" value={saida.descricaoProduto_20} onChange={handleInputChange} />
             </div>
-            <div className="col-width-1 mr-1">
+            <div className="col-1 mr-1">
               <input type="number" name="quantidadeProduto_20" className="" value={saida.quantidadeProduto_20} onChange={handleInputChange} />
             </div>
-            <div className="col-width-3 mr-1">
+            <div className="col-3 mr-1">
               <input type="text" maxLength="30" name="observacao_20" className="" value={saida.observacao_20} onChange={handleInputChange} />
             </div>
           </div>

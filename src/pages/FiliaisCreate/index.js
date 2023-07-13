@@ -55,6 +55,7 @@ export default function FiliaisCreate() {
         text: data.message,
         icon: "error",
         confirmButtonText: "Voltar",
+        confirmButtonColor: "#008aca",
       });
     }
   }
@@ -63,7 +64,7 @@ export default function FiliaisCreate() {
     <div className="container">
       <div className="form__single-collumn">
         <div className="form__title">
-          <h4>Cadastro de Filiais</h4>
+          <p>Cadastro de Filiais</p>
           <hr />
         </div>
 
@@ -75,24 +76,24 @@ export default function FiliaisCreate() {
           <input type="text" name="endereco" maxLength="100" required onChange={handleChange}></input>
 
           <div className="row">
-            <div className="col-width-6 mr-3">
+            <div className="col-6 mr-3">
               <label htmlFor="numeroEndereco">Número</label>
               <input type="number" name="numeroEndereco" required onChange={handleChange}></input>
             </div>
 
-            <div className="col-width-10">
+            <div className="col-10">
               <label htmlFor="complemento">Complemento</label>
               <input type="text" name="complemento" onChange={handleChange}></input>
             </div>
           </div>
 
           <div className="row">
-            <div className="col-width-9 mr-3">
+            <div className="col-9 mr-3">
               <label htmlFor="cidade">Cidade</label>
               <input type="text" name="cidade" required onChange={handleChange}></input>
             </div>
 
-            <div className="col-width-7 mr-3">
+            <div className="col-7 mr-3">
               <label htmlFor="estado">Estado</label>
               <select name="estado" required onChange={handleChange}>
                 <option value="">Selecione</option>

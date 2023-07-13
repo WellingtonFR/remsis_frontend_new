@@ -33,14 +33,14 @@ export default function TransferenciaReport() {
           <div className="col--width-3">
             <img src={logoMagalu} className="report__logo" alt="Logomarca Magalu" />
           </div>
-          <div className="col-width-2 mr-2 report__header__fields">
+          <div className="col-2 mr-2 report__header__fields">
             <label>Data</label>
             <div className="data">{new Date(report.created_at).toLocaleDateString()}</div>
 
             <label>Controle</label>
             <div className="data">{report.numeroControle}</div>
           </div>
-          <div className="col-width-5 mr-2 report__header__fields">
+          <div className="col-5 mr-2 report__header__fields">
             <label>Filial de destino</label>
             <div className="data">{report.nomeFilialDestino}</div>
 
@@ -48,7 +48,7 @@ export default function TransferenciaReport() {
             <div className="data">{report.enderecoFilialDestino}</div>
           </div>
 
-          <div className="col-width-5 report__header__fields">
+          <div className="col-5 report__header__fields">
             <label>Transportador</label>
             <div className="data">{report.transportador}</div>
 
@@ -302,7 +302,7 @@ export default function TransferenciaReport() {
       </div>
       <div className="report__footer">
         <div className="row">
-          <div className="col-width-4 report__footer__fields">
+          <div className="col-4 report__footer__fields">
             <div className="sign">
               <label>Conferente do CD</label>
               <div className="report__sign-line">
@@ -310,7 +310,7 @@ export default function TransferenciaReport() {
               </div>
             </div>
           </div>
-          <div className="col-width-6 mr-3 report__footer__fields">
+          <div className="col-6 mr-3 report__footer__fields">
             <div className="report__footer__orientations">
               Declaro que efetuei a conferência dos produtos relacionados e que estes foram carregados em perfeitas condições e nas quantidades de acordo com o relatório descrito acima.
             </div>

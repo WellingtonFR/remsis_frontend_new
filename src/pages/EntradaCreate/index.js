@@ -133,6 +133,7 @@ export default function EntradaCreate() {
         text: data.message,
         icon: "error",
         confirmButtonText: "Voltar",
+        confirmButtonColor: "#008aca",
       });
     }
   }
@@ -140,17 +141,22 @@ export default function EntradaCreate() {
   return (
     <div className="container">
       <form onSubmit={onSubmit}>
-        <h4 className="form__title uppercase">Cadastro de entrada</h4>
-        <hr />
-        <div className="search-bar mt-2">
-          <div className="">
-            <label htmlFor="data">Data</label>
-            <input type="text" name="data" className="input--width-1" required disabled value={date} />
+        <div className="form__title uppercase">
+          <p>Cadastro de entrada</p>
+          <hr />
+        </div>
+
+        <div className="search-bar">
+          <div className="row">
+            <div className="col ml-2">
+              <label htmlFor="data">Data</label>
+              <input type="text" name="data" required disabled value={date} />
+            </div>
           </div>
 
-          <div className="ml-3">
+          <div className="col ml-2">
             <label htmlFor="filialOrigem">Filial origem</label>
-            <select name="filialOrigem" className="input--width-2" required disabled={filialOrigem !== "" ? true : false} onChange={(e) => setFilialOrigem(e.target.value)}>
+            <select name="filialOrigem" required disabled={filialOrigem !== "" ? true : false} onChange={(e) => setFilialOrigem(e.target.value)}>
               <option value="">Selecione</option>
               {filiais.map((filial) => (
                 <option value={filial.numeroFilial} key={filial.numeroFilial}>
@@ -160,9 +166,9 @@ export default function EntradaCreate() {
             </select>
           </div>
 
-          <div className="ml-3">
+          <div className="col ml-2">
             <label htmlFor="nomeConferente">Conferente</label>
-            <select name="nomeConferente" className="input--width-5 " required disabled={conferente !== "" ? true : false} onChange={(e) => setConferente(e.target.value)}>
+            <select name="nomeConferente" required disabled={conferente !== "" ? true : false} onChange={(e) => setConferente(e.target.value)}>
               <option value="">Selecione</option>
               {conferentes.map((conferente) => (
                 <option value={conferente.nomeConferente} key={conferente.nomeConferente}>
@@ -172,12 +178,12 @@ export default function EntradaCreate() {
             </select>
           </div>
 
-          <div className="ml-3">
+          <div className="col ml-2">
             <label htmlFor="doca">Doca</label>
-            <input type="number" name="doca" className="input--width-2 " required value={doca} onChange={(e) => setDoca(e.target.value)} />
+            <input type="number" name="doca" required value={doca} onChange={(e) => setDoca(e.target.value)} />
           </div>
 
-          <div className="ml-3">
+          <div className="col ml-2 mt-3">
             <button type="submit" id="btn-submit" className="btn btn--primary btn--medium" disabled style={{ height: "50px" }}>
               Inserir
             </button>
@@ -185,19 +191,19 @@ export default function EntradaCreate() {
         </div>
 
         <div className="row">
-          <div className="form__header col-width-1 mr-2 bold">Nota fiscal</div>
-          <div className="form__header col-width-1 mr-2 bold">Código</div>
-          <div className="form__header col-width-3 mr-2 bold">Descrição</div>
-          <div className="form__header col-width-1 mr-2 bold">Quantidade</div>
-          <div className="form__header col-width-1 mr-2 bold">Filial Destino</div>
-          <div className="form__header col-width-3 mr-2 bold">Observação</div>
-          <div className="form__header col-width-1"></div>
+          <div className="col-1 mr-1 bold">Nota fiscal</div>
+          <div className="col-1 mr-1 bold">Código</div>
+          <div className="col-3 mr-1 bold">Descrição</div>
+          <div className="col-1 mr-1 bold">Quantidade</div>
+          <div className="col-1 mr-1 bold">Filial Destino</div>
+          <div className="col-3 mr-1 bold">Observação</div>
+          <div className="col-1"></div>
         </div>
 
         {formFields.map((form, index) => {
           return (
             <div key={index} className="row mt-1">
-              <div className="col-width-1 mr-2">
+              <div className="col-1 mr-1">
                 <input
                   type="text"
                   name="notaFiscal"
@@ -208,27 +214,27 @@ export default function EntradaCreate() {
                 />
               </div>
 
-              <div className="col-width-1 mr-2">
+              <div className="col-1 mr-1">
                 <input type="text" name="codigo" maxLength="10" value={form.codigoProduto} required onChange={(event) => handleFormBodyChange(event, index)} />
               </div>
 
-              <div className="col-width-3 mr-2">
+              <div className="col-3 mr-1">
                 <input type="text" name="descricaoProduto" maxLength="30" value={form.descricaoProduto} required onChange={(event) => handleFormBodyChange(event, index)} />
               </div>
 
-              <div className="col-width-1 mr-2">
+              <div className="col-1 mr-1">
                 <input type="number" name="quantidadeProduto" required value={form.quantidadeProduto} onChange={(event) => handleFormBodyChange(event, index)} />
               </div>
 
-              <div className="col-width-1 mr-2">
+              <div className="col-1 mr-1">
                 <input type="number" name="filialDestino" required value={form.filialDestino} onChange={(event) => handleFormBodyChange(event, index)} />
               </div>
 
-              <div className="col-width-3 mr-2">
+              <div className="col-3 mr-1">
                 <input type="text" name="observacao" maxLength="30" value={form.observacao} onChange={(event) => handleFormBodyChange(event, index)} />
               </div>
 
-              <div className="col-width-1 mr-2">
+              <div className="col-1 mr-1">
                 <button type="button" className="btn btn--primary btn--icon" id="btn-remove-fields" onClick={() => removeFields(index)}>
                   <FiMinusCircle size="30" />
                 </button>

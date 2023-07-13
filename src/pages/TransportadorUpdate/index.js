@@ -9,7 +9,7 @@ export default function TransportadoUpdate() {
   const [transportador, setTransportador] = useState("");
   const { id } = useParams();
 
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -44,7 +44,7 @@ export default function TransportadoUpdate() {
           showConfirmButton: false,
         });
       });
-      history.push("/transportador");
+      navigate.push("/transportador");
     } catch (err) {
       const { data } = err.response;
       Swal.fire({
@@ -52,6 +52,7 @@ export default function TransportadoUpdate() {
         text: data.message,
         icon: "error",
         confirmButtonText: "Voltar",
+        confirmButtonColor: "#008aca",
       });
     }
   }
@@ -59,7 +60,7 @@ export default function TransportadoUpdate() {
   return (
     <div className="form-create">
       <div className="form-custom">
-        <h4 className="form-header">Alteração de dados do transportador</h4>
+        <p>Alteração de dados do transportador</p>
         <small>Modifique as informação e clique em alterar</small>
         <form onSubmit={handleUpdateTransportador} id="formCreateTransportador">
           <hr />

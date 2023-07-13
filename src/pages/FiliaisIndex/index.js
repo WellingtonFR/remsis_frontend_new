@@ -10,6 +10,7 @@ export default function FiliaisIndex() {
   const [filiais, setFiliais] = useState([]);
   const [numeroFilial, setNumeroFilial] = useState("");
   const [cidade, setCidade] = useState("");
+  const [item_ID, setItem_ID] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -28,7 +29,7 @@ export default function FiliaisIndex() {
         showCancelButton: true,
         confirmButtonText: "Excluir",
         cancelButtonText: "Cancelar",
-        confirmButtonColor: "#af0600",
+        confirmButtonColor: "#008aca",
       });
       if (userConfirmAction) {
         showLoader();
@@ -74,6 +75,7 @@ export default function FiliaisIndex() {
         text: "É necessário preencher algum campo da pesquisa",
         icon: "info",
         confirmButtonText: "Voltar",
+        confirmButtonColor: "#008aca",
       });
       return;
     }
@@ -95,23 +97,48 @@ export default function FiliaisIndex() {
         text: data.message,
         icon: "info",
         confirmButtonText: "Voltar",
+        confirmButtonColor: "#008aca",
       });
     }
   }
+
+  const showModal = (id) => {
+    const modal = document.querySelector(".modal");
+    const overlay = document.querySelector(".overlay");
+
+    modal.style.visibility = "visible";
+    overlay.style.visibility = "visible";
+
+    setItem_ID(id);
+  };
+
+  const hideModal = () => {
+    const modal = document.querySelector(".modal");
+    const overlay = document.querySelector(".overlay");
+
+    modal.style.visibility = "hidden";
+    overlay.style.visibility = "hidden";
+  };
 
   return (
     <div className="container">
       <div className="search-bar">
         <form onSubmit={handleSearch} className="form">
-          <label htmlFor="numeroFilial">Filial</label>
-          <input type="text" name="numeroFilial" maxLength="10" className="input--width-2 mr-3" onChange={(e) => setNumeroFilial(e.target.value)}></input>
-          <label htmlFor="cidade" className="ml-1 mr-2">
-            Cidade
-          </label>
-          <input type="text" name="cidade" className="input--width-2 mr-3" onChange={(e) => setCidade(e.target.value)}></input>
-          <button type="submit" className="btn btn--primary" onClick={() => handleSearch}>
-            Pesquisar
-          </button>
+          <div className="row">
+            <div className="col-6 mr-2">
+              <label htmlFor="numeroFilial">Filial</label>
+              <input type="text" name="numeroFilial" maxLength="10" onChange={(e) => setNumeroFilial(e.target.value)}></input>
+            </div>
+            <div className="col-6 mr-2">
+              <label htmlFor="cidade">Cidade</label>
+              <input type="text" name="cidade" onChange={(e) => setCidade(e.target.value)}></input>
+            </div>
+            <div className="col-3 mt-2">
+              <button type="submit" className="btn btn--primary btn--small" onClick={() => handleSearch}>
+                Pesquisar
+              </button>
+            </div>
+          </div>
         </form>
       </div>
 
@@ -144,13 +171,26 @@ export default function FiliaisIndex() {
                 <td>{filial.estado}</td>
                 <td>{filial.nomeFantasia}</td>
                 <td>
-                  <FiMoreHorizontal className="btn--icon_table" onClick={() => excluirFilial(filial.id)} />
+                  <FiMoreHorizontal className="btn--icon_table" onClick={() => showModal(filial.id)} />
                 </td>
               </tr>
             ))
           )}
         </tbody>
       </table>
+
+      <div className="overlay">
+        <div className="modal" style={{ backgroundColor: "transparent", width: "fit-content", height: "fit-content" }}>
+          <div className="modal__body">
+            <Link to={`/filiais/update/${item_ID}`}>
+              <button className="btn btn--primary btn--medium mr-3">Alterar</button>
+            </Link>
+            <input type="button" value="Excluir" className="btn btn--danger btn--medium mr-3" onClick={() => excluirFilial(item_ID)} />
+            <input type="button" className="btn btn--dark btn--medium" value="Fechar" onClick={hideModal} />
+          </div>
+        </div>
+      </div>
+
       {loader}
     </div>
   );

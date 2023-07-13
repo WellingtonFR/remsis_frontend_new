@@ -5,11 +5,13 @@ $font-size: 14px;
 $font-weight: 500;
 
 .navbar {
+  height: 50px;
   overflow: hidden;
   background-color: $navbar-color;
-  z-index: 9999;
   color: $color;
   font-weight: $font-weight;
+  padding-top: 14px;
+  padding-left: 10px;
 }
 
 .navbar a {
@@ -17,7 +19,7 @@ $font-weight: 500;
   color: $color;
   font-size: $font-size;
   text-align: center;
-  padding: 14px 16px;
+  padding-right: 20px;
   text-decoration: none;
   &:hover {
     color: $color-hover;
@@ -33,10 +35,11 @@ $font-weight: 500;
   font-size: $font-size;
   border: none;
   outline: none;
-  padding: 14px 16px;
+  padding: 0px;
+  padding-right: 16px;
+  margin: 0;
   background-color: inherit;
   font-family: inherit;
-  margin: 0;
   font-weight: $font-weight;
   color: $color;
   &:hover {
