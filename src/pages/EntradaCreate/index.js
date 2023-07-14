@@ -180,7 +180,7 @@ export default function EntradaCreate() {
 
           <div className="col ml-2">
             <label htmlFor="doca">Doca</label>
-            <input type="number" name="doca" required value={doca} onChange={(e) => setDoca(e.target.value)} />
+            <input type="number" name="doca" id="doca" required value={doca} onChange={(e) => setDoca(e.target.value)} />
           </div>
 
           <div className="col ml-2 mt-3">
@@ -210,7 +210,7 @@ export default function EntradaCreate() {
                   required
                   value={form.notaFiscal}
                   onChange={(event) => handleFormBodyChange(event, index)}
-                  onClick={() => (document.querySelector("#btn-submit").disabled = false)}
+                  onClick={() => ((document.querySelector("#btn-submit").disabled = false), (document.querySelector("#doca").disabled = true))}
                 />
               </div>
 
@@ -244,7 +244,7 @@ export default function EntradaCreate() {
         })}
 
         <div className="row mt-2">
-          <button className="btn btn--primary btn--icon" id="btn-add-fields" disabled={conferente === "" || filialOrigem === "" || doca === "" ? true : false} onClick={addFields}>
+          <button type="button" className="btn btn--primary btn--icon" id="btn-add-fields" disabled={conferente === "" || filialOrigem === "" || doca === "" ? true : false} onClick={addFields}>
             <FiPlusCircle size="30" />
           </button>
         </div>
