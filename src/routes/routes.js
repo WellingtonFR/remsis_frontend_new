@@ -25,16 +25,20 @@ import Navbar from "../components/Navbar";
 export default function App() {
   const token = localStorage.getItem("token");
   const isLoggedIn = localStorage.getItem("isLoggedIn");
-  const isAuthenticated = () => token !== "" && isLoggedIn === "true";
+  const isAuthenticated = () => token !== null && token !== "";
 
-  const PrivateRoute = ({ element: Element, ...rest }) => (
-    <Route {...rest} render={(props) => (isAuthenticated() ? <Element {...props} /> : <Navigate to={{ pathname: "/login", state: { from: props.location } }} />)} />
-  );
+  const ProtectedRoute = ({ authenticated, children }) => {
+    if (!authenticated) {
+      return <Navigate to="login" replace />;
+    }
+
+    return children;
+  };
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route path="login" element={<Login />} />
         <Route
           element={
             <>
@@ -43,37 +47,156 @@ export default function App() {
             </>
           }
         >
-          <Route path="/" element={<Home />} />
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute authenticated={isAuthenticated()}>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
 
           {/*Filial*/}
-          <Route path="filiais" element={<FiliaisIndex />} />
-          <Route path="filiais/create" element={<FiliaisCreate />} />
-          <Route path="filiais/update/:id" element={<FiliaisUpdate />} />
+          <Route
+            path="filiais"
+            element={
+              <ProtectedRoute authenticated={isAuthenticated()}>
+                <FiliaisIndex />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="filiais/create"
+            element={
+              <ProtectedRoute authenticated={isAuthenticated()}>
+                <FiliaisCreate />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="filiais/update/:id"
+            element={
+              <ProtectedRoute authenticated={isAuthenticated()}>
+                <FiliaisUpdate />
+              </ProtectedRoute>
+            }
+          />
 
           {/*Saida */}
-          <Route path="saida" element={<SaidaIndex />} />
-          <Route path="saida/create" element={<SaidaCreate />} />
-          <Route path="saida/update/:id" element={<SaidaUpdate />} />
-          <Route path="saida/report/:id" element={<SaidaReport />} />
+          <Route
+            path="saida"
+            element={
+              <ProtectedRoute authenticated={isAuthenticated()}>
+                <SaidaIndex />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="saida/create"
+            element={
+              <ProtectedRoute authenticated={isAuthenticated()}>
+                <SaidaCreate />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="saida/update/:id"
+            element={
+              <ProtectedRoute authenticated={isAuthenticated()}>
+                <SaidaUpdate />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="saida/report/:id"
+            element={
+              <ProtectedRoute authenticated={isAuthenticated()}>
+                <SaidaReport />
+              </ProtectedRoute>
+            }
+          />
 
           {/*Entrada */}
-          <Route path="entrada" element={<EntradaIndex />} />
-          <Route path="entrada/create" element={<EntradaCreate />} />
+          <Route
+            path="entrada"
+            element={
+              <ProtectedRoute authenticated={isAuthenticated()}>
+                <EntradaIndex />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="entrada/create"
+            element={
+              <ProtectedRoute authenticated={isAuthenticated()}>
+                <EntradaCreate />
+              </ProtectedRoute>
+            }
+          />
 
           {/* Estoque */}
-          <Route path="estoque" element={<EstoqueIndex />} />
+          <Route
+            path="estoque"
+            element={
+              <ProtectedRoute authenticated={isAuthenticated()}>
+                <EstoqueIndex />
+              </ProtectedRoute>
+            }
+          />
 
           {/*Transportador*/}
-          <Route path="transportador" element={<TransportadorIndex />} />
-          <Route path="transportador/create" element={<TransportadorCreate />} />
-          <Route path="transportador/update/:id" element={<TransportadorUpdate />} />
+          <Route
+            path="transportador"
+            element={
+              <ProtectedRoute authenticated={isAuthenticated()}>
+                <TransportadorIndex />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="transportador/create"
+            element={
+              <ProtectedRoute authenticated={isAuthenticated()}>
+                <TransportadorCreate />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="transportador/update/:id"
+            element={
+              <ProtectedRoute authenticated={isAuthenticated()}>
+                <TransportadorUpdate />
+              </ProtectedRoute>
+            }
+          />
 
           {/*Conferente*/}
-          <Route path="conferente" element={<ConferenteIndex />} />
-          <Route path="conferente/create" element={<ConferenteCreate />} />
+          <Route
+            path="conferente"
+            element={
+              <ProtectedRoute authenticated={isAuthenticated()}>
+                <ConferenteIndex />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="conferente/create"
+            element={
+              <ProtectedRoute authenticated={isAuthenticated()}>
+                <ConferenteCreate />
+              </ProtectedRoute>
+            }
+          />
 
           {/* 404 error */}
-          <Route path="*" element={<NotFoundPage />} />
+          <Route
+            path="*"
+            element={
+              <ProtectedRoute authenticated={isAuthenticated()}>
+                <NotFoundPage />
+              </ProtectedRoute>
+            }
+          />
         </Route>
       </Routes>
     </BrowserRouter>
