@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useAsyncError, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { FiPlusCircle } from "react-icons/fi";
 import api from "../../services/api";
@@ -15,13 +15,15 @@ export default function SaidaCreate() {
   const [placaVeiculo, setPlacaVeiculo] = useState("");
   const [doca, setDoca] = useState();
   const [selectedCheckBox, setSelectedCheckBox] = useState(0);
+  const [isChecked, setIsChecked] = useState(false);
 
   const [filiais, setFiliais] = useState([]); //Preenche o option com as filiais
   const [transportadores, setTransportadores] = useState([]); //Preenche o option
   const [transportador, setTransportador] = useState(""); //para saída dos dados ao submeter
   const [conferente, setConferente] = useState(""); //Preenche o option
   const [conferentes, setConferentes] = useState([]); //para saída dos dados ao submeter
-  const [registroEntrada, setRegistrosEntrada] = useState([]);
+  const [registroEntrada, setRegistrosEntrada] = useState([]); //registros de entrada para preencher no modal
+  const [checkBox_id, setCheckbox_id] = useState([]); //Ids de entrada para dar baixa na saída
 
   //#region useState
   const [filialOrigem_1, setFilialorigem_1] = useState("");
@@ -502,8 +504,8 @@ export default function SaidaCreate() {
     hideModal();
   }
 
-  function changeCheckBox() {
-    let checked = document.querySelectorAll('input[name="saida-checkbox"]:checked').length;
+  function checkboxManager(id) {
+    let checked = document.querySelectorAll("input[name='modal-checkbox']:checked").length;
     setSelectedCheckBox(checked);
 
     if (checked > 20) {
@@ -515,6 +517,26 @@ export default function SaidaCreate() {
     } else if (checked <= 20) {
       inputCheckBoxCount.style.color = "#ffffff";
       btnConfirmModal.removeAttribute("disabled");
+    }
+  }
+
+  function toggleAllCheckbox() {
+    let checkbox = document.getElementsByName("modal-checkbox");
+
+    if (!isChecked) {
+      setIsChecked(true);
+
+      for (let i = 0; i < checkbox.length; i++) {
+        checkbox[i].checked = true;
+      }
+      checkboxManager();
+    } else {
+      setIsChecked(false);
+
+      for (let i = 0; i < checkbox.length; i++) {
+        checkbox[i].checked = false;
+      }
+      checkboxManager();
     }
   }
 
@@ -1310,7 +1332,7 @@ export default function SaidaCreate() {
               <thead>
                 <tr>
                   <th>
-                    <input type="checkbox" disabled className="ml-1"></input>
+                    <input type="checkbox" className="ml-1" onClick={toggleAllCheckbox}></input>
                   </th>
                   <th className="text-center">Filial Origem</th>
                   <th>Código</th>
@@ -1332,7 +1354,7 @@ export default function SaidaCreate() {
                   <tbody key={registro.id}>
                     <tr>
                       <td>
-                        <input type="checkbox" name="saida-checkbox" value={registro.id} onChange={changeCheckBox}></input>
+                        <input type="checkbox" name="modal-checkbox" value={registro.id} onChange={checkboxManager}></input>
                       </td>
                       <td className="text-center">{registro.filialOrigem}</td>
                       <td>{registro.codigo}</td>
